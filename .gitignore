@@ -1,0 +1,12 @@
+/.env*
+/.vscode/
+/coverage/
+/debug.log
+/node_modules/
+/.next/
+/next-env.d.ts
+
+#### OS
+Thumbs.db
+.DS_Store
+._.DS_Store
