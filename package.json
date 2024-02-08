@@ -36,7 +36,7 @@
     "purge": "rm -rf dist/ .next/ node_modules/ package-lock.json"
   },
   "dependencies": {
-    "@azure/msal-browser": "^3.7.1",
+    "@azure/msal-browser": "^3.9.0",
     "@azure/msal-node": "^2.6.2",
     "@azure/msal-react": "^2.0.10",
     "lodash": "^4.17.21",
