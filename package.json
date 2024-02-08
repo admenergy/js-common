@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^3.7.1",
-    "@azure/msal-node": "^2.6.2",
+    "@azure/msal-node": "^2.6.3",
     "@azure/msal-react": "^2.0.10",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
