@@ -36,9 +36,9 @@
     "purge": "rm -rf dist/ .next/ node_modules/ package-lock.json"
   },
   "dependencies": {
-    "@azure/msal-browser": "^3.7.1",
-    "@azure/msal-node": "^2.6.2",
-    "@azure/msal-react": "^2.0.10",
+    "@azure/msal-browser": "^3.9.0",
+    "@azure/msal-node": "^2.6.3",
+    "@azure/msal-react": "^2.0.11",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "notistack": "^3.0.1",
@@ -50,8 +50,8 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
-    "@mui/icons-material": "5.15.8",
-    "@mui/material": "^5.15.7",
+    "@mui/icons-material": "5.15.9",
+    "@mui/material": "^5.15.9",
     "@testing-library/jest-dom": "^6.4.2",
     "@types/babel__preset-env": "~7.9.6",
     "@types/eslint": "~8.56.2",
