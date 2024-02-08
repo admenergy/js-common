@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    versioning-strategy: "increase"
+    groups:
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+
+      nextjs:
+        patterns:
+          - "next"
+          - "@next/eslint-plugin-next"
+          - "eslint-config-next"
+
+      material-ui:
+        patterns:
+          - "@mui/material"
+          - "@mui/icons-material"
+
+      ag-grid:
+        patterns:
+          - "ag-grid-*"
+
+      es-lint:
+        patterns:
+          - "@typescript-eslint/eslint-plugin"
+          - "@typescript-eslint/parser"
+
+      jest:
+        patterns:
+          - "jest"
+          - "jest-environment-jsdom"
