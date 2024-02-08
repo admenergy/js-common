@@ -20,7 +20,7 @@
     "common": "./src/common/index.ts",
     ".": "./src/index.ts"
   },
-  "private": true,
+  "private": false,
   "scripts": {
     "==[ Development ]==": "",
     "build": "npm run clean && webpack --mode production && npx tsc && git add dist/",
