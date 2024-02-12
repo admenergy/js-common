@@ -27,7 +27,7 @@
     "lint": "npx eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
     "test": "jest",
     "==[ Install/Clean ]==": "",
-    "reinstall": "npm run purge && npm i",
+    "reinstall": "npm run purge && npm i && npx typesync",
     "reinstall-rebuild": "npm run reinstall && npm run build",
     "update": "npx npm-check-updates -u && npm install",
     "clean": "rm -rf dist/ .next/",
