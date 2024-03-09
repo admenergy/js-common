@@ -6,4 +6,5 @@ export * from "./bestTimeUnitMS";
 export * from "./getIn";
 export * from "./removeDiacritics";
 export * from "./sanitizeStringDisplay";
+export * from "./sanitizeStringKey";
 export * from "./setIn";
