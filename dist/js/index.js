@@ -941,7 +941,11 @@ function sanitizeStringKey(str) {
   str = str.replace(/^\|+|\|+$/g, "");
 
   // Split for map with camelCase()
-  return str.split("|").map(camelCase).join("");
+  str = str.split("|").map(camelCase).join("");
+
+  // Lower first character
+  str = str[0].toLowerCase() + str.slice(1);
+  return str;
 }
 function camelCase(word) {
   return word[0].toUpperCase() + word.slice(1);
