@@ -1,8 +1,18 @@
 import { ObjectPath } from "./getIn";
 
 export function setIn<T>(source: T, path: ObjectPath, value: any): T {
+  if (typeof source === "undefined") {
+    throw new TypeError(`Can't use setIn on undefined.`);
+  }
+  if (source === null) {
+    throw new TypeError(`Can't use setIn on null.`);
+  }
+  if (typeof source !== "object") {
+    throw new TypeError(`setIn doesn't operate on ${typeof source}.`);
+  }
+
   if (path.length === 0) {
-    throw new TypeError(`Can't use setIn on a non-object.`);
+    throw new TypeError(`Can't use setIn to replace the root.`);
   }
 
   return traverse(source, path, value).node;
