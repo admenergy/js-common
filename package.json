@@ -2,6 +2,10 @@
   "name": "@admenergy/js-common",
   "version": "1.0.0",
   "exports": {
+    ".": {
+      "import": "./dist/js/index.js",
+      "types": "./dist/ts/index.d.ts"
+    },
     "./client": {
       "import": "./dist/js/client/index.js",
       "types": "./dist/ts/client/index.d.ts"
@@ -13,17 +17,13 @@
     "./server": {
       "import": "./dist/js/server/index.js",
       "types": "./dist/ts/server/index.d.ts"
-    },
-    ".": {
-      "import": "./dist/js/index.js",
-      "types": "./dist/ts/index.d.ts"
     }
   },
   "webpackEntry": {
+    ".": "./src/index.ts",
     "client": "./src/client/index.ts",
     "common": "./src/common/index.ts",
-    "server": "./src/server/index.ts",
-    ".": "./src/index.ts"
+    "server": "./src/server/index.ts"
   },
   "private": false,
   "scripts": {
@@ -32,7 +32,7 @@
     "build-git-add": "npm run build && git add dist/",
     "build-test": "npm run build && jest",
     "test": "jest",
-    "test-watch": "jest --watch",
+    "test:watch": "jest --watch",
     "lint": "npx eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
     "==[ Install/Clean ]==": "",
     "reinstall": "npm run purge && npm i && npx typesync",
