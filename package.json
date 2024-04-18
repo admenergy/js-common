@@ -32,6 +32,7 @@
     "build-git-add": "npm run build && git add dist/",
     "build-test": "npm run build && jest",
     "test": "jest",
+    "test-watch": "jest --watch",
     "lint": "npx eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
     "==[ Install/Clean ]==": "",
     "reinstall": "npm run purge && npm i && npx typesync",
