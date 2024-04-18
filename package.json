@@ -23,9 +23,11 @@
   "private": false,
   "scripts": {
     "==[ Development ]==": "",
-    "build": "npm run clean && webpack --mode production && npx tsc && git add dist/",
-    "lint": "npx eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
+    "build": "npm run clean && webpack --mode production && npx tsc",
+    "build-git-add": "npm run build && git add dist/",
+    "build-test": "npm run build && jest",
     "test": "jest",
+    "lint": "npx eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
     "==[ Install/Clean ]==": "",
     "reinstall": "npm run purge && npm i && npx typesync",
     "reinstall-rebuild": "npm run reinstall && npm run build",
