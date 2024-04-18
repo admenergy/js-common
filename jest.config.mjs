@@ -1,7 +1,7 @@
 const esModules = ["jsondiffpatch"];
 const customConfig = {
   testEnvironment: "jest-environment-jsdom",
-  testMatch: ["<rootDir>/__tests__/**/*.test.(js|jsx)"],
+  testMatch: ["<rootDir>/src/__tests__/**/*.test.(js|jsx)"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
   },
