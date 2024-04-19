@@ -1,4 +1,5 @@
 export * from "./ErrorTypes";
+export * from "./EventDispatcher";
 export * from "./benchmark";
 export * from "./bestByteUnit";
 export * from "./bestConversionHelper";

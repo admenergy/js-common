@@ -51,6 +51,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, {
   AccessDeniedError: () => (/* reexport */ AccessDeniedError),
   ConversionResult: () => (/* reexport */ ConversionResult),
+  EventDispatcher: () => (/* reexport */ EventDispatcher),
   NotFoundError: () => (/* reexport */ NotFoundError),
   UnauthorizedError: () => (/* reexport */ UnauthorizedError),
   benchmark: () => (/* reexport */ benchmark),
@@ -150,6 +151,294 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
   _inherits(NotFoundError, _Error3);
   return _createClass(NotFoundError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
+;// CONCATENATED MODULE: ./src/common/EventDispatcher.ts
+function EventDispatcher_typeof(o) { "@babel/helpers - typeof"; return EventDispatcher_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, EventDispatcher_typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function EventDispatcher_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function EventDispatcher_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, EventDispatcher_toPropertyKey(descriptor.key), descriptor); } }
+function EventDispatcher_createClass(Constructor, protoProps, staticProps) { if (protoProps) EventDispatcher_defineProperties(Constructor.prototype, protoProps); if (staticProps) EventDispatcher_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _defineProperty(obj, key, value) { key = EventDispatcher_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function EventDispatcher_toPropertyKey(t) { var i = EventDispatcher_toPrimitive(t, "string"); return "symbol" == EventDispatcher_typeof(i) ? i : i + ""; }
+function EventDispatcher_toPrimitive(t, r) { if ("object" != EventDispatcher_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != EventDispatcher_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * Event Dispatcher
+ *
+ * @example
+ * // Using EventDispatcher directly
+ * const dispatcher = new EventDispatcher<{ foo: number }>();
+ * dispatcher.on("myevent", event => console.log(event));
+ * dispatcher.trigger("myevent", { foo: 42 });
+ * -> { foo: 42 }
+ *
+ * @example
+ * // Extending EventDispatcher in a custom class
+ * class MyClass extends EventDispatcher<{ foo: number }> {
+ *     constructor() {
+ *         super();
+ *         this.on("myevent", this.handleMyEvent);
+ *     }
+ *
+ *     handleMyEvent(event: { foo: number }) {
+ *         console.log('Handled in MyClass:', event);
+ *     }
+ * }
+ * const myClass = new MyClass();
+ * myClass.trigger("myevent", { foo: 42 });
+ * -> { foo: 42 }
+ */
+var EventDispatcher = /*#__PURE__*/function () {
+  function EventDispatcher() {
+    EventDispatcher_classCallCheck(this, EventDispatcher);
+    _defineProperty(this, "handlers", new Map());
+    _defineProperty(this, "batchedHandlers", new Map());
+  }
+  return EventDispatcher_createClass(EventDispatcher, [{
+    key: "trigger",
+    value: function trigger(type) {
+      var _this = this;
+      var event = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var handlers = this.handlers.get(type);
+      if (!handlers) return Promise.resolve([]);
+      var handlerPromises = [];
+      var stopPropagation = function stopPropagation() {
+        handlerPromises.splice(0, handlerPromises.length);
+      };
+      var eventData = _objectSpread(_objectSpread({}, event), {}, {
+        stopPropagation: stopPropagation
+      });
+      handlers.forEach(function (handler) {
+        if (_this.matchFilters(eventData, handler.filters)) {
+          if (handler.batched) {
+            if (!_this.batchedHandlers.has(type)) {
+              _this.batchedHandlers.set(type, new Map());
+              setTimeout(function () {
+                var batchedHandlers = _this.batchedHandlers.get(type);
+                if (batchedHandlers) {
+                  batchedHandlers.forEach(function (events, handler) {
+                    handlerPromises.push(handler.callback(events));
+                  });
+                  _this.batchedHandlers["delete"](type);
+                }
+              });
+            }
+            if (!_this.batchedHandlers.get(type).has(handler)) {
+              _this.batchedHandlers.get(type).set(handler, []);
+            }
+            _this.batchedHandlers.get(type).get(handler).push(eventData);
+          } else {
+            handlerPromises.push(handler.callback(eventData));
+          }
+        }
+      });
+      return Promise.all(handlerPromises);
+    }
+  }, {
+    key: "on",
+    value: function on(type, callback) {
+      var _this2 = this;
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+        batched: false,
+        filters: {}
+      };
+      var typeKeys = type.split(/\s+/);
+      if (1 < typeKeys.length) {
+        typeKeys.forEach(function (type) {
+          if (type) _this2.on(type, callback, options);
+        });
+        return this;
+      }
+      var handlers = this.handlers.get(type);
+      if (!handlers) {
+        this.handlers.set(type, new Set());
+      }
+      this.handlers.get(type).add({
+        callback: callback,
+        filters: options.filters,
+        batched: options.batched
+      });
+      return this;
+    }
+  }, {
+    key: "off",
+    value: function off(type, callback) {
+      var _this3 = this;
+      var typeKeys = type.split(/\s+/);
+      if (1 < typeKeys.length) {
+        typeKeys.forEach(function (type) {
+          if (type) _this3.off(type, callback);
+        });
+        return this;
+      }
+      var handlers = this.handlers.get(type);
+      if (handlers) {
+        var removals = [];
+        handlers.forEach(function (handler) {
+          if (handler.callback === callback) {
+            removals.push(handler);
+          }
+        });
+        removals.forEach(function (handler) {
+          return handlers["delete"](handler);
+        });
+        if (!handlers.size) {
+          this.handlers["delete"](type);
+        }
+      }
+      return this;
+    }
+  }, {
+    key: "matchFilters",
+    value: function matchFilters(event, filters) {
+      for (var key in filters) {
+        var filter = filters[key];
+        var value = event[key];
+        if (Array.isArray(filter)) {
+          if (!filter.includes(value)) {
+            return false;
+          }
+        } else if (filter instanceof RegExp) {
+          if (!filter.test(value)) {
+            return false;
+          }
+        } else {
+          if (value !== filter) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+  }]);
+}();
+
+// Old JavaScript Code:
+/*
+const OldDeprecatedEventDispatcher = {
+  trigger: function (type, e = {}) {
+    if (typeof type !== "string") throw `Expected string for parameter: "type"`;
+
+    const handlersBatchKey = `_handlers_${type}_batch`;
+    const handlersKey = `_handlers_${type}`;
+    const handlers = this[String(handlersKey)];
+
+    if (handlers) {
+      const handlerPromises = [];
+      const originalStop = e.stopPropagation;
+      let keepGoing = true;
+
+      e.stopPropagation = () => {
+        keepGoing = false;
+        if (originalStop) originalStop();
+      };
+
+      handlers.forEach((f) => {
+        if (!keepGoing) return;
+
+        const match = (value, filter) => {
+          if (typeof filter === "object" && filter instanceof RegExp) {
+            return filter.test(value);
+          } else if (Array.isArray(filter)) {
+            let ret = false;
+            for (let t of filter) {
+              ret = ret || match(value, t);
+              if (ret) break;
+            }
+            return ret;
+          } else {
+            return value === filter;
+          }
+        };
+
+        let matched = true;
+        for (let key in f.filters) {
+          matched &= match(e[String(key)], f.filters[String(key)]);
+          if (!matched) break;
+        }
+        if (!matched) return;
+        if (f.batched) {
+          if (!this[String(handlersBatchKey)]) {
+            handlerPromises.push(
+              new Promise((resolve, reject) => {
+                this[String(handlersBatchKey)] = new Map();
+                setTimeout(() => {
+                  this[String(handlersBatchKey)].forEach((events, f) => {
+                    resolve(f.callback(events));
+                  });
+                  this[String(handlersBatchKey)] = null;
+                });
+              }),
+            );
+          }
+          if (!this[String(handlersBatchKey)].get(f))
+            this[String(handlersBatchKey)].set(f, []);
+          this[String(handlersBatchKey)].get(f).push({ target: this, ...e });
+        } else {
+          handlerPromises.push(f.callback(e));
+        }
+      });
+
+      return Promise.all(handlerPromises);
+    }
+  },
+
+  on: function (
+    type,
+    f,
+    { batched, filters } = { batched: false, filters: {} },
+  ) {
+    if (typeof type !== "string") throw `Expected string for parameter: "type"`;
+    if (typeof f !== "function") throw `Expected function for parameter: "f"`;
+
+    if (type.split(" ").length > 1) {
+      type.split(" ").forEach((type) => {
+        this.on(type, f);
+      });
+      return;
+    }
+
+    const handlersKey = `_handlers_${type}`;
+    let handlers = this[String(handlersKey)];
+
+    if (!handlers) {
+      handlers = this[String(handlersKey)] = new Set();
+    }
+
+    handlers.add({ callback: f, filters, batched });
+
+    return this;
+  },
+
+  off: function (type, f) {
+    if (typeof type !== "string") throw `Expected string for parameter: "type"`;
+    if (typeof f !== "function") throw `Expected function for parameter: "f"`;
+
+    if (type.split(" ").length > 1) {
+      type.split(" ").forEach((type) => {
+        this.off(type, f);
+      });
+      return;
+    }
+
+    const handlersKey = `_handlers_${type}`;
+    const handlers = this[String(handlersKey)];
+
+    if (handlers) {
+      const removals = [];
+      handlers.forEach((h) => {
+        if (h.callback === f) removals.push(h);
+      });
+      removals.forEach((h) => handlers.delete(h));
+
+      if (!handlers.size) {
+        delete this[String(handlersKey)];
+      }
+    }
+
+    return this;
+  },
+};
+*/
 ;// CONCATENATED MODULE: ./src/common/bestConversionHelper.ts
 function bestConversionHelper_typeof(o) { "@babel/helpers - typeof"; return bestConversionHelper_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, bestConversionHelper_typeof(o); }
 function bestConversionHelper_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, bestConversionHelper_toPropertyKey(descriptor.key), descriptor); } }
@@ -968,9 +1257,9 @@ function camelCase(word) {
   return word[0].toUpperCase() + word.slice(1);
 }
 ;// CONCATENATED MODULE: ./src/common/setIn.ts
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = setIn_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function setIn_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function setIn_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? setIn_ownKeys(Object(t), !0).forEach(function (r) { setIn_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : setIn_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function setIn_defineProperty(obj, key, value) { key = setIn_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function setIn_toPropertyKey(t) { var i = setIn_toPrimitive(t, "string"); return "symbol" == setIn_typeof(i) ? i : i + ""; }
 function setIn_toPrimitive(t, r) { if ("object" != setIn_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != setIn_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || setIn_unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -1010,7 +1299,7 @@ function setIn(source, path, value) {
       } else {
         var ret;
         if (source) {
-          ret = Array.isArray(source) ? _toConsumableArray(source) : _objectSpread({}, source);
+          ret = Array.isArray(source) ? _toConsumableArray(source) : setIn_objectSpread({}, source);
         } else {
           ret = Number.isInteger(Number(p)) ? [] : {};
         }
@@ -1037,9 +1326,9 @@ function setIn(source, path, value) {
           changed = _traverse.changed;
         var newsource;
         if (source) {
-          newsource = Array.isArray(source) ? _toConsumableArray(source) : _objectSpread({}, source);
+          newsource = Array.isArray(source) ? _toConsumableArray(source) : setIn_objectSpread({}, source);
         } else {
-          newsource = Number.isInteger(Number(np)) ? _toConsumableArray(source) : _objectSpread({}, source);
+          newsource = Number.isInteger(Number(np)) ? _toConsumableArray(source) : setIn_objectSpread({}, source);
         }
         newsource[String(p)] = node;
         return {
@@ -1051,7 +1340,7 @@ function setIn(source, path, value) {
           _node = _traverse2.node,
           _changed = _traverse2.changed;
         if (_changed) {
-          var _ret = Array.isArray(source) ? _toConsumableArray(source) : _objectSpread({}, source);
+          var _ret = Array.isArray(source) ? _toConsumableArray(source) : setIn_objectSpread({}, source);
           _ret[String(p)] = _node;
           return {
             node: _ret,
@@ -1068,6 +1357,7 @@ function setIn(source, path, value) {
   }
 }
 ;// CONCATENATED MODULE: ./src/common/index.ts
+
 
 
 
