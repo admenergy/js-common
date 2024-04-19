@@ -1,14 +1,15 @@
 const esModules = ["jsondiffpatch"];
 const customConfig = {
   preset: "ts-jest",
-  moduleDirectories: ["node_modules", "src"], // Add src to module directories
+  moduleDirectories: ["node_modules", "src"],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1", // Map TypeScript paths to Jest paths
+    "^@/(.*)$": "<rootDir>/src/$1",
   },
   testEnvironment: "jest-environment-jsdom",
-  testMatch: ["<rootDir>/__tests__/**/*.test.(js|jsx)"],
+  testMatch: ["<rootDir>/__tests__/**/*.test.(js|jsx|ts|tsx)"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
+    "^.+\\.(ts|tsx)$": "ts-jest",
   },
   transformIgnorePatterns: [`/node_modules/(?!(${esModules.join("|")})/)`],
   // setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
