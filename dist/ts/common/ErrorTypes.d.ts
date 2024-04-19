@@ -11,7 +11,7 @@ export declare class UnauthorizedError extends Error {
      *
      * @param {string} [message] - The error message. Pass a message to override the default.
      */
-    constructor(message?: any);
+    constructor(message?: string);
 }
 /**
  * Access Denied Error
@@ -26,5 +26,20 @@ export declare class AccessDeniedError extends Error {
      *
      * @param {string} [message] - The error message. Pass a message to override the default.
      */
-    constructor(message?: any);
+    constructor(message?: string);
+}
+/**
+ * Not Found Error
+ *
+ * The requested resource was not found.
+ *
+ * @extends Error
+ */
+export declare class NotFoundError extends Error {
+    /**
+     * Create a NotFoundError.
+     *
+     * @param {string} [message] - The error message. Pass a message to override the default.
+     */
+    constructor(message?: string);
 }
