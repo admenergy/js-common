@@ -1,10 +1,14 @@
-interface EventOptions {
+export interface EventOptions {
   batched?: boolean;
   filters?: Record<string, any>;
 }
 
+export type EventData<T> = T & {
+  stopPropagation: () => void;
+};
+
 interface EventHandler<T> {
-  callback: (event: T) => void;
+  callback: (event: T | T[]) => any;
   filters: Record<string, any>;
   batched: boolean;
 }
@@ -40,7 +44,41 @@ export class EventDispatcher<T = any> {
   private batchedHandlers: Map<string, Map<EventHandler<T>, T[]>> = new Map();
 
   trigger(type: string, event: T = {} as T): Promise<void[]> {
-    // TODO
+    const handlers = this.handlers.get(type);
+    if (!handlers) return Promise.resolve([]);
+
+    const handlerPromises: Promise<void>[] = [];
+    const stopPropagation = () => {
+      handlerPromises.splice(0, handlerPromises.length);
+    };
+    const eventData: EventData<T> = { ...event, stopPropagation };
+
+    handlers.forEach((handler) => {
+      if (this.matchFilters(eventData, handler.filters)) {
+        if (handler.batched) {
+          if (!this.batchedHandlers.has(type)) {
+            this.batchedHandlers.set(type, new Map());
+            setTimeout(() => {
+              const batchedHandlers = this.batchedHandlers.get(type);
+              if (batchedHandlers) {
+                batchedHandlers.forEach((events, handler) => {
+                  handlerPromises.push(handler.callback(events));
+                });
+                this.batchedHandlers.delete(type);
+              }
+            });
+          }
+          if (!this.batchedHandlers.get(type).has(handler)) {
+            this.batchedHandlers.get(type).set(handler, []);
+          }
+          this.batchedHandlers.get(type).get(handler).push(eventData);
+        } else {
+          handlerPromises.push(handler.callback(eventData));
+        }
+      }
+    });
+
+    return Promise.all(handlerPromises);
   }
 
   on(
@@ -48,11 +86,52 @@ export class EventDispatcher<T = any> {
     callback: (event: T) => void,
     options: EventOptions = { batched: false, filters: {} },
   ): this {
-    // TODO
+    const typeKeys = type.split(/\s+/);
+    if (1 < typeKeys.length) {
+      typeKeys.forEach((type) => {
+        if (type) this.on(type, callback, options);
+      });
+      return this;
+    }
+
+    const handlers = this.handlers.get(type);
+    if (!handlers) {
+      this.handlers.set(type, new Set());
+    }
+
+    this.handlers.get(type).add({
+      callback,
+      filters: options.filters,
+      batched: options.batched,
+    });
+
+    return this;
   }
 
   off(type: string, callback: (event: T) => void): this {
-    // TODO
+    const typeKeys = type.split(/\s+/);
+    if (1 < typeKeys.length) {
+      typeKeys.forEach((type) => {
+        if (type) this.off(type, callback);
+      });
+      return this;
+    }
+
+    const handlers = this.handlers.get(type);
+    if (handlers) {
+      const removals: EventHandler<T>[] = [];
+      handlers.forEach((handler) => {
+        if (handler.callback === callback) {
+          removals.push(handler);
+        }
+      });
+      removals.forEach((handler) => handlers.delete(handler));
+      if (!handlers.size) {
+        this.handlers.delete(type);
+      }
+    }
+
+    return this;
   }
 
   private matchFilters(event: T, filters: Record<string, any>): boolean {
@@ -77,9 +156,9 @@ export class EventDispatcher<T = any> {
   }
 }
 
+// Old JavaScript Code:
 /*
-Old JavaScript Code:
-const EventDispatcher = {
+const OldDeprecatedEventDispatcher = {
   trigger: function (type, e = {}) {
     if (typeof type !== "string") throw `Expected string for parameter: "type"`;
 
@@ -162,15 +241,8 @@ const EventDispatcher = {
       return;
     }
 
-    const typesList = this._event_types || null;
     const handlersKey = `_handlers_${type}`;
     let handlers = this[String(handlersKey)];
-
-    const handlerType = typesList && typesList[String(type)];
-    if (typesList && !handlerType)
-      throw `Unknown event type "${type}". Expected ${JSON.stringify(
-        Object.keys(typesList),
-      )}`;
 
     if (!handlers) {
       handlers = this[String(handlersKey)] = new Set();
@@ -192,15 +264,8 @@ const EventDispatcher = {
       return;
     }
 
-    const typesList = this._event_types || null;
     const handlersKey = `_handlers_${type}`;
-    let handlers = this[String(handlersKey)];
-
-    const handlerType = typesList && typesList[String(type)];
-    if (typesList && !handlerType)
-      throw `Unknown event type "${type}". Expected ${JSON.stringify(
-        Object.keys(typesList),
-      )}`;
+    const handlers = this[String(handlersKey)];
 
     if (handlers) {
       const removals = [];
