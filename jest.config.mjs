@@ -6,7 +6,7 @@ const customConfig = {
     "^@/(.*)$": "<rootDir>/src/$1", // Map TypeScript paths to Jest paths
   },
   testEnvironment: "jest-environment-jsdom",
-  testMatch: ["<rootDir>/src/__tests__/**/*.test.(js|jsx)"],
+  testMatch: ["<rootDir>/__tests__/**/*.test.(js|jsx)"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
   },
