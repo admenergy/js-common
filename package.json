@@ -57,7 +57,7 @@
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^15.0.2",
+    "@testing-library/react": "^15.0.3",
     "@types/babel__preset-env": "^7.9.6",
     "@types/eslint": "^8.56.10",
     "@types/jest": "^29.5.12",
