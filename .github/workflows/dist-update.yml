@@ -46,13 +46,9 @@ jobs:
         run: |
           git config --global user.email "--"
           git config --global user.name "Workflow - Dist Update"
-
-      - name: Checkout dist-update branch
-        if: env.changes_detected == 'true'
-        run: |
           git fetch
           git checkout dist-updates || git checkout -b dist-updates
-          git reset --hard origin/main  # Ensures dist-updates is always in sync with main
+          git reset --hard origin/main  # Ensures dist-updates is in sync with main
 
       - name: Add and commit changes
         if: env.changes_detected == 'true'
@@ -64,7 +60,4 @@ jobs:
       - name: Create or update Pull Request
         if: env.changes_detected == 'true'
         run: |
-          exists=$(gh pr list --head dist-updates --json number --jq ".[].number" | head -n 1)
-          if [[ -z "$exists" ]]; then
-            gh pr create --base main --head dist-updates --title "Update dist files" --body "This PR updates the dist files after dependency updates."
-          fi
+          gh pr list --head dist-updates | grep dist-updates || gh pr create --base main --head dist-updates --title "Update dist files" --body "This PR updates the dist files after dependency updates." --label "automated-pr"
