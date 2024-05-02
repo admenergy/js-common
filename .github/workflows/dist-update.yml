@@ -1,7 +1,8 @@
 name: Build and Update Dist
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
     paths:
