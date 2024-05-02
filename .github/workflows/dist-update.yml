@@ -9,6 +9,10 @@ on:
       - "package.json"
       - "package-lock.json"
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update_dist:
     runs-on: ubuntu-latest
@@ -52,4 +56,4 @@ jobs:
           git add dist/
           git commit -m "Update dist files"
           git push -f origin dist-updates
-          gh pr list --head dist-updates | grep dist-updates || gh pr create --base main --head dist-updates --title "Update dist files" --body "This PR updates the dist files after dependency updates." --label "automated-pr"
+          gh pr list --head dist-updates | grep dist-updates || gh pr create --base main --head dist-updates --title "Update dist files" --body "This PR updates the dist files after dependency updates."
