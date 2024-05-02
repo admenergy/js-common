@@ -1,8 +1,7 @@
 name: Build and Update Dist
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
     paths:
@@ -18,14 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
-      - name: Install Dependencies
-        run: npm install
-
       - name: Setup Git
         run: |
           git config --global user.email "--"
@@ -34,8 +25,15 @@ jobs:
           git checkout dist-updates || git checkout -b dist-updates
           git reset --hard origin/main
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Dependencies
+        run: npm install
+
       - name: Run build
-        if: env.changes_detected == 'true'
         run: npm run build
 
       - name: Check for changes
