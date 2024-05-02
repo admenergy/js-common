@@ -1,4 +1,4 @@
-name: Build and Update Dist
+name: Update dist/
 
 on:
   push:
@@ -19,8 +19,8 @@ jobs:
 
       - name: Setup Git
         run: |
-          git config --global user.email "--"
           git config --global user.name "Workflow - Dist Update"
+          git config --global user.email "--"
           git fetch
           git checkout dist-updates || git checkout -b dist-updates
           git reset --hard origin/main
@@ -33,7 +33,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run build
+      - name: Build dist/
         run: npm run build
 
       - name: Check for changes
@@ -41,14 +41,15 @@ jobs:
         run: |
           git diff --exit-code || echo "changes_detected=true" >> $GITHUB_ENV
 
-      - name: Add and commit changes
+      - name: Setup GitHub CLI
+        if: env.changes_detected == 'true'
+        run: |
+          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Commit and create Pull Request
         if: env.changes_detected == 'true'
         run: |
           git add dist/
           git commit -m "Update dist files"
           git push -f origin dist-updates
-
-      - name: Create or update Pull Request
-        if: env.changes_detected == 'true'
-        run: |
           gh pr list --head dist-updates | grep dist-updates || gh pr create --base main --head dist-updates --title "Update dist files" --body "This PR updates the dist files after dependency updates." --label "automated-pr"
