@@ -8,14 +8,6 @@ on:
       - "src/**"
       - "package.json"
       - "package-lock.json"
-  pull_request:
-    types: [closed]
-    branches:
-      - main
-    paths:
-      - "src/**"
-      - "package.json"
-      - "package-lock.json"
 
 jobs:
   update_dist:
@@ -33,22 +25,22 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Setup Git
+        run: |
+          git config --global user.email "--"
+          git config --global user.name "Workflow - Dist Update"
+          git fetch
+          git checkout dist-updates || git checkout -b dist-updates
+          git reset --hard origin/main
+
       - name: Run build
+        if: env.changes_detected == 'true'
         run: npm run build
 
       - name: Check for changes
         id: check_changes
         run: |
           git diff --exit-code || echo "changes_detected=true" >> $GITHUB_ENV
-
-      - name: Setup Git
-        if: env.changes_detected == 'true'
-        run: |
-          git config --global user.email "--"
-          git config --global user.name "Workflow - Dist Update"
-          git fetch
-          git checkout dist-updates || git checkout -b dist-updates
-          git reset --hard origin/main  # Ensures dist-updates is in sync with main
 
       - name: Add and commit changes
         if: env.changes_detected == 'true'
