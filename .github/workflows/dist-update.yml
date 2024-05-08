@@ -17,6 +17,11 @@ jobs:
   update_dist:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true || github.event_name == 'push'
+    env:
+      BASE_BRANCH: main
+      HEAD_BRANCH: dist-updates
+      PR_TITLE: Update `dist/` files
+      PR_BODY: This PR updates the `dist/` files after code or dependency changes.
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -52,11 +57,6 @@ jobs:
 
       - name: Commit and create Pull Request
         if: env.changes_detected == 'true'
-        env:
-          BASE_BRANCH: main
-          HEAD_BRANCH: dist-updates
-          PR_TITLE: Update `dist/` files
-          PR_BODY: This PR updates the `dist/` files after code or dependency changes.
         run: |
           git add dist/
           git commit -m "Update dist files"
@@ -64,13 +64,16 @@ jobs:
 
           existing_pr=$(gh pr list --head dist-updates | grep dist-updates)
           if [ -z "$existing_pr" ]; then
-            pr_url=$(gh pr create --base ${{ env.BASE_BRANCH }} --head ${{ env.HEAD_BRANCH }} --title "${{ env.PR_TITLE }}" --body "${{ env.PR_BODY }}")
-            echo "PR created: $pr_url"
+            echo "create_pr=true" >> $GITHUB_ENV
+          fi
 
-            auto_merge_enabled=$(gh api repos/$GITHUB_REPOSITORY/branches/$BASE_BRANCH/protection/required_status_checks | jq .strict)
-            if [ "$auto_merge_enabled" == "true" ]; then
-              gh pr merge -m --auto "$pr_url"
-            fi
-          else
-            echo "PR already exists. Skipping pull request."
+      - name: Create Pull Request
+        if: env.create_pr == 'true'
+        run: |
+          pr_url=$(gh pr create --base ${{ env.BASE_BRANCH }} --head ${{ env.HEAD_BRANCH }} --title "${{ env.PR_TITLE }}" --body "${{ env.PR_BODY }}")
+          echo "PR created: $pr_url"
+
+          auto_merge_enabled=$(gh api repos/$GITHUB_REPOSITORY/branches/$BASE_BRANCH/protection/required_status_checks | jq .strict)
+          if [ "$auto_merge_enabled" == "true" ]; then
+            gh pr merge -m --auto "$pr_url"
           fi
