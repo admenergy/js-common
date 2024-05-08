@@ -48,12 +48,29 @@ jobs:
       - name: Setup GitHub CLI
         if: env.changes_detected == 'true'
         run: |
-          echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "GH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
 
       - name: Commit and create Pull Request
         if: env.changes_detected == 'true'
+        env:
+          BASE_BRANCH: main
+          HEAD_BRANCH: dist-updates
+          PR_TITLE: Update `dist/` files
+          PR_BODY: This PR updates the `dist/` files after code or dependency changes.
         run: |
           git add dist/
           git commit -m "Update dist files"
           git push -f origin dist-updates
-          gh pr list --head dist-updates | grep dist-updates || gh pr create --base main --head dist-updates --title "Update dist files" --body "This PR updates the dist files after dependency updates."
+
+          existing_pr=$(gh pr list --head dist-updates | grep dist-updates)
+          if [ -z "$existing_pr" ]; then
+            pr_url=$(gh pr create --base ${{ env.BASE_BRANCH }} --head ${{ env.HEAD_BRANCH }} --title "${{ env.PR_TITLE }}" --body "${{ env.PR_BODY }}")
+            echo "PR created: $pr_url"
+
+            auto_merge_enabled=$(gh api repos/$GITHUB_REPOSITORY/branches/$BASE_BRANCH/protection/required_status_checks | jq .strict)
+            if [ "$auto_merge_enabled" == "true" ]; then
+              gh pr merge -m --auto "$pr_url"
+            fi
+          else
+            echo "PR already exists. Skipping pull request."
+          fi
