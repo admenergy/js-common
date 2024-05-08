@@ -55,14 +55,17 @@ jobs:
         run: |
           echo "GH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Commit and create Pull Request
+      - name: Commit changes
         if: env.changes_detected == 'true'
         run: |
           git add dist/
           git commit -m "Update dist files"
           git push -f origin dist-updates
 
-          existing_pr=$(gh pr list --head dist-updates | grep dist-updates)
+      - name: Check for existing PR
+        if: env.changes_detected == 'true'
+        run: |
+          existing_pr=$(gh pr list --head dist-updates | grep dist-updates || echo "")
           if [ -z "$existing_pr" ]; then
             echo "create_pr=true" >> $GITHUB_ENV
           fi
