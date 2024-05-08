@@ -21,11 +21,11 @@ jobs:
       BASE_BRANCH: main
       HEAD_BRANCH: dist-updates
       PR_TITLE: |
-        Update `dist/` files
+        Update dist/ files
       PR_BODY: |
         ## Automated Pull Request
 
-        This pull request updates the `dist/` files.
+        This pull request updates the dist/ files.
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
