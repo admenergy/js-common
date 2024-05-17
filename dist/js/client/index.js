@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 389:
+/***/ 878:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -322,8 +322,8 @@ function encodeQueryString(data, url) {
     return query;
   }
 }
-// EXTERNAL MODULE: ./src/ErrorTypes.ts
-var ErrorTypes = __webpack_require__(389);
+// EXTERNAL MODULE: ./src/ErrorTypes/index.ts
+var ErrorTypes = __webpack_require__(878);
 // EXTERNAL MODULE: external "lodash"
 var external_lodash_ = __webpack_require__(773);
 var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_);
