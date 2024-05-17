@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 949:
+/***/ 732:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -20,12 +20,93 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  encodeForm: () => (/* reexport */ encodeForm),
   encodeQueryString: () => (/* reexport */ encodeQueryString),
   fetchJSON: () => (/* reexport */ fetchJSON),
-  sget: () => (/* reexport */ sget),
-  sset: () => (/* reexport */ sset)
+  sget: () => (/* reexport */ sget)
 });
 
+;// CONCATENATED MODULE: ./src/client/encodeForm.ts
+/**
+ * @todo Not done. Needs to support: checkbox, radio, select
+ *
+ * Encode HTML Form
+ *
+ * Encodes a Form element as a plain JavaScript object
+ *
+ * @param {HTMLFormElement}  form  Form to encode the values of.
+ * @returns {Object}  Object containing the `{ name: value }`
+ *
+ * @example
+ * onSubmit = event => {
+ *   event.preventDefault();
+ *   console.log(encodeForm(event.target));
+ * }
+ */
+function encodeForm(htmlFormElement) {
+  var ret = {};
+  var valueOfElement = function valueOfElement(element) {
+    var type = element.getAttribute("type");
+    var asNum;
+    var value;
+    switch (element.tagName) {
+      case "INPUT":
+        switch (type) {
+          case "number":
+            asNum = Number(element.value);
+            return isNaN(asNum) ? NaN : asNum;
+          case "checkbox":
+            return element.checked;
+          default:
+            return element.value;
+        }
+      case "TEXTAREA":
+        return element.value;
+      case "SELECT":
+        {
+          // WONT FIX: Multi not supported.
+          var selectElement = element;
+          if (~selectElement.selectedIndex) {
+            return selectElement.options[selectElement.selectedIndex].value;
+          } else {
+            return "";
+          }
+        }
+      default:
+        value = element.getAttribute("data-value");
+        return typeof value === "string" ? JSON.parse(value) : "";
+    }
+  };
+  htmlFormElement.querySelectorAll("[name]").forEach(function (element) {
+    var name = element.getAttribute("name");
+    if (!name) return; // only if name has content
+
+    var arrayMode = false;
+    var checkboxLike = element instanceof HTMLInputElement && (element.type === "checkbox" || element.type === "radio");
+    var value = valueOfElement(element);
+    if (checkboxLike) {
+      arrayMode = true;
+      value = element.value;
+    }
+    if (arrayMode) {
+      if (typeof ret[name] === "undefined") ret[name] = [];
+      if (!Array.isArray(ret[name])) {
+        // skip this erroneous case
+        console.warn("[SKIP] Data was set to store an array, but encountered a non-array element: ".concat(element.tagName, "[name=").concat(name, "]") + (element.tagName === "INPUT" ? "[type=".concat(element.type, "]") : ""));
+        return;
+      }
+      ret[name].push(value);
+    } else {
+      if (Array.isArray(ret[name])) {
+        // skip this erroneous case
+        console.warn("Data was set to store a string, but encountered an array element: ".concat(element.tagName, "[name=").concat(name, "]") + (element.tagName === "INPUT" ? "[type=".concat(element.type, "]") : ""));
+        return;
+      }
+      ret[name] = value;
+    }
+  });
+  return ret;
+}
 ;// CONCATENATED MODULE: ./src/client/encodeQueryString.ts
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -268,33 +349,6 @@ function sget(key, defaultValue) {
   var stored = storage.getItem(key);
   if (stored === null) return defaultValue;
   return JSON.parse(stored);
-}
-;// CONCATENATED MODULE: ./src/client/sset.ts
-/**
- * Set to Storage as JSON
- *
- * @param key - The key to set.
- * @param value - The value to set. Will be stringified as JSON.
- * @param storage - The storage object to set the value in, defaults to localStorage.
- *
- * @returns The value that was set.
- *
- * @throws TypeError If the parameter types are bad.
- *
- * @example
- * const value = sset("foo", 42);
- * -> 42
- */
-function sset(key, value) {
-  var storage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : localStorage;
-  if (!(storage instanceof Storage)) {
-    throw new TypeError("sset(key, value, storage) : 'storage' must be a Storage object.");
-  }
-  if (typeof key !== "string") {
-    throw new TypeError("sset(key, value, storage) : 'key' must be a string.");
-  }
-  storage.setItem(key, JSON.stringify(value));
-  return value;
 }
 ;// CONCATENATED MODULE: ./src/client/index.ts
 
@@ -1799,7 +1853,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   common: () => (/* reexport module object */ _common__WEBPACK_IMPORTED_MODULE_1__),
 /* harmony export */   server: () => (/* reexport module object */ _server__WEBPACK_IMPORTED_MODULE_2__)
 /* harmony export */ });
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(949);
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(732);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(629);
 /* harmony import */ var _server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30);
 
