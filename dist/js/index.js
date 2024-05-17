@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 389:
+/***/ 878:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -247,8 +247,8 @@ function encodeQueryString(data, url) {
     return query;
   }
 }
-// EXTERNAL MODULE: ./src/ErrorTypes.ts
-var ErrorTypes = __webpack_require__(389);
+// EXTERNAL MODULE: ./src/ErrorTypes/index.ts
+var ErrorTypes = __webpack_require__(878);
 // EXTERNAL MODULE: external "lodash"
 var external_lodash_ = __webpack_require__(773);
 var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_);
@@ -508,8 +508,8 @@ __webpack_require__.d(__webpack_exports__, {
   setIn: () => (/* reexport */ setIn)
 });
 
-// EXTERNAL MODULE: ./src/ErrorTypes.ts
-var ErrorTypes = __webpack_require__(389);
+// EXTERNAL MODULE: ./src/ErrorTypes/index.ts
+var ErrorTypes = __webpack_require__(878);
 ;// CONCATENATED MODULE: ./src/common/EventDispatcher.ts
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -1896,7 +1896,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   common: () => (/* reexport module object */ _common__WEBPACK_IMPORTED_MODULE_2__),
 /* harmony export */   server: () => (/* reexport module object */ _server__WEBPACK_IMPORTED_MODULE_3__)
 /* harmony export */ });
-/* harmony import */ var _ErrorTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(389);
+/* harmony import */ var _ErrorTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(878);
 /* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(568);
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(143);
 /* harmony import */ var _server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
