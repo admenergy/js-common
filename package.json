@@ -17,13 +17,18 @@
     "./server": {
       "import": "./dist/js/server/index.js",
       "types": "./dist/ts/server/index.d.ts"
+    },
+    "./ErrorTypes": {
+      "import": "./dist/js/ErrorTypes/index.js",
+      "types": "./dist/ts/ErrorTypes/index.d.ts"
     }
   },
   "webpackEntry": {
     ".": "./src/index.ts",
     "client": "./src/client/index.ts",
     "common": "./src/common/index.ts",
-    "server": "./src/server/index.ts"
+    "server": "./src/server/index.ts",
+    "ErrorTypes": "./src/ErrorTypes/index.ts"
   },
   "private": false,
   "scripts": {
