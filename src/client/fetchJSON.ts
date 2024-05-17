@@ -1,4 +1,4 @@
-import { AccessDeniedError, UnauthorizedError } from "@/common";
+import { AccessDeniedError, UnauthorizedError } from "@/ErrorTypes";
 import _ from "lodash";
 
 export interface FetchJsonOptions {

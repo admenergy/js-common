@@ -1,4 +1,4 @@
-export * from "./ErrorTypes";
+export * from "../ErrorTypes"; // TODO: move one scope higher
 export * from "./EventDispatcher";
 export * from "./benchmark";
 export * from "./bestByteUnit";
