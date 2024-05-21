@@ -40,7 +40,13 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "security"],
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { args: "none" }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^React$",
+      },
+    ],
     "@typescript-eslint/no-var-requires": "off",
     "deprecation/deprecation": "warn",
     "no-cond-assign": "off",
