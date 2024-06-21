@@ -43,8 +43,8 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install Lockfile Dependencies
+        run: npm ci
 
       - name: Build dist/
         run: npm run build
