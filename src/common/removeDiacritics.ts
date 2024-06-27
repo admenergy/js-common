@@ -44,6 +44,9 @@ const defaultDiacriticsRemovalMap = [
   // Underscores
   { base: "_", letters: /[\u005F\uFE4D-\uFE4F]/g },
 
+  // Invisible formatting characters
+  { base: "", letters: /[\u0002\u0003]/g },
+
   // Letters
   {
     base: "A",
