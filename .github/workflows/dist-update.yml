@@ -59,23 +59,30 @@ jobs:
         run: |
           echo "GH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
 
+      - name: Delete existing Pull Request
+        if: env.changes_detected == 'true'
+        run: |
+          # Check if PR already exists
+          existing_pr=$(gh pr list --head dist-updates | grep dist-updates || echo "")
+
+          # Close existing PR & delete branch
+          if [ -n "$existing_pr" ]; then
+            pr_number=$(echo $existing_pr | awk '{print $1}')
+            gh pr close $pr_number
+
+            git push origin --delete dist-updates
+            git fetch --prune
+          fi
+
       - name: Commit changes
         if: env.changes_detected == 'true'
         run: |
           git add dist/
           git commit -m "Update dist files"
-          git push -f origin dist-updates
-
-      - name: Check for existing PR
-        if: env.changes_detected == 'true'
-        run: |
-          existing_pr=$(gh pr list --head dist-updates | grep dist-updates || echo "")
-          if [ -z "$existing_pr" ]; then
-            echo "create_pr=true" >> $GITHUB_ENV
-          fi
+          git push origin dist-updates
 
       - name: Create Pull Request
-        if: env.create_pr == 'true'
+        if: env.changes_detected == 'true'
         run: |
           pr_url=$(gh pr create --base ${{ env.BASE_BRANCH }} --head ${{ env.HEAD_BRANCH }} --title "${{ env.PR_TITLE }}" --body "${{ env.PR_BODY }}")
           echo "PR created: $pr_url"
