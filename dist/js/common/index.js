@@ -103,6 +103,44 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
   return _createClass(NotFoundError);
 }( /*#__PURE__*/_wrapNativeSuper(Error));
 
+/***/ }),
+
+/***/ 937:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createPromise: () => (/* binding */ createPromise)
+/* harmony export */ });
+/**
+ * Promise Helper
+ *
+ * Returns an object with an unresolved promise, resolve(), & reject() exposed to you. Suitable for non-promise code, like FileReader.
+ *
+ * @returns An object with properties: promise, a Promise<any> that can be awaited; resolve, a function to resolve the promise; and reject, a function to reject the promise.
+ *
+ * @example
+ * const pr = createPromise();
+ * const reader = new FileReader();
+ * reader.addEventListener("loadend", pr.resolve);
+ * reader.readAsArrayBuffer(file);
+ * await pr.promise;
+ * return stuff;
+ */
+function createPromise() {
+  var resolve;
+  var reject;
+  var promise = new Promise(function (rs, rj) {
+    resolve = rs;
+    reject = rj;
+  });
+  return {
+    promise: promise,
+    resolve: resolve,
+    reject: reject
+  };
+}
+
 /***/ })
 
 /******/ 	});
@@ -176,7 +214,7 @@ __webpack_require__.d(__webpack_exports__, {
   bestByteUnit: () => (/* reexport */ bestByteUnit),
   bestConversionHelper: () => (/* reexport */ bestConversionHelper),
   bestTimeUnitMS: () => (/* reexport */ bestTimeUnitMS),
-  createPromise: () => (/* reexport */ createPromise),
+  createPromise: () => (/* reexport */ createPromise.createPromise),
   getIn: () => (/* reexport */ getIn),
   getMime: () => (/* reexport */ getMime),
   isISODateString: () => (/* reexport */ isISODateString),
@@ -744,35 +782,8 @@ function bestTimeUnitMS(ms) {
   var round = Math.round(value * 100) / 100;
   return new ConversionResult(value, round, conversion.unit);
 }
-;// CONCATENATED MODULE: ./src/common/createPromise.ts
-/**
- * Promise Helper
- *
- * Returns an object with an unresolved promise, resolve(), & reject() exposed to you. Suitable for non-promise code, like FileReader.
- *
- * @returns An object with properties: promise, a Promise<any> that can be awaited; resolve, a function to resolve the promise; and reject, a function to reject the promise.
- *
- * @example
- * const pr = createPromise();
- * const reader = new FileReader();
- * reader.addEventListener("loadend", pr.resolve);
- * reader.readAsArrayBuffer(file);
- * await pr.promise;
- * return stuff;
- */
-function createPromise() {
-  var resolve;
-  var reject;
-  var promise = new Promise(function (rs, rj) {
-    resolve = rs;
-    reject = rj;
-  });
-  return {
-    promise: promise,
-    resolve: resolve,
-    reject: reject
-  };
-}
+// EXTERNAL MODULE: ./src/common/createPromise.ts
+var createPromise = __webpack_require__(937);
 ;// CONCATENATED MODULE: ./src/common/getIn.ts
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
