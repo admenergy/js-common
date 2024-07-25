@@ -132,7 +132,8 @@ __webpack_require__.r(__webpack_exports__);
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
   getEnv: () => (/* reexport */ getEnv),
-  runProcess: () => (/* reexport */ runProcess)
+  runProcess: () => (/* reexport */ runProcess),
+  sanitizePath: () => (/* reexport */ sanitizePath)
 });
 
 // EXTERNAL MODULE: external "json5"
@@ -278,7 +279,66 @@ function _runProcess() {
   }));
   return _runProcess.apply(this, arguments);
 }
+;// CONCATENATED MODULE: external "path"
+const external_path_namespaceObject = require("path");
+;// CONCATENATED MODULE: ./src/server/sanitizePath.ts
+
+
+/**
+ * Sanitize Path
+ *
+ * Paths are only allowed to contain:
+ *     spaces
+ *     a-z
+ *     A-Z
+ *     0-9
+ *     _
+ *     ,
+ *     .
+ *     -
+ *
+ * @param workingDir - The working directory to resolve paths from.
+ * @param filePath - The relative path to sanitize.
+ *
+ * @returns The resolved path.
+ *
+ * @throws TypeError if the parameter types are incorrect.
+ * @throws Error if the path is outside the working directory.
+ *
+ * @example
+ * const safePath = sanitizePath("/var/data", "Foo̵̔̐Bã̸r?.txt");
+ * -> "/var/data/FooBar.txt"
+ */
+function sanitizePath(workingDir, filePath) {
+  if (typeof workingDir !== "string") {
+    throw new TypeError("sanitizePath(workingDir, filePath) : 'workingDir' must be a string.");
+  }
+  if (typeof filePath !== "string") {
+    throw new TypeError("sanitizePath(workingDir, filePath) : 'filePath' must be a string.");
+  }
+  var resolvedPath = (0,external_path_namespaceObject.normalize)((0,external_path_namespaceObject.join)(workingDir, filePath
+  // Protocol
+  .replace(/^\w+:\/\//, "")
+
+  // Split by path separator
+  .split(/[\\/]/)
+
+  // Remove invalid characters:
+  //   - Decode URI encodings
+  //   - Remove strange characters
+  //   - Trim whitespace
+  //   - Resolve . and ..
+  .map(function (s) {
+    return (0,external_path_namespaceObject.normalize)(decodeURIComponent(s).replace(/[^a-zA-Z0-9 _,.()-]/g, "").trim());
+  }).join("/")));
+  if (!resolvedPath.startsWith(workingDir)) {
+    console.log("\u26D4 ", "Path traversal detected\n       Working Path: ".concat(workingDir, "\n      Resolved Path: ").concat(resolvedPath));
+    throw new Error("Stay in your sandbox like a good kid!");
+  }
+  return resolvedPath;
+}
 ;// CONCATENATED MODULE: ./src/server/index.ts
+
 
 
 /******/ 	return __webpack_exports__;
