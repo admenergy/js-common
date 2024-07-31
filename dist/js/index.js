@@ -386,6 +386,7 @@ function _fetchJSON() {
             if (res.status === 403) {
               throw new ErrorTypes.AccessDeniedError(unexpectedText);
             }
+            console.error(_context.t0);
             throw new Error("[".concat(res.status, "] Unexpected non-json response: ") + unexpectedText);
           }));
         case 22:
