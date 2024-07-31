@@ -98,7 +98,7 @@ export async function fetchJSON(
   let json;
   try {
     json = await res.clone().json();
-  } catch (err) {
+  } catch (error) {
     return res.text().then((unexpectedText) => {
       if (res.status === 401) {
         throw new UnauthorizedError(unexpectedText);
@@ -108,6 +108,7 @@ export async function fetchJSON(
         throw new AccessDeniedError(unexpectedText);
       }
 
+      console.error(error);
       throw new Error(
         `[${res.status}] Unexpected non-json response: ` + unexpectedText,
       );
