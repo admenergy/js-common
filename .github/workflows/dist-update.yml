@@ -30,11 +30,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup GitHub CLI
+        run: |
+          echo "GH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Delete existing Pull Request
+        run: |
+          # Check if PR already exists
+          existing_pr=$(gh pr list --head dist-updates | grep dist-updates || echo "")
+
+          git push origin --delete dist-updates || true
+          git fetch --prune
+
+          # Close existing PR & delete branch
+          if [ -n "$existing_pr" ]; then
+            pr_number=$(echo $existing_pr | awk '{print $1}')
+            gh pr close $pr_number
+          fi
+
       - name: Setup Git
         run: |
           git config --global user.name "Workflow - Dist Update"
           git config --global user.email "--"
-          git fetch
           git checkout dist-updates || git checkout -b dist-updates
           git reset --hard origin/main
 
@@ -53,26 +70,6 @@ jobs:
         id: check_changes
         run: |
           git diff --exit-code || echo "changes_detected=true" >> $GITHUB_ENV
-
-      - name: Setup GitHub CLI
-        if: env.changes_detected == 'true'
-        run: |
-          echo "GH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
-
-      - name: Delete existing Pull Request
-        if: env.changes_detected == 'true'
-        run: |
-          # Check if PR already exists
-          existing_pr=$(gh pr list --head dist-updates | grep dist-updates || echo "")
-
-          # Close existing PR & delete branch
-          if [ -n "$existing_pr" ]; then
-            pr_number=$(echo $existing_pr | awk '{print $1}')
-            gh pr close $pr_number
-
-            git push origin --delete dist-updates
-            git fetch --prune
-          fi
 
       - name: Commit changes
         if: env.changes_detected == 'true'
