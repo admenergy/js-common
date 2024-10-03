@@ -218,7 +218,7 @@ function runProcess(_x) {
   return _runProcess.apply(this, arguments);
 }
 function _runProcess() {
-  _runProcess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(script) {
+  _runProcess = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(script) {
     var params,
       log,
       stdout,

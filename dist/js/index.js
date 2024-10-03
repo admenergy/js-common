@@ -57,7 +57,7 @@ var UnauthorizedError = /*#__PURE__*/function (_Error) {
   }
   _inherits(UnauthorizedError, _Error);
   return _createClass(UnauthorizedError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}(/*#__PURE__*/_wrapNativeSuper(Error));
 
 /**
  * Access Denied Error
@@ -79,7 +79,7 @@ var AccessDeniedError = /*#__PURE__*/function (_Error2) {
   }
   _inherits(AccessDeniedError, _Error2);
   return _createClass(AccessDeniedError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}(/*#__PURE__*/_wrapNativeSuper(Error));
 
 /**
  * Not Found Error
@@ -101,7 +101,7 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
   }
   _inherits(NotFoundError, _Error3);
   return _createClass(NotFoundError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}(/*#__PURE__*/_wrapNativeSuper(Error));
 
 /***/ }),
 
@@ -291,7 +291,7 @@ function fetchJSON(_x, _x2) {
   return _fetchJSON.apply(this, arguments);
 }
 function _fetchJSON() {
-  _fetchJSON = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(url, data) {
+  _fetchJSON = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(url, data) {
     var options,
       asForm,
       fetchData,
@@ -933,7 +933,7 @@ function benchmark(_x, _x2) {
   return _benchmark.apply(this, arguments);
 }
 function _benchmark() {
-  _benchmark = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(f, count) {
+  _benchmark = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(f, count) {
     var conversions, s, i, _i, e, ms, opsPerSec, conversion, value, round, unit;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
@@ -1216,7 +1216,7 @@ function performance(_x, _x2) {
   return _performance.apply(this, arguments);
 }
 function _performance() {
-  _performance = performance_asyncToGenerator( /*#__PURE__*/performance_regeneratorRuntime().mark(function _callee(name, fn) {
+  _performance = performance_asyncToGenerator(/*#__PURE__*/performance_regeneratorRuntime().mark(function _callee(name, fn) {
     var n, count;
     return performance_regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
@@ -1846,7 +1846,7 @@ function runProcess(_x) {
   return _runProcess.apply(this, arguments);
 }
 function _runProcess() {
-  _runProcess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(script) {
+  _runProcess = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(script) {
     var params,
       log,
       stdout,
