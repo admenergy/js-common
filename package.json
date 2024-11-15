@@ -86,7 +86,7 @@
     "react-test-renderer": "^18.3.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.6.3",
-    "typesync": "^0.13.3",
+    "typesync": "^0.13.4",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4"
   }
