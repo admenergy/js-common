@@ -1,4 +1,4 @@
-const esModules = ["jsondiffpatch"];
+// const esModules = ["jsondiffpatch"];
 const customConfig = {
   preset: "ts-jest",
   moduleDirectories: ["node_modules", "src"],
@@ -11,8 +11,9 @@ const customConfig = {
     "^.+\\.(js|jsx)$": "babel-jest",
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
-  transformIgnorePatterns: [`/node_modules/(?!(${esModules.join("|")})/)`],
-  // setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  transformIgnorePatterns: [
+    // `/node_modules/(?!(${esModules.join("|")})/)`
+  ],
 };
 
 export default async () => {
