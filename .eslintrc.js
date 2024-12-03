@@ -43,13 +43,19 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:react/recommended",
   ],
-  plugins: ["react", "@typescript-eslint", "security"],
+  plugins: [
+    //
+    "@typescript-eslint",
+    "react",
+    "security",
+  ],
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
         args: "none",
+        caughtErrors: "none",
         varsIgnorePattern: "^React$",
       },
     ],
