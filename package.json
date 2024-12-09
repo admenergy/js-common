@@ -40,11 +40,9 @@
     "test:watch": "jest --watch",
     "lint": "npx eslint . --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
     "==[ Install/Clean ]==": "",
-    "reinstall": "npm run purge && npm i && npx typesync",
-    "reinstall-rebuild": "npm run reinstall && npm run build",
-    "update": "npx npm-check-updates -u && npm install",
+    "reinstall": "npm run purge && yarn install && npx typesync",
     "clean": "rm -rf dist/ .next/",
-    "purge": "rm -rf dist/ .next/ node_modules/ package-lock.json"
+    "purge": "rm -rf dist/ .next/ node_modules/ package-lock.json yarn.lock"
   },
   "dependencies": {
     "json5": "^2.2.3",
@@ -88,5 +86,6 @@
     "typesync": "^0.14.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
