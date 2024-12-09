@@ -1,11 +1,12 @@
 // const esModules = ["jsondiffpatch"];
 const customConfig = {
   preset: "ts-jest",
+  testEnvironment: "jsdom",
   moduleDirectories: ["node_modules", "src"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  testEnvironment: "jest-environment-jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testMatch: ["<rootDir>/__tests__/**/*.test.(js|jsx|ts|tsx)"],
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",
