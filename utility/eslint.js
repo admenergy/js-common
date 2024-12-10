@@ -34,3 +34,8 @@ const table = importantLintIssues.map((json) => {
 });
 
 console.table(table);
+
+const hasErrors = importantLintIssues.some((issue) => issue.errorCount > 0);
+if (hasErrors) {
+  process.exit(1);
+}
