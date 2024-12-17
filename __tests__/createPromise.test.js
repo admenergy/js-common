@@ -1,4 +1,4 @@
-import { createPromise } from "@/common";
+import { createPromise } from "~/common";
 
 describe("createPromise", () => {
   it(`should return an object with promise, resolve, and reject`, () => {

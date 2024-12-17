@@ -1,5 +1,5 @@
-import { createPromise } from "@/common/createPromise";
 import { spawn } from "child_process";
+import { createPromise } from "~/common/createPromise";
 
 interface RunProcessResult {
   log: string;

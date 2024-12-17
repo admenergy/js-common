@@ -1,4 +1,4 @@
-import { bestTimeUnitMS } from "@/common";
+import { bestTimeUnitMS } from "~/common";
 
 describe("bestTimeUnitMS", () => {
   it(`should convert to the best time possible (1100 ms -> no change)`, () => {
