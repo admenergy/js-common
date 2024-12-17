@@ -1,4 +1,4 @@
-import { bestConversionHelper } from "@/common";
+import { bestConversionHelper } from "~/common";
 
 describe("bestConversionHelper", () => {
   const conversions = [

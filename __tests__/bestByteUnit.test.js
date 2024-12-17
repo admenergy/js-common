@@ -1,4 +1,4 @@
-import { bestByteUnit } from "@/common";
+import { bestByteUnit } from "~/common";
 
 describe("bestByteUnit", () => {
   it(`should throw error if bytes is not a number`, () => {

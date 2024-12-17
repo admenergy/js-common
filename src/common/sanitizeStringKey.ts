@@ -1,4 +1,4 @@
-import { sanitizeStringDisplay } from "@/common";
+import { sanitizeStringDisplay } from "~/common";
 
 /**
  * Sanitize String Key

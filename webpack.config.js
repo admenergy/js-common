@@ -20,12 +20,13 @@ const clientConfig = {
       name: packageJson.name,
       type: "umd",
     },
+    globalObject: "this",
   },
   externals: dependencies,
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
     alias: {
-      "@": path.resolve(__dirname, "src/"),
+      "~": path.resolve(__dirname, "src/"),
     },
   },
   module: {

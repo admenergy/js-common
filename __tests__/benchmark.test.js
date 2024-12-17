@@ -1,4 +1,4 @@
-import { benchmark } from "@/common";
+import { benchmark } from "~/common";
 
 describe("benchmark function", () => {
   it(`should return a string`, async () => {
