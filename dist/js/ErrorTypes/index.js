@@ -7,7 +7,7 @@
 		exports["@admenergy/js-common"] = factory();
 	else
 		root["@admenergy/js-common"] = factory();
-})(global, () => {
+})(this, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope

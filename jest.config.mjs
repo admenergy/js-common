@@ -4,7 +4,7 @@ const customConfig = {
   testEnvironment: "jsdom",
   moduleDirectories: ["node_modules", "src"],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
+    "^~/(.*)$": "<rootDir>/src/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testMatch: ["<rootDir>/__tests__/**/*.test.(js|jsx|ts|tsx)"],

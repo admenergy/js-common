@@ -1,5 +1,5 @@
-import { fetchJSON } from "@/client";
-import { AccessDeniedError, UnauthorizedError } from "@/ErrorTypes";
+import { fetchJSON } from "~/client";
+import { AccessDeniedError, UnauthorizedError } from "~/ErrorTypes";
 
 describe("fetchJSON", () => {
   afterEach(() => {

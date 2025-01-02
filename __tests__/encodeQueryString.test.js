@@ -1,4 +1,4 @@
-import { encodeQueryString } from "@/client";
+import { encodeQueryString } from "~/client";
 
 describe("encodeQueryString", () => {
   it(`encodes an object into a query string`, () => {
