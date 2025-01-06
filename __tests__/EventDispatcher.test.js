@@ -1,4 +1,4 @@
-import { EventDispatcher } from "@/common";
+import { EventDispatcher } from "~/common";
 
 describe("EventDispatcher", () => {
   let dispatcher;

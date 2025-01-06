@@ -1,4 +1,4 @@
-import { removeDiacritics } from "@/common";
+import { removeDiacritics } from "~/common";
 
 /**
  * Sanitize String Display
