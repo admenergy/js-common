@@ -81,7 +81,7 @@
     "eslint-plugin-security": "^3.0.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "ts-jest": "^29.2.5",
+    "ts-jest": "^29.2.6",
     "typescript": "^5.7.3",
     "typesync": "^0.14.1",
     "webpack": "^5.98.0",
