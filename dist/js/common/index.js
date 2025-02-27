@@ -221,6 +221,7 @@ __webpack_require__.d(__webpack_exports__, {
   isISODateString: () => (/* reexport */ isISODateString),
   performance: () => (/* reexport */ performance),
   removeDiacritics: () => (/* reexport */ removeDiacritics),
+  sanitizeJSON: () => (/* reexport */ sanitizeJSON),
   sanitizeStringDisplay: () => (/* reexport */ sanitizeStringDisplay),
   sanitizeStringKey: () => (/* reexport */ sanitizeStringKey),
   setIn: () => (/* reexport */ setIn)
@@ -1424,6 +1425,126 @@ var defaultDiacriticsRemovalMap = [
   base: "z",
   letters: /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g
 }];
+;// ./src/common/sanitizeJSON.ts
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || sanitizeJSON_unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function sanitizeJSON_createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = sanitizeJSON_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function sanitizeJSON_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return sanitizeJSON_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? sanitizeJSON_arrayLikeToArray(r, a) : void 0; } }
+function sanitizeJSON_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function sanitizeJSON_typeof(o) { "@babel/helpers - typeof"; return sanitizeJSON_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, sanitizeJSON_typeof(o); }
+/**
+ * Creates a safe copy of a JSON-like object:
+ * - No prototype chain (prevents prototype pollution)
+ * - Removes dangerous keys (__proto__, constructor, prototype)
+ * - No circular references
+ * - Converts special objects to JSON-compatible formats:
+ *   - Dates -> ISO strings
+ *   - Sets -> Arrays
+ *   - Maps -> Objects
+ *
+ * @param {*} obj - Any JavaScript value to sanitize
+ * @param {Object} [options] - Optional configuration
+ * @param {WeakMap<Object,boolean>} [options.seen=new WeakMap()] - WeakMap of seen objects to prevent circular refs
+ * @returns {*} A clean copy safe for JSON operations and database queries
+ * @throws {Error} If circular reference is detected
+ */
+
+function sanitizeJSON(obj) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var _options$seen = options.seen,
+    seen = _options$seen === void 0 ? new WeakSet() : _options$seen;
+
+  // Handle null/undefined
+  if (obj === null || obj === undefined) {
+    return obj;
+  }
+
+  // Handle primitives
+  if (sanitizeJSON_typeof(obj) !== "object") {
+    return obj;
+  }
+
+  // Handle special objects
+  if (obj instanceof Date) {
+    return obj.toISOString();
+  }
+  if (obj instanceof Set) {
+    return Array.from(obj).map(function (item) {
+      return sanitizeJSON(item, {
+        seen: seen
+      });
+    });
+  }
+  if (obj instanceof Map) {
+    var _cleanObj = Object.create(null);
+    var _iterator = sanitizeJSON_createForOfIteratorHelper(obj.entries()),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var _step$value = _slicedToArray(_step.value, 2),
+          _key = _step$value[0],
+          value = _step$value[1];
+        // Handle different key types
+        if (sanitizeJSON_typeof(_key) === "symbol") {
+          var _key$toString$match;
+          var regexSymbolLabel = /^Symbol\((.*)\)$/;
+          var desc = (_key$toString$match = _key.toString().match(regexSymbolLabel)) === null || _key$toString$match === void 0 ? void 0 : _key$toString$match[1];
+          if (desc) {
+            _cleanObj[desc] = sanitizeJSON(value, {
+              seen: seen
+            });
+          }
+        } else if (sanitizeJSON_typeof(_key) !== "object" && typeof _key !== "function") {
+          // Handle other primitive types
+          _cleanObj[String(_key)] = sanitizeJSON(value, {
+            seen: seen
+          });
+        }
+        // Skip objects and functions
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+    return _cleanObj;
+  }
+
+  // Detect circular references (only check objects)
+  if (seen.has(obj)) {
+    throw new Error("Circular reference detected");
+  }
+  seen.add(obj);
+
+  // Handle arrays
+  if (Array.isArray(obj)) {
+    return obj.map(function (item) {
+      return sanitizeJSON(item, {
+        seen: seen
+      });
+    });
+  }
+
+  // Handle objects
+  var cleanObj = Object.create(null);
+  for (var _i = 0, _Object$keys = Object.keys(obj); _i < _Object$keys.length; _i++) {
+    var _key2 = _Object$keys[_i];
+    if (_key2 === "__proto__" || _key2 === "constructor" || _key2 === "prototype") {
+      continue;
+    }
+    try {
+      cleanObj[_key2] = sanitizeJSON(obj[_key2], {
+        seen: seen
+      });
+    } catch (error) {
+      if (false) {}
+      continue;
+    }
+  }
+  return cleanObj;
+}
 ;// ./src/common/sanitizeStringDisplay.ts
 
 
@@ -1497,12 +1618,12 @@ function setIn_toPrimitive(t, r) { if ("object" != setIn_typeof(t) || !t) return
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || setIn_unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return setIn_arrayLikeToArray(r); }
-function _toArray(r) { return _arrayWithHoles(r) || _iterableToArray(r) || setIn_unsupportedIterableToArray(r) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _toArray(r) { return setIn_arrayWithHoles(r) || _iterableToArray(r) || setIn_unsupportedIterableToArray(r) || setIn_nonIterableRest(); }
+function setIn_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function setIn_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return setIn_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? setIn_arrayLikeToArray(r, a) : void 0; } }
 function setIn_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function setIn_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function setIn_typeof(o) { "@babel/helpers - typeof"; return setIn_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, setIn_typeof(o); }
 function setIn(source, path, value) {
   if (typeof source === "undefined") {
@@ -1590,6 +1711,7 @@ function setIn(source, path, value) {
 }
 ;// ./src/common/index.ts
  // TODO: move one scope higher
+
 
 
 
