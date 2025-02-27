@@ -11,6 +11,7 @@ export * from "./isISODateString";
 export * from "./Limiter";
 export * from "./performance";
 export * from "./removeDiacritics";
+export * from "./sanitizeJSON";
 export * from "./sanitizeStringDisplay";
 export * from "./sanitizeStringKey";
 export * from "./setIn";
