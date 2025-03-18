@@ -154,6 +154,10 @@ export class EventDispatcher<T = any> {
     }
     return true;
   }
+
+  public getHandlerCount(eventName: string): number {
+    return this.handlers.get(eventName)?.size ?? 0;
+  }
 }
 
 // Old JavaScript Code:

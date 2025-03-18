@@ -1,8 +1,9 @@
-import { bestByteUnit } from "~/common";
+import { describe, expect, it } from "vitest";
+import { bestByteUnit } from "./bestByteUnit";
 
 describe("bestByteUnit", () => {
   it(`should throw error if bytes is not a number`, () => {
-    expect(() => bestByteUnit("test")).toThrow(TypeError);
+    expect(() => bestByteUnit("test" as any)).toThrow(TypeError);
   });
 
   it(`should convert to the best byte possible (1100 B -> no change)`, () => {

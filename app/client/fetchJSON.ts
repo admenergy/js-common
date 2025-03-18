@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AccessDeniedError, UnauthorizedError } from "~/ErrorTypes";
+import { AccessDeniedError, UnauthorizedError } from "../ErrorTypes";
 
 export interface FetchJsonOptions {
   form?: boolean;

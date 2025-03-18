@@ -1,4 +1,5 @@
-import { createPromise } from "~/common";
+import { describe, expect, it } from "vitest";
+import { createPromise } from "./createPromise";
 
 describe("createPromise", () => {
   it(`should return an object with promise, resolve, and reject`, () => {
@@ -12,7 +13,7 @@ describe("createPromise", () => {
   });
 
   it(`should resolve promise when resolve function is called`, async () => {
-    const pr = createPromise();
+    const pr = createPromise<string>();
     const testValue = "test";
     pr.resolve(testValue);
     await expect(pr.promise).resolves.toBe(testValue);

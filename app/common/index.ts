@@ -1,4 +1,4 @@
-export * from "../ErrorTypes"; // TODO: move one scope higher
+export * from "../ErrorTypes/index"; // TODO: move one scope higher
 export * from "./benchmark";
 export * from "./bestByteUnit";
 export * from "./bestConversionHelper";

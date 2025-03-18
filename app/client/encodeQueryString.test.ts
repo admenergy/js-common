@@ -1,4 +1,5 @@
-import { encodeQueryString } from "~/client";
+import { describe, expect, it } from "vitest";
+import { encodeQueryString } from "./encodeQueryString";
 
 describe("encodeQueryString", () => {
   it(`encodes an object into a query string`, () => {
@@ -15,13 +16,13 @@ describe("encodeQueryString", () => {
   });
 
   it(`throws a TypeError if 'data' is not an object`, () => {
-    const data = "not an object"; // using 'any' to allow intentional wrong type
+    const data = "not an object" as any; // using 'any' to allow intentional wrong type
     expect(() => encodeQueryString(data)).toThrow(TypeError);
   });
 
   it(`throws a TypeError if 'url' is provided but not a string`, () => {
     const data = { foo: "bar" };
-    const url = 42; // using 'any' to allow intentional wrong type
+    const url = 42 as any; // using 'any' to allow intentional wrong type
     expect(() => encodeQueryString(data, url)).toThrow(TypeError);
   });
 });

@@ -1,0 +1,10 @@
+/.next/
+/dist/
+/node_modules/
+/temp/
+/uploads/
+/wip/
+/.env*
+/build/
+/public/build/
+/coverage/ 

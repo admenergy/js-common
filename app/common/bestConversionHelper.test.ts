@@ -1,4 +1,5 @@
-import { bestConversionHelper } from "~/common";
+import { describe, expect, it } from "vitest";
+import { bestConversionHelper } from "./bestConversionHelper";
 
 describe("bestConversionHelper", () => {
   const conversions = [
@@ -63,25 +64,25 @@ describe("bestConversionHelper", () => {
 
   it(`should throw TypeError if startingNumber is not a number`, () => {
     expect(() =>
-      bestConversionHelper("not a number", 1.2, conversions, 0),
+      bestConversionHelper("not a number" as any, 1.2, conversions, 0),
     ).toThrow(TypeError);
   });
 
   it(`should throw TypeError if threshold is not a number`, () => {
     expect(() =>
-      bestConversionHelper(1000, "not a number", conversions, 0),
+      bestConversionHelper(1000, "not a number" as any, conversions, 0),
     ).toThrow(TypeError);
   });
 
   it(`should throw TypeError if conversions is not an array`, () => {
-    expect(() => bestConversionHelper(1000, 1.2, "not an array", 0)).toThrow(
-      TypeError,
-    );
+    expect(() =>
+      bestConversionHelper(1000, 1.2, "not an array" as any, 0),
+    ).toThrow(TypeError);
   });
 
   it(`should throw TypeError if startingConversionsIndex is not a number`, () => {
     expect(() =>
-      bestConversionHelper(1000, 1.2, conversions, "not a number"),
+      bestConversionHelper(1000, 1.2, conversions, "not a number" as any),
     ).toThrow(TypeError);
   });
 });

@@ -1,4 +1,5 @@
-import { bestTimeUnitMS } from "~/common";
+import { describe, expect, it } from "vitest";
+import { bestTimeUnitMS } from "./bestTimeUnitMS";
 
 describe("bestTimeUnitMS", () => {
   it(`should convert to the best time possible (1100 ms -> no change)`, () => {
@@ -26,6 +27,6 @@ describe("bestTimeUnitMS", () => {
   });
 
   it(`should throw error if ms is not a number`, () => {
-    expect(() => bestTimeUnitMS("test")).toThrow(TypeError);
+    expect(() => bestTimeUnitMS("test" as any)).toThrow(TypeError);
   });
 });

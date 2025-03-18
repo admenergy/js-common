@@ -1,4 +1,5 @@
-import { benchmark } from "~/common";
+import { describe, expect, it } from "vitest";
+import { benchmark } from "./benchmark";
 
 describe("benchmark function", () => {
   it(`should return a string`, async () => {
@@ -7,11 +8,13 @@ describe("benchmark function", () => {
   });
 
   it(`should throw error if first argument is not a function`, async () => {
-    await expect(benchmark("not a function", 1)).rejects.toThrow(TypeError);
+    await expect(benchmark("not a function" as any, 1)).rejects.toThrow(
+      TypeError,
+    );
   });
 
   it(`should throw error if second argument is not a number`, async () => {
-    await expect(benchmark(() => {}, "not a number")).rejects.toThrow(
+    await expect(benchmark(() => {}, "not a number" as any)).rejects.toThrow(
       TypeError,
     );
   });

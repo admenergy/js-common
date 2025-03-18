@@ -1,0 +1,28 @@
+---
+description: Information about js-common's directory structure and organization
+globs: *.ts, *.tsx, *.js, *.jsx
+alwaysApply: false
+---
+# Project Structure
+
+## Root Directory
+- `.cursor/` - AI assistant rules and guidelines
+- `.github/` - GitHub workflows and templates
+- `app/` - Source code
+- `dist/` - Build output (generated)
+  - `js/` - JavaScript output
+  - `ts/` - TypeScript declaration files
+- `utility/` - Build and development utilities
+  - `eslint.js` - ESLint output formatter
+- `.eslintrc.js` - ESLint configuration
+- `.gitignore` - Git ignore rules
+- `jest.config.js` - Jest configuration
+- `package.json` - Project configuration and dependencies
+- `tsconfig.json` - TypeScript configuration
+- `webpack.config.js` - Webpack configuration
+
+## Source Code Organization
+- Each major feature has its own directory under `src/`
+- Each feature directory contains:
+  - `index.ts` - Main entry point
+  - Supporting files (components, utilities, etc.)

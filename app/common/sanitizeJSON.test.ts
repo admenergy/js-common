@@ -1,4 +1,5 @@
-import { sanitizeJSON } from "~/common";
+import { describe, expect, it } from "vitest";
+import { sanitizeJSON } from "./sanitizeJSON";
 
 describe("sanitizeJSON", () => {
   it("should handle basic primitives", () => {
@@ -20,7 +21,10 @@ describe("sanitizeJSON", () => {
   });
 
   it("should convert Map to object (skipping non-stringable keys)", () => {
-    const map = new Map([
+    const map = new Map<
+      string | number | boolean | symbol | object | (() => void),
+      any
+    >([
       ["a", 1], // string key
       [42, "number"], // number key
       [true, "boolean"], // boolean key

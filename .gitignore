@@ -1,10 +1,15 @@
-/.env*
+# Development
+/.cache/
+/.swc/
+/.vscode-server/
 /.vscode/
+/build/
 /coverage/
-/debug.log
 /node_modules/
-/.next/
-/next-env.d.ts
+/public/build/
+/volumes/
+/.env*
+/debug.log
 
 #### OS
 Thumbs.db
