@@ -45,7 +45,7 @@
     "test": "NODE_ENV=test vitest run --silent --config vitest.config.mts",
     "test:watch": "NODE_ENV=test vitest --config vitest.config.mts",
     "test:coverage": "NODE_ENV=test vitest run --coverage --config vitest.config.mts",
-    "lint": "npx eslint src/ --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
+    "lint": "npx eslint app/ --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
     "==[ Install/Clean ]==": "",
     "reinstall": "yarn run purge && yarn install && npx typesync",
     "clean": "rm -rf dist/ .next/ .cache/ build/ public/build/",

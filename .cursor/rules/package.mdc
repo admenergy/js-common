@@ -30,8 +30,8 @@ Example:
 
 ```json
 "webpackEntry": {
-  ".": "./src/index.ts",
-  "path": "./src/path/index.ts"
+  ".": "./app/index.ts",
+  "path": "./app/path/index.ts"
 }
 ```
 
@@ -42,7 +42,7 @@ Example:
 - `build-git-add`: `yarn run build && git add dist/`
 - `test`: `jest`
 - `test:watch`: `jest --watch`
-- `lint`: `npx eslint src/ --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js`
+- `lint`: `npx eslint app/ --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js`
 - `clean`: `rm -rf dist/ .next/`
 - `purge`: `rm -rf dist/ .next/ node_modules/ package-lock.json yarn.lock`
 - `reinstall`: `yarn run purge && yarn install && npx typesync`

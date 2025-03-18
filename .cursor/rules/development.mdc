@@ -8,9 +8,9 @@ alwaysApply: false
 ## Code Organization
 
 - Place new code in appropriate directories:
-  - `src/client/` - Client-side React components
-  - `src/common/` - Shared utilities and types
-  - `src/server/` - Server-side code
+  - `app/client/` - Client-side React components
+  - `app/common/` - Shared utilities and types
+  - `app/server/` - Server-side code
   - etc.
 - When making a new export directory, update package.json with it.
 
