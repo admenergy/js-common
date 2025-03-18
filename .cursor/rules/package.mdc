@@ -1,0 +1,75 @@
+---
+description: Package.json rules and requirements
+globs: package.json
+alwaysApply: false
+---
+# Package.json
+
+This is a library for other ADM in-house software. **Webpack** is used to build the project. Note that **Remix** is strictly installed as a dev-dep. It's just for development.
+
+## Exports Configuration
+
+The exports field in package.json defines how other projects can import different parts of this library. Each export path maps to both JavaScript modules and their corresponding TypeScript type definitions.
+
+"exports" and "webpackEntry" must mirror each other.
+
+Example:
+
+```json
+"exports": {
+  ".": {
+    "import": "./dist/js/index.js",
+    "types": "./dist/ts/index.d.ts"
+  },
+  "./path": {
+    "import": "./dist/js/path/index.js",
+    "types": "./dist/ts/path/index.d.ts"
+  }
+}
+```
+
+```json
+"webpackEntry": {
+  ".": "./app/index.ts",
+  "path": "./app/path/index.ts"
+}
+```
+
+## Scripts
+### Required Scripts
+- `build`: `yarn run clean && webpack --mode production && npx tsc`
+- `build-test`: `yarn run build && jest`
+- `build-git-add`: `yarn run build && git add dist/`
+- `test`: `jest`
+- `test:watch`: `jest --watch`
+- `lint`: `npx eslint app/ --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js`
+- `clean`: `rm -rf dist/ .next/`
+- `purge`: `rm -rf dist/ .next/ node_modules/ package-lock.json yarn.lock`
+- `reinstall`: `yarn run purge && yarn install && npx typesync`
+
+## Dependencies
+
+Always consider the things being exported when yarn adding dependencies. For instance, if you don't see any components exported, then `@mui/*` wont be needed, as it's a lib used in development only. 
+
+Not everything supports React 19 yet, so we are forcing them using yarn styled overrides.
+
+```json
+"resolutions": {
+  "react": "19.0.0",
+  "react-dom": "19.0.0",
+  "**/react": "19.0.0",
+  "**/react-dom": "19.0.0"
+}
+```
+
+ESLint 9 breaks most things on the internet, so we are version locking to 8.x.x
+
+## In-house Dependencies
+
+To install another in-house lib, provide the https url, not the git+ssh url. Also shuold be public, so the runners can run without permission hell.
+
+```json
+"dependencies": {
+  "package-name": "https://github.com/admenergy/package-name.git#main"
+}
+```

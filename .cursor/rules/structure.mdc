@@ -1,0 +1,47 @@
+---
+description: Information about js-common's directory structure and organization
+globs: *.ts, *.tsx, *.js, *.jsx
+alwaysApply: false
+---
+# Project Structure
+
+The project follows a standard structure:
+
+- `app/` - Source code
+- `dist/` - Compiled output
+- `node_modules/` - Dependencies
+- `public/` - Static assets
+- `utility/` - Build and development utilities
+
+## Code Organization
+
+- Each major feature has its own directory under `app/`
+- Components are organized by feature
+- Shared utilities go in `app/common/`
+- Server-side code goes in `app/server/`
+
+## Build Output
+
+- `dist/js/` mirrors `app/` structure
+- `dist/ts/` contains TypeScript declarations
+
+## Root Directory
+- `.cursor/` - AI assistant rules and guidelines
+- `.github/` - GitHub workflows and templates
+- `dist/` - Build output (generated)
+  - `js/` - JavaScript output
+  - `ts/` - TypeScript declaration files
+- `utility/` - Build and development utilities
+  - `eslint.js` - ESLint output formatter
+- `.eslintrc.js` - ESLint configuration
+- `.gitignore` - Git ignore rules
+- `jest.config.js` - Jest configuration
+- `package.json` - Project configuration and dependencies
+- `tsconfig.json` - TypeScript configuration
+- `webpack.config.js` - Webpack configuration
+
+## Source Code Organization
+- Each major feature has its own directory under `app/`
+- Each feature directory contains:
+  - `index.ts` - Main entry point
+  - Supporting files (components, utilities, etc.)

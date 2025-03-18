@@ -1,0 +1,31 @@
+---
+description: Development guidelines and best practices for js-common
+globs: *.ts, *.tsx, *.js, *.jsx
+alwaysApply: false
+---
+# Development Notes
+
+## Code Organization
+
+- Place new code in appropriate directories:
+  - `app/client/` - Client-side React components
+  - `app/common/` - Shared utilities and types
+  - `app/server/` - Server-side code
+  - etc.
+- When making a new export directory, update package.json with it.
+
+## Building
+
+- `yarn build` - Production build
+- `yarn build-test` - Build and run tests, used in git build runner
+- `yarn build-git-add` - Build and stage dist files. Handy shortcut.
+- `yarn clean` - Clean build artifacts
+- `yarn reinstall` - Full dependency reinstall
+
+## Testing
+
+- Vitest tests should be written alongside new code
+- Test files should be co-located next to their source files
+
+- `yarn test` - Run all tests
+- `yarn test:coverage` - Coverage test
