@@ -21,7 +21,6 @@ module.exports = {
   },
   root: true,
   ignorePatterns: [
-    "__tests__",
     ".eslintrc.js",
     ".next/",
     "coverage",
