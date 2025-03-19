@@ -18,12 +18,14 @@ Example:
 ```json
 "exports": {
   ".": {
-    "import": "./dist/js/index.js",
-    "types": "./dist/ts/index.d.ts"
+    "types": "./dist/ts/index.d.ts",
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "./path": {
-    "import": "./dist/js/path/index.js",
-    "types": "./dist/ts/path/index.d.ts"
+    "types": "./dist/ts/path/index.d.ts",
+    "import": "./dist/esm/path/index.js",
+    "require": "./dist/cjs/path/index.js"
   }
 }
 ```

@@ -3,6 +3,8 @@ import type { ConfigEnv, UserConfig } from "vite";
 import { defineConfig } from "vite";
 import { configDefaults } from "vitest/config";
 
+const TEST = process.env.NODE_ENV === "test";
+
 export default async ({ command }: ConfigEnv): Promise<UserConfig> => {
   const tsconfigPaths = (await import("vite-tsconfig-paths")).default;
 
@@ -16,18 +18,20 @@ export default async ({ command }: ConfigEnv): Promise<UserConfig> => {
       host: true,
       port: 3000,
     },
-    plugins: [
-      remix({
-        future: {
-          v3_fetcherPersist: true,
-          v3_lazyRouteDiscovery: true,
-          v3_relativeSplatPath: true,
-          v3_singleFetch: true,
-          v3_throwAbortReason: true,
-        },
-      }),
-      tsconfigPaths(),
-    ],
+    plugins: TEST
+      ? [tsconfigPaths()]
+      : [
+          remix({
+            future: {
+              v3_fetcherPersist: true,
+              v3_lazyRouteDiscovery: true,
+              v3_relativeSplatPath: true,
+              v3_singleFetch: true,
+              v3_throwAbortReason: true,
+            },
+          }),
+          tsconfigPaths(),
+        ],
     test: {
       globals: true,
       environment: "jsdom",
