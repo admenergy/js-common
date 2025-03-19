@@ -4,28 +4,28 @@
   "exports": {
     ".": {
       "types": "./dist/ts/index.d.ts",
-      "import": "./dist/js/index.js",
-      "require": "./dist/js/index.js"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./client": {
       "types": "./dist/ts/client/index.d.ts",
-      "import": "./dist/js/client/index.js",
-      "require": "./dist/js/client/index.js"
+      "import": "./dist/esm/client/index.js",
+      "require": "./dist/cjs/client/index.js"
     },
     "./common": {
       "types": "./dist/ts/common/index.d.ts",
-      "import": "./dist/js/common/index.js",
-      "require": "./dist/js/common/index.js"
+      "import": "./dist/esm/common/index.js",
+      "require": "./dist/cjs/common/index.js"
     },
     "./server": {
       "types": "./dist/ts/server/index.d.ts",
-      "import": "./dist/js/server/index.js",
-      "require": "./dist/js/server/index.js"
+      "import": "./dist/esm/server/index.js",
+      "require": "./dist/cjs/server/index.js"
     },
     "./ErrorTypes": {
       "types": "./dist/ts/ErrorTypes/index.d.ts",
-      "import": "./dist/js/ErrorTypes/index.js",
-      "require": "./dist/js/ErrorTypes/index.js"
+      "import": "./dist/esm/ErrorTypes/index.js",
+      "require": "./dist/cjs/ErrorTypes/index.js"
     }
   },
   "webpackEntry": {

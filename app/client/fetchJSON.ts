@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { merge } from "lodash";
 import { AccessDeniedError, UnauthorizedError } from "../ErrorTypes";
 
 export interface FetchJsonOptions {
@@ -56,14 +56,14 @@ export async function fetchJSON(
   let fetchData;
 
   if (asForm) {
-    fetchData = _.merge(
+    fetchData = merge(
       {
         method: "post",
       },
       options,
     );
   } else {
-    fetchData = _.merge(
+    fetchData = merge(
       {
         method: typeof data === "undefined" ? "get" : "post",
         headers: {

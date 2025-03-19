@@ -1,3 +1,5 @@
+import { CacheProvider } from "@emotion/react";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import {
   Links,
   Meta,
@@ -5,9 +7,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { ReactNode } from "react";
+import createEmotionCache from "~/styles/createEmotionCache";
+import theme from "~/styles/theme";
 
-export default function App(props: { children: ReactNode }) {
+const cache = createEmotionCache();
+
+export default function App() {
   return (
     <html lang="en">
       <head>
@@ -17,7 +22,12 @@ export default function App(props: { children: ReactNode }) {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <CacheProvider value={cache}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Outlet />
+          </ThemeProvider>
+        </CacheProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
