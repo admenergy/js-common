@@ -1,56 +1,16 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["@admenergy/js-common"] = factory();
-	else
-		root["@admenergy/js-common"] = factory();
-})(this, () => {
-return /******/ (() => { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
 var __webpack_exports__ = {};
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   AccessDeniedError: () => (/* binding */ AccessDeniedError),
-/* harmony export */   NotFoundError: () => (/* binding */ NotFoundError),
-/* harmony export */   UnauthorizedError: () => (/* binding */ UnauthorizedError)
-/* harmony export */ });
+// This entry needs to be wrapped in an IIFE because it uses a non-standard name for the exports (exports).
+(() => {
+var exports = __webpack_exports__;
+
+
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.UnauthorizedError = exports.NotFoundError = exports.AccessDeniedError = void 0;
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
@@ -73,7 +33,7 @@ function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? O
  *
  * @extends Error
  */
-var UnauthorizedError = /*#__PURE__*/function (_Error) {
+var UnauthorizedError = exports.UnauthorizedError = /*#__PURE__*/function (_Error) {
   /**
    * Create an UnauthorizedError.
    *
@@ -87,7 +47,6 @@ var UnauthorizedError = /*#__PURE__*/function (_Error) {
   _inherits(UnauthorizedError, _Error);
   return _createClass(UnauthorizedError);
 }(/*#__PURE__*/_wrapNativeSuper(Error));
-
 /**
  * Access Denied Error
  *
@@ -95,7 +54,7 @@ var UnauthorizedError = /*#__PURE__*/function (_Error) {
  *
  * @extends Error
  */
-var AccessDeniedError = /*#__PURE__*/function (_Error2) {
+var AccessDeniedError = exports.AccessDeniedError = /*#__PURE__*/function (_Error2) {
   /**
    * Create an AccessDeniedError.
    *
@@ -109,7 +68,6 @@ var AccessDeniedError = /*#__PURE__*/function (_Error2) {
   _inherits(AccessDeniedError, _Error2);
   return _createClass(AccessDeniedError);
 }(/*#__PURE__*/_wrapNativeSuper(Error));
-
 /**
  * Not Found Error
  *
@@ -117,7 +75,7 @@ var AccessDeniedError = /*#__PURE__*/function (_Error2) {
  *
  * @extends Error
  */
-var NotFoundError = /*#__PURE__*/function (_Error3) {
+var NotFoundError = exports.NotFoundError = /*#__PURE__*/function (_Error3) {
   /**
    * Create a NotFoundError.
    *
@@ -131,7 +89,8 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
   _inherits(NotFoundError, _Error3);
   return _createClass(NotFoundError);
 }(/*#__PURE__*/_wrapNativeSuper(Error));
-/******/ 	return __webpack_exports__;
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
-});
