@@ -1,18 +1,20 @@
 import { vitePlugin as remix } from "@remix-run/dev";
+import type { ConfigEnv, UserConfig } from "vite";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 import { configDefaults } from "vitest/config";
 
-export default ({ command }: any) => {
+export default async ({ command }: ConfigEnv): Promise<UserConfig> => {
+  const tsconfigPaths = (await import("vite-tsconfig-paths")).default;
+
   const ssr = {
     external: ["argon2"],
     noExternal: [],
   };
 
-  return defineConfig({
+  return {
     server: {
       host: true,
-      port: 3000, // Development port must be set here
+      port: 3000,
     },
     plugins: [
       remix({
@@ -28,17 +30,17 @@ export default ({ command }: any) => {
     ],
     test: {
       globals: true,
-      environment: "node",
-      include: ["app/**/*.test.ts"],
+      environment: "jsdom",
+      include: ["app/**/*.test.ts", "app/**/*.test.tsx"],
       exclude: configDefaults.exclude,
       coverage: {
         provider: "v8",
         reporter: ["text", "json", "html"],
-        include: ["app/**/*.ts"],
-        exclude: ["app/**/*.test.ts"],
+        include: ["app/**/*.ts", "app/**/*.tsx"],
+        exclude: ["app/**/*.test.ts", "app/**/*.test.tsx"],
       },
       pool: "forks",
     },
     ssr,
-  });
+  };
 };

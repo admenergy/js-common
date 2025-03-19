@@ -1,6 +1,13 @@
-import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react";
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "@remix-run/react";
+import { ReactNode } from "react";
 
-export default function App() {
+export default function App(props: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -10,7 +17,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <b>Hi. :)</b>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
       </body>
