@@ -52,8 +52,8 @@
     "purge": "rm -rf dist/ .next/ node_modules/ package-lock.json yarn.lock .cache/ build/ public/build/"
   },
   "resolutions": {
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "**/react": "19.0.0",
     "**/react-dom": "19.0.0"
   },
@@ -61,8 +61,8 @@
     "json5": "^2.2.3",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",
