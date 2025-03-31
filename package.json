@@ -76,7 +76,7 @@
     "@mui/icons-material": "^6.4.8",
     "@mui/material": "^6.4.8",
     "@remix-run/dev": "^2.16.1",
-    "@remix-run/express": "^2.16.1",
+    "@remix-run/express": "^2.16.4",
     "@remix-run/node": "^2.16.1",
     "@remix-run/react": "^2.16.1",
     "@remix-run/serve": "^2.16.1",
