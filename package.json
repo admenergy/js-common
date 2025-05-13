@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",
-    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@microsoft/eslint-formatter-sarif": "^3.1.0",
     "@mui/icons-material": "<7.0.0",
