@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "src/**"
+      - "app/**"
       - "package.json"
       - "package-lock.json"
 
@@ -72,7 +72,11 @@ jobs:
           # Don't include tsbuildinfo. It changes a lot without actually affecting the build
           git stash push dist/tsconfig.tsbuildinfo
 
-          git diff --exit-code || echo "changes_detected=true" >> $GITHUB_ENV
+          if git diff --exit-code; then
+            echo "changes_detected=false" >> $GITHUB_ENV
+          else
+            echo "changes_detected=true" >> $GITHUB_ENV
+          fi
 
           # Restore tsbuildinfo
           git stash pop || true
