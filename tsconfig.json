@@ -8,8 +8,8 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "./dist/ts",
-    "rootDir": "./src",
-    "baseUrl": "./src",
+    "rootDir": "./app",
+    "baseUrl": "./app",
     "paths": {
       "~/*": ["./*"]
     },
@@ -22,13 +22,17 @@
     "incremental": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "__tests__/**/*.js",
-    "__tests__/**/*.jsx",
-    "src/**/*.js",
-    "src/**/*.jsx",
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ],
-  "exclude": ["node_modules", "dist", "__tests__"]
+  "include": ["app/**/*.js", "app/**/*.jsx", "app/**/*.ts", "app/**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "__tests__",
+    "app/**/*.test.ts",
+    "app/**/*.test.tsx",
+    "app/entry.client.tsx",
+    "app/entry.server.tsx",
+    "app/root.tsx",
+    "app/routes",
+    "app/styles"
+  ]
 }
