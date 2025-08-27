@@ -376,7 +376,7 @@ function _fetchJSON() {
       _args = arguments,
       _t;
     return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
+      while (1) switch (_context.p = _context.n) {
         case 0:
           options = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
           if (!(typeof url !== "string")) {

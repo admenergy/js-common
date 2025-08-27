@@ -1071,7 +1071,7 @@ function _performance() {
   _performance = performance_asyncToGenerator(/*#__PURE__*/performance_regenerator().m(function _callee(name, fn) {
     var n, count;
     return performance_regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
+      while (1) switch (_context.p = _context.n) {
         case 0:
           if (!(typeof name !== "string")) {
             _context.n = 1;
