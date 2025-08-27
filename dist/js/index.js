@@ -7,230 +7,112 @@
 		exports["@admenergy/js-common"] = factory(require("lodash"), require("json5"));
 	else
 		root["@admenergy/js-common"] = factory(root["lodash"], root["json5"]);
-})(this, (__WEBPACK_EXTERNAL_MODULE__773__, __WEBPACK_EXTERNAL_MODULE__741__) => {
+})(this, (__WEBPACK_EXTERNAL_MODULE__154__, __WEBPACK_EXTERNAL_MODULE__741__) => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 6:
+/***/ 85:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  getEnv: () => (/* reexport */ getEnv),
-  runProcess: () => (/* reexport */ runProcess),
-  sanitizePath: () => (/* reexport */ sanitizePath)
-});
-
-// EXTERNAL MODULE: external "json5"
-var external_json5_ = __webpack_require__(741);
-var external_json5_default = /*#__PURE__*/__webpack_require__.n(external_json5_);
-;// ./src/server/getEnv.ts
-
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AccessDeniedError: () => (/* binding */ AccessDeniedError),
+/* harmony export */   NotFoundError: () => (/* binding */ NotFoundError),
+/* harmony export */   UnauthorizedError: () => (/* binding */ UnauthorizedError)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _wrapNativeSuper(t) { var r = "function" == typeof Map ? new Map() : void 0; return _wrapNativeSuper = function _wrapNativeSuper(t) { if (null === t || !_isNativeFunction(t)) return t; if ("function" != typeof t) throw new TypeError("Super expression must either be null or a function"); if (void 0 !== r) { if (r.has(t)) return r.get(t); r.set(t, Wrapper); } function Wrapper() { return _construct(t, arguments, _getPrototypeOf(this).constructor); } return Wrapper.prototype = Object.create(t.prototype, { constructor: { value: Wrapper, enumerable: !1, writable: !0, configurable: !0 } }), _setPrototypeOf(Wrapper, t); }, _wrapNativeSuper(t); }
+function _construct(t, e, r) { if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && _setPrototypeOf(p, r.prototype), p; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _isNativeFunction(t) { try { return -1 !== Function.toString.call(t).indexOf("[native code]"); } catch (n) { return "function" == typeof t; } }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+/**
+ * Unauthorized Error
+ *
+ * A request did not provide the required authentication.
+ *
+ * @extends Error
+ */
+var UnauthorizedError = /*#__PURE__*/function (_Error) {
+  /**
+   * Create an UnauthorizedError.
+   *
+   * @param {string} [message] - The error message. Pass a message to override the default.
+   */
+  function UnauthorizedError() {
+    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "[401] Unauthorized. Please sign in and try again.";
+    _classCallCheck(this, UnauthorizedError);
+    return _callSuper(this, UnauthorizedError, [message]);
+  }
+  _inherits(UnauthorizedError, _Error);
+  return _createClass(UnauthorizedError);
+}(/*#__PURE__*/_wrapNativeSuper(Error));
 
 /**
- * Get environment variable and parse it if applicable.
- * If ends in ".json5", it will be parsed as JSON5.
+ * Access Denied Error
  *
- * @param variableName - Name of the environment variable. Case sensitive.
- * @returns The parsed environment variable, or null if not found or on parsing errors.
+ * The authenticated user does not have permissions for the request.
  *
- * @throws TypeError if the parameter types are bad.
- *
- * @example
- * const config = getEnv("CONFIG");
- * -> "Test value"
- *
- * @example
- * const config = getEnv("config.json5");
- * -> { foo: "Test value" }
+ * @extends Error
  */
-function getEnv(variableName) {
-  if (typeof variableName !== "string") {
-    throw new TypeError("getEnv(variableName) : 'variableName' must be a string.");
+var AccessDeniedError = /*#__PURE__*/function (_Error2) {
+  /**
+   * Create an AccessDeniedError.
+   *
+   * @param {string} [message] - The error message. Pass a message to override the default.
+   */
+  function AccessDeniedError() {
+    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "[403] Access Denied. You do not have permission to access this resource.";
+    _classCallCheck(this, AccessDeniedError);
+    return _callSuper(this, AccessDeniedError, [message]);
   }
-  var envValue = process.env[variableName];
-  if (typeof envValue !== "string") {
-    console.log("\u26A0\uFE0F ", "Missing or invalid type for ".concat(variableName, " environment variable"));
-    return null;
-  }
-  var parsedConfig = envValue.trim();
-  if (!parsedConfig) {
-    console.log("\u26A0\uFE0F ", "Variable ".concat(variableName, " is empty"));
-    return null;
-  }
-  if (variableName.endsWith(".json5")) {
-    try {
-      // Check if the content needs to be base64 decoded
-      var firstChar = parsedConfig[0];
-      if (firstChar !== "{" && firstChar !== "[" && firstChar !== '"') {
-        parsedConfig = Buffer.from(parsedConfig, "base64").toString("utf8");
-      }
-
-      // Parse JSON5
-      return external_json5_default().parse(parsedConfig);
-    } catch (error) {
-      console.log("\u26A0\uFE0F ", "Failed to parse ".concat(variableName));
-      return null;
-    }
-  }
-  return parsedConfig;
-}
-;// external "child_process"
-const external_child_process_namespaceObject = require("child_process");
-// EXTERNAL MODULE: ./src/common/createPromise.ts
-var createPromise = __webpack_require__(937);
-;// ./src/server/runProcess.ts
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-
+  _inherits(AccessDeniedError, _Error2);
+  return _createClass(AccessDeniedError);
+}(/*#__PURE__*/_wrapNativeSuper(Error));
 
 /**
- * Runs a script with parameters.
+ * Not Found Error
  *
- * @param script - The path to the script to run.
- * @param params - An array of parameters to pass to the script.
+ * The requested resource was not found.
  *
- * @returns Resolves to an object containing the output of the script.
- *
- * @throws TypeError if the parameter types are incorrect.
- *
- * @example
- * const { log, stdout, stderr } = await runProcess("ls", ["-1", "~/"]);
+ * @extends Error
  */
-function runProcess(_x) {
-  return _runProcess.apply(this, arguments);
-}
-function _runProcess() {
-  _runProcess = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(script) {
-    var params,
-      log,
-      stdout,
-      stderr,
-      pr,
-      child,
-      _args = arguments;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
-        case 0:
-          params = _args.length > 1 && _args[1] !== undefined ? _args[1] : [];
-          if (!(typeof script !== "string")) {
-            _context.n = 1;
-            break;
-          }
-          throw new TypeError("runProcess(script, params?) : 'script' must be a string.");
-        case 1:
-          if (Array.isArray(params)) {
-            _context.n = 2;
-            break;
-          }
-          throw new TypeError("runProcess(script, params?) : 'params' is optional, but must be an array of strings.");
-        case 2:
-          log = ""; // Both out/err in the order they appeared in
-          stdout = "";
-          stderr = "";
-          pr = (0,createPromise.createPromise)();
-          child = (0,external_child_process_namespaceObject.spawn)(script, params);
-          child.on("exit", function (code) {
-            var data = {
-              log: log,
-              stdout: stdout,
-              stderr: stderr
-            };
-            if (code === 0) {
-              pr.resolve(data);
-            } else {
-              console.log(log);
-              pr.reject(new Error("Process exited with code ".concat(code)));
-            }
-          });
-          child.stdout.setEncoding("utf8");
-          child.stderr.setEncoding("utf8");
-          child.stdout.on("data", function (data) {
-            stdout += data;
-            log += data;
-          });
-          child.stderr.on("data", function (data) {
-            stderr += data;
-            log += data;
-          });
-          return _context.a(2, pr.promise);
-      }
-    }, _callee);
-  }));
-  return _runProcess.apply(this, arguments);
-}
-;// external "path"
-const external_path_namespaceObject = require("path");
-;// ./src/server/sanitizePath.ts
-
-
-/**
- * Sanitize Path
- *
- * Paths are only allowed to contain:
- *     spaces
- *     a-z
- *     A-Z
- *     0-9
- *     _
- *     ,
- *     .
- *     -
- *
- * @param workingDir - The working directory to resolve paths from.
- * @param filePath - The relative path to sanitize.
- *
- * @returns The resolved path.
- *
- * @throws TypeError if the parameter types are incorrect.
- * @throws Error if the path is outside the working directory.
- *
- * @example
- * const safePath = sanitizePath("/var/data", "Foo̵̔̐Bã̸r?.txt");
- * -> "/var/data/FooBar.txt"
- */
-function sanitizePath(workingDir, filePath) {
-  if (typeof workingDir !== "string") {
-    throw new TypeError("sanitizePath(workingDir, filePath) : 'workingDir' must be a string.");
+var NotFoundError = /*#__PURE__*/function (_Error3) {
+  /**
+   * Create a NotFoundError.
+   *
+   * @param {string} [message] - The error message. Pass a message to override the default.
+   */
+  function NotFoundError() {
+    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "[404] Not Found.";
+    _classCallCheck(this, NotFoundError);
+    return _callSuper(this, NotFoundError, [message]);
   }
-  if (typeof filePath !== "string") {
-    throw new TypeError("sanitizePath(workingDir, filePath) : 'filePath' must be a string.");
-  }
-  var resolvedPath = (0,external_path_namespaceObject.normalize)((0,external_path_namespaceObject.join)(workingDir, filePath
-  // Protocol
-  .replace(/^\w+:\/\//, "")
-
-  // Split by path separator
-  .split(/[\\/]/)
-
-  // Remove invalid characters:
-  //   - Decode URI encodings
-  //   - Remove strange characters
-  //   - Trim whitespace
-  //   - Resolve . and ..
-  .map(function (s) {
-    return (0,external_path_namespaceObject.normalize)(decodeURIComponent(s).replace(/[^a-zA-Z0-9 _,.()-]/g, "").trim());
-  }).join("/")));
-  if (!resolvedPath.startsWith(workingDir)) {
-    console.log("\u26D4 ", "Path traversal detected\n       Working Path: ".concat(workingDir, "\n      Resolved Path: ").concat(resolvedPath));
-    throw new Error("Stay in your sandbox like a good kid!");
-  }
-  return resolvedPath;
-}
-;// ./src/server/index.ts
-
-
-
+  _inherits(NotFoundError, _Error3);
+  return _createClass(NotFoundError);
+}(/*#__PURE__*/_wrapNativeSuper(Error));
 
 /***/ }),
 
-/***/ 568:
+/***/ 154:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__154__;
+
+/***/ }),
+
+/***/ 245:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -245,7 +127,7 @@ __webpack_require__.d(__webpack_exports__, {
   sset: () => (/* reexport */ sset)
 });
 
-;// ./src/client/encodeForm.ts
+;// ./app/client/encodeForm.ts
 /**
  * @todo Not done. Needs to support: checkbox, radio, select
  *
@@ -326,7 +208,7 @@ function encodeForm(htmlFormElement) {
   });
   return ret;
 }
-;// ./src/client/encodeQueryString.ts
+;// ./app/client/encodeQueryString.ts
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -373,11 +255,10 @@ function encodeQueryString(data, url) {
   }
 }
 // EXTERNAL MODULE: external "lodash"
-var external_lodash_ = __webpack_require__(773);
-var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_);
-// EXTERNAL MODULE: ./src/ErrorTypes/index.ts
-var ErrorTypes = __webpack_require__(878);
-;// ./src/client/fetchJSON.ts
+var external_lodash_ = __webpack_require__(154);
+// EXTERNAL MODULE: ./app/ErrorTypes/index.ts
+var ErrorTypes = __webpack_require__(85);
+;// ./app/client/fetchJSON.ts
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = fetchJSON_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
@@ -451,11 +332,11 @@ function _fetchJSON() {
         case 3:
           asForm = !!options.form;
           if (asForm) {
-            fetchData = external_lodash_default().merge({
+            fetchData = (0,external_lodash_.merge)({
               method: "post"
             }, options);
           } else {
-            fetchData = external_lodash_default().merge({
+            fetchData = (0,external_lodash_.merge)({
               method: typeof data === "undefined" ? "get" : "post",
               headers: {
                 "Accept": "application/json",
@@ -543,7 +424,7 @@ function _fetchJSON() {
   }));
   return _fetchJSON.apply(this, arguments);
 }
-;// ./src/client/sget.ts
+;// ./app/client/sget.ts
 /**
  * Get from storage as JSON
  *
@@ -571,7 +452,7 @@ function sget(key, defaultValue) {
   if (stored === null) return defaultValue;
   return JSON.parse(stored);
 }
-;// ./src/client/sset.ts
+;// ./app/client/sset.ts
 /**
  * Set to Storage as JSON
  *
@@ -598,7 +479,7 @@ function sset(key, value) {
   storage.setItem(key, JSON.stringify(value));
   return value;
 }
-;// ./src/client/index.ts
+;// ./app/client/index.ts
 
 
 
@@ -607,7 +488,7 @@ function sset(key, value) {
 
 /***/ }),
 
-/***/ 698:
+/***/ 407:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -637,9 +518,9 @@ __webpack_require__.d(__webpack_exports__, {
   setIn: () => (/* reexport */ setIn)
 });
 
-// EXTERNAL MODULE: ./src/ErrorTypes/index.ts
-var ErrorTypes = __webpack_require__(878);
-;// ./src/common/bestConversionHelper.ts
+// EXTERNAL MODULE: ./app/ErrorTypes/index.ts
+var ErrorTypes = __webpack_require__(85);
+;// ./app/common/bestConversionHelper.ts
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
@@ -701,7 +582,7 @@ function bestConversionHelper(startingNumber, threshold, conversions, startingCo
   }
   return conversions[i];
 }
-;// ./src/common/benchmark.ts
+;// ./app/common/benchmark.ts
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -810,7 +691,7 @@ function _benchmark() {
   }));
   return _benchmark.apply(this, arguments);
 }
-;// ./src/common/bestByteUnit.ts
+;// ./app/common/bestByteUnit.ts
 
 
 /**
@@ -858,7 +739,7 @@ function bestByteUnit(_byte) {
   var round = Math.round(value * 100) / 100;
   return new ConversionResult(value, round, conversion.unit);
 }
-;// ./src/common/bestTimeUnitMS.ts
+;// ./app/common/bestTimeUnitMS.ts
 
 
 /**
@@ -903,9 +784,9 @@ function bestTimeUnitMS(ms) {
   var round = Math.round(value * 100) / 100;
   return new ConversionResult(value, round, conversion.unit);
 }
-// EXTERNAL MODULE: ./src/common/createPromise.ts
-var createPromise = __webpack_require__(937);
-;// ./src/common/EventDispatcher.ts
+// EXTERNAL MODULE: ./app/common/createPromise.ts
+var createPromise = __webpack_require__(550);
+;// ./app/common/EventDispatcher.ts
 function EventDispatcher_typeof(o) { "@babel/helpers - typeof"; return EventDispatcher_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, EventDispatcher_typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -1063,6 +944,12 @@ var EventDispatcher = /*#__PURE__*/function () {
       }
       return true;
     }
+  }, {
+    key: "getHandlerCount",
+    value: function getHandlerCount(eventName) {
+      var _this$handlers$get$si, _this$handlers$get;
+      return (_this$handlers$get$si = (_this$handlers$get = this.handlers.get(eventName)) === null || _this$handlers$get === void 0 ? void 0 : _this$handlers$get.size) !== null && _this$handlers$get$si !== void 0 ? _this$handlers$get$si : 0;
+    }
   }]);
 }();
 
@@ -1193,7 +1080,7 @@ const OldDeprecatedEventDispatcher = {
   },
 };
 */
-;// ./src/common/getIn.ts
+;// ./app/common/getIn.ts
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
@@ -1222,7 +1109,7 @@ function getIn(object, path, defaultValue) {
   if (typeof object === "undefined") return defaultValue;
   return object;
 }
-;// ./src/common/getMime.ts
+;// ./app/common/getMime.ts
 /**
  * Returns the MIME type of a file based on its extension.
  *
@@ -1264,7 +1151,7 @@ function getMime(fileName) {
   if (/(^|\.)(woff2)$/.test(name)) return "font/woff2";
   return "application/octet-stream";
 }
-;// ./src/common/isISODateString.ts
+;// ./app/common/isISODateString.ts
 /**
  * Checks if a given string looks like a valid ISO date string.
  *
@@ -1278,7 +1165,7 @@ function isISODateString(str) {
   // JavaScript regex for ISO datetime: https://stackoverflow.com/a/3143231/1258524
   return /^(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))$/.test(str);
 }
-;// ./src/common/Limiter.ts
+;// ./app/common/Limiter.ts
 function Limiter_typeof(o) { "@babel/helpers - typeof"; return Limiter_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, Limiter_typeof(o); }
 function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(Limiter_typeof(e) + " is not iterable"); }
 function Limiter_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return Limiter_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (Limiter_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, Limiter_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, Limiter_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), Limiter_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", Limiter_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), Limiter_regeneratorDefine2(u), Limiter_regeneratorDefine2(u, o, "Generator"), Limiter_regeneratorDefine2(u, n, function () { return this; }), Limiter_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (Limiter_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
@@ -1453,7 +1340,7 @@ var TrackablePromise = /*#__PURE__*/function () {
     }
   }]);
 }();
-;// ./src/common/performance.ts
+;// ./app/common/performance.ts
 function performance_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return performance_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (performance_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, performance_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, performance_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), performance_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", performance_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), performance_regeneratorDefine2(u), performance_regeneratorDefine2(u, o, "Generator"), performance_regeneratorDefine2(u, n, function () { return this; }), performance_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (performance_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function performance_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } performance_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { performance_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, performance_regeneratorDefine2(e, r, n, t); }
 function performance_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -1517,7 +1404,7 @@ function _performance() {
   }));
   return _performance.apply(this, arguments);
 }
-;// ./src/common/removeDiacritics.ts
+;// ./app/common/removeDiacritics.ts
 /**
  * Remove Diacritics
  *
@@ -1829,7 +1716,7 @@ var defaultDiacriticsRemovalMap = [
   base: "z",
   letters: /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g
 }];
-;// ./src/common/sanitizeJSON.ts
+;// ./app/common/sanitizeJSON.ts
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || sanitizeJSON_unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -1950,7 +1837,7 @@ function sanitizeJSON(obj) {
   }
   return cleanObj;
 }
-;// ./src/common/sanitizeStringDisplay.ts
+;// ./app/common/sanitizeStringDisplay.ts
 
 
 /**
@@ -1977,7 +1864,7 @@ function sanitizeStringDisplay(str) {
   str = str.trim();
   return str;
 }
-;// ./src/common/sanitizeStringKey.ts
+;// ./app/common/sanitizeStringKey.ts
 
 
 /**
@@ -2014,7 +1901,7 @@ function sanitizeStringKey(str) {
 function camelCase(word) {
   return word[0].toUpperCase() + word.slice(1);
 }
-;// ./src/common/setIn.ts
+;// ./app/common/setIn.ts
 function setIn_ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function setIn_objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? setIn_ownKeys(Object(t), !0).forEach(function (r) { setIn_defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : setIn_ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function setIn_defineProperty(e, r, t) { return (r = setIn_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -2114,7 +2001,7 @@ function setIn(source, path, value) {
     }
   }
 }
-;// ./src/common/index.ts
+;// ./app/common/index.ts
  // TODO: move one scope higher
 
 
@@ -2135,114 +2022,7 @@ function setIn(source, path, value) {
 
 /***/ }),
 
-/***/ 741:
-/***/ ((module) => {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__741__;
-
-/***/ }),
-
-/***/ 773:
-/***/ ((module) => {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__773__;
-
-/***/ }),
-
-/***/ 878:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   AccessDeniedError: () => (/* binding */ AccessDeniedError),
-/* harmony export */   NotFoundError: () => (/* binding */ NotFoundError),
-/* harmony export */   UnauthorizedError: () => (/* binding */ UnauthorizedError)
-/* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
-function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
-function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
-function _wrapNativeSuper(t) { var r = "function" == typeof Map ? new Map() : void 0; return _wrapNativeSuper = function _wrapNativeSuper(t) { if (null === t || !_isNativeFunction(t)) return t; if ("function" != typeof t) throw new TypeError("Super expression must either be null or a function"); if (void 0 !== r) { if (r.has(t)) return r.get(t); r.set(t, Wrapper); } function Wrapper() { return _construct(t, arguments, _getPrototypeOf(this).constructor); } return Wrapper.prototype = Object.create(t.prototype, { constructor: { value: Wrapper, enumerable: !1, writable: !0, configurable: !0 } }), _setPrototypeOf(Wrapper, t); }, _wrapNativeSuper(t); }
-function _construct(t, e, r) { if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && _setPrototypeOf(p, r.prototype), p; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _isNativeFunction(t) { try { return -1 !== Function.toString.call(t).indexOf("[native code]"); } catch (n) { return "function" == typeof t; } }
-function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
-/**
- * Unauthorized Error
- *
- * A request did not provide the required authentication.
- *
- * @extends Error
- */
-var UnauthorizedError = /*#__PURE__*/function (_Error) {
-  /**
-   * Create an UnauthorizedError.
-   *
-   * @param {string} [message] - The error message. Pass a message to override the default.
-   */
-  function UnauthorizedError() {
-    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "[401] Unauthorized. Please sign in and try again.";
-    _classCallCheck(this, UnauthorizedError);
-    return _callSuper(this, UnauthorizedError, [message]);
-  }
-  _inherits(UnauthorizedError, _Error);
-  return _createClass(UnauthorizedError);
-}(/*#__PURE__*/_wrapNativeSuper(Error));
-
-/**
- * Access Denied Error
- *
- * The authenticated user does not have permissions for the request.
- *
- * @extends Error
- */
-var AccessDeniedError = /*#__PURE__*/function (_Error2) {
-  /**
-   * Create an AccessDeniedError.
-   *
-   * @param {string} [message] - The error message. Pass a message to override the default.
-   */
-  function AccessDeniedError() {
-    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "[403] Access Denied. You do not have permission to access this resource.";
-    _classCallCheck(this, AccessDeniedError);
-    return _callSuper(this, AccessDeniedError, [message]);
-  }
-  _inherits(AccessDeniedError, _Error2);
-  return _createClass(AccessDeniedError);
-}(/*#__PURE__*/_wrapNativeSuper(Error));
-
-/**
- * Not Found Error
- *
- * The requested resource was not found.
- *
- * @extends Error
- */
-var NotFoundError = /*#__PURE__*/function (_Error3) {
-  /**
-   * Create a NotFoundError.
-   *
-   * @param {string} [message] - The error message. Pass a message to override the default.
-   */
-  function NotFoundError() {
-    var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "[404] Not Found.";
-    _classCallCheck(this, NotFoundError);
-    return _callSuper(this, NotFoundError, [message]);
-  }
-  _inherits(NotFoundError, _Error3);
-  return _createClass(NotFoundError);
-}(/*#__PURE__*/_wrapNativeSuper(Error));
-
-/***/ }),
-
-/***/ 937:
+/***/ 550:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -2277,6 +2057,231 @@ function createPromise() {
     reject: reject
   };
 }
+
+/***/ }),
+
+/***/ 587:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  getEnv: () => (/* reexport */ getEnv),
+  runProcess: () => (/* reexport */ runProcess),
+  sanitizePath: () => (/* reexport */ sanitizePath)
+});
+
+// EXTERNAL MODULE: external "json5"
+var external_json5_ = __webpack_require__(741);
+var external_json5_default = /*#__PURE__*/__webpack_require__.n(external_json5_);
+;// ./app/server/getEnv.ts
+
+
+/**
+ * Get environment variable and parse it if applicable.
+ * If ends in ".json5", it will be parsed as JSON5.
+ *
+ * @param variableName - Name of the environment variable. Case sensitive.
+ * @returns The parsed environment variable, or null if not found or on parsing errors.
+ *
+ * @throws TypeError if the parameter types are bad.
+ *
+ * @example
+ * const config = getEnv("CONFIG");
+ * -> "Test value"
+ *
+ * @example
+ * const config = getEnv("config.json5");
+ * -> { foo: "Test value" }
+ */
+function getEnv(variableName) {
+  if (typeof variableName !== "string") {
+    throw new TypeError("getEnv(variableName) : 'variableName' must be a string.");
+  }
+  var envValue = process.env[variableName];
+  if (typeof envValue !== "string") {
+    console.log("\u26A0\uFE0F ", "Missing or invalid type for ".concat(variableName, " environment variable"));
+    return null;
+  }
+  var parsedConfig = envValue.trim();
+  if (!parsedConfig) {
+    console.log("\u26A0\uFE0F ", "Variable ".concat(variableName, " is empty"));
+    return null;
+  }
+  if (variableName.endsWith(".json5")) {
+    try {
+      // Check if the content needs to be base64 decoded
+      var firstChar = parsedConfig[0];
+      if (firstChar !== "{" && firstChar !== "[" && firstChar !== '"') {
+        parsedConfig = Buffer.from(parsedConfig, "base64").toString("utf8");
+      }
+
+      // Parse JSON5
+      return external_json5_default().parse(parsedConfig);
+    } catch (error) {
+      console.log("\u26A0\uFE0F ", "Failed to parse ".concat(variableName));
+      return null;
+    }
+  }
+  return parsedConfig;
+}
+;// external "child_process"
+const external_child_process_namespaceObject = require("child_process");
+// EXTERNAL MODULE: ./app/common/createPromise.ts
+var createPromise = __webpack_require__(550);
+;// ./app/server/runProcess.ts
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { if (r) i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n;else { var o = function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); }; o("next", 0), o("throw", 1), o("return", 2); } }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+/**
+ * Runs a script with parameters.
+ *
+ * @param script - The path to the script to run.
+ * @param params - An array of parameters to pass to the script.
+ *
+ * @returns Resolves to an object containing the output of the script.
+ *
+ * @throws TypeError if the parameter types are incorrect.
+ *
+ * @example
+ * const { log, stdout, stderr } = await runProcess("ls", ["-1", "~/"]);
+ */
+function runProcess(_x) {
+  return _runProcess.apply(this, arguments);
+}
+function _runProcess() {
+  _runProcess = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(script) {
+    var params,
+      log,
+      stdout,
+      stderr,
+      pr,
+      child,
+      _args = arguments;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          params = _args.length > 1 && _args[1] !== undefined ? _args[1] : [];
+          if (!(typeof script !== "string")) {
+            _context.n = 1;
+            break;
+          }
+          throw new TypeError("runProcess(script, params?) : 'script' must be a string.");
+        case 1:
+          if (Array.isArray(params)) {
+            _context.n = 2;
+            break;
+          }
+          throw new TypeError("runProcess(script, params?) : 'params' is optional, but must be an array of strings.");
+        case 2:
+          log = ""; // Both out/err in the order they appeared in
+          stdout = "";
+          stderr = "";
+          pr = (0,createPromise.createPromise)();
+          child = (0,external_child_process_namespaceObject.spawn)(script, params);
+          child.on("exit", function (code) {
+            var data = {
+              log: log,
+              stdout: stdout,
+              stderr: stderr
+            };
+            if (code === 0) {
+              pr.resolve(data);
+            } else {
+              console.log(log);
+              pr.reject(new Error("Process exited with code ".concat(code)));
+            }
+          });
+          child.stdout.setEncoding("utf8");
+          child.stderr.setEncoding("utf8");
+          child.stdout.on("data", function (data) {
+            stdout += data;
+            log += data;
+          });
+          child.stderr.on("data", function (data) {
+            stderr += data;
+            log += data;
+          });
+          return _context.a(2, pr.promise);
+      }
+    }, _callee);
+  }));
+  return _runProcess.apply(this, arguments);
+}
+;// external "path"
+const external_path_namespaceObject = require("path");
+;// ./app/server/sanitizePath.ts
+
+
+/**
+ * Sanitize Path
+ *
+ * Paths are only allowed to contain:
+ *     spaces
+ *     a-z
+ *     A-Z
+ *     0-9
+ *     _
+ *     ,
+ *     .
+ *     -
+ *
+ * @param workingDir - The working directory to resolve paths from.
+ * @param filePath - The relative path to sanitize.
+ *
+ * @returns The resolved path.
+ *
+ * @throws TypeError if the parameter types are incorrect.
+ * @throws Error if the path is outside the working directory.
+ *
+ * @example
+ * const safePath = sanitizePath("/var/data", "Foo̵̔̐Bã̸r?.txt");
+ * -> "/var/data/FooBar.txt"
+ */
+function sanitizePath(workingDir, filePath) {
+  if (typeof workingDir !== "string") {
+    throw new TypeError("sanitizePath(workingDir, filePath) : 'workingDir' must be a string.");
+  }
+  if (typeof filePath !== "string") {
+    throw new TypeError("sanitizePath(workingDir, filePath) : 'filePath' must be a string.");
+  }
+  var resolvedPath = (0,external_path_namespaceObject.normalize)((0,external_path_namespaceObject.join)(workingDir, filePath
+  // Protocol
+  .replace(/^\w+:\/\//, "")
+
+  // Split by path separator
+  .split(/[\\/]/)
+
+  // Remove invalid characters:
+  //   - Decode URI encodings
+  //   - Remove strange characters
+  //   - Trim whitespace
+  //   - Resolve . and ..
+  .map(function (s) {
+    return (0,external_path_namespaceObject.normalize)(decodeURIComponent(s).replace(/[^a-zA-Z0-9 _,.()-]/g, "").trim());
+  }).join("/")));
+  if (!resolvedPath.startsWith(workingDir)) {
+    console.log("\u26D4 ", "Path traversal detected\n       Working Path: ".concat(workingDir, "\n      Resolved Path: ").concat(resolvedPath));
+    throw new Error("Stay in your sandbox like a good kid!");
+  }
+  return resolvedPath;
+}
+;// ./app/server/index.ts
+
+
+
+
+/***/ }),
+
+/***/ 741:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__741__;
 
 /***/ })
 
@@ -2356,10 +2361,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   common: () => (/* reexport module object */ _common__WEBPACK_IMPORTED_MODULE_2__),
 /* harmony export */   server: () => (/* reexport module object */ _server__WEBPACK_IMPORTED_MODULE_3__)
 /* harmony export */ });
-/* harmony import */ var _ErrorTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(878);
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(568);
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(698);
-/* harmony import */ var _server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
+/* harmony import */ var _ErrorTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(85);
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(245);
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(407);
+/* harmony import */ var _server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(587);
 
 
 
