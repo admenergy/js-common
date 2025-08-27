@@ -1,4 +1,4 @@
-export * from "../ErrorTypes";
+export * from "../ErrorTypes/index";
 export * from "./benchmark";
 export * from "./bestByteUnit";
 export * from "./bestConversionHelper";
