@@ -462,14 +462,17 @@ function _fetchJSON() {
             _context.n = 10;
             break;
           }
+          console.log("🐙 fetchJSON 401", json.message);
           throw new ErrorTypes.UnauthorizedError(json.message);
         case 10:
           if (!(res.status === 403)) {
             _context.n = 11;
             break;
           }
+          console.log("🐙 fetchJSON 403", json.message);
           throw new ErrorTypes.AccessDeniedError(json.message);
         case 11:
+          console.log("🐙 fetchJSON error", json.message);
           throw new Error((_json$message = json.message) !== null && _json$message !== void 0 ? _json$message : JSON.stringify(json));
         case 12:
           return _context.a(2);
