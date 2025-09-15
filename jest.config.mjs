@@ -2,9 +2,9 @@
 const customConfig = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
-  moduleDirectories: ["node_modules", "src"],
+  moduleDirectories: ["node_modules", "app"],
   moduleNameMapper: {
-    "^~/(.*)$": "<rootDir>/src/$1",
+    "^~/(.*)$": "<rootDir>/app/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testMatch: ["<rootDir>/__tests__/**/*.test.(js|jsx|ts|tsx)"],

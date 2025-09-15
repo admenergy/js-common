@@ -38,7 +38,7 @@
     "build-test": "npm run build && jest",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "npx eslint src/ --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --format json | node utility/eslint.js",
+    "lint": "npx eslint app/ --config .eslintrc.js --ext .js,.jsx,.ts,.tsx --ignore-pattern '**/*.test.*' --ignore-pattern 'app/entry.*' --ignore-pattern 'app/root.tsx' --ignore-pattern 'app/routes/**' --ignore-pattern 'app/styles/**' --format json | node utility/eslint.js",
     "==[ Install/Clean ]==": "",
     "reinstall": "yarn run purge && yarn install && npx typesync",
     "clean": "rm -rf dist/ .next/",
