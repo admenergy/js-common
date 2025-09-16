@@ -38,4 +38,5 @@ export declare class EventDispatcher<T = any> {
     on(type: string, callback: (event: T) => void, options?: EventOptions): this;
     off(type: string, callback: (event: T) => void): this;
     private matchFilters;
+    getHandlerCount(eventName: string): number;
 }

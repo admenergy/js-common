@@ -119,12 +119,15 @@ export async function fetchJSON(
     return json;
   } else {
     if (res.status === 401) {
+      console.log("🐙 fetchJSON 401", json.message);
       throw new UnauthorizedError(json.message);
     }
     if (res.status === 403) {
+      console.log("🐙 fetchJSON 403", json.message);
       throw new AccessDeniedError(json.message);
     }
 
+    console.log("🐙 fetchJSON error", json.message);
     throw new Error(json.message ?? JSON.stringify(json));
   }
 }
