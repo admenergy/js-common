@@ -31,8 +31,3 @@ updates:
         patterns:
           - "@typescript-eslint/eslint-plugin"
           - "@typescript-eslint/parser"
-
-      jest:
-        patterns:
-          - "jest"
-          - "jest-environment-jsdom"
