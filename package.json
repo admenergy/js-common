@@ -45,7 +45,7 @@
     "purge": "rm -rf dist/ .next/ node_modules/ package-lock.json yarn.lock"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/jest-dom": "^6.9.1",
     "json5": "^2.2.3",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
