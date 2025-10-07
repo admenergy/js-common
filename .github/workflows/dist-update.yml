@@ -32,7 +32,7 @@ jobs:
 
       - name: Setup GitHub CLI
         run: |
-          echo "GH_TOKEN=${{ secrets.PAT_TOKEN }}" >> $GITHUB_ENV
+          echo "${{ secrets.PAT_TOKEN }}" | gh auth login --with-token
 
       - name: Delete existing Pull Request
         run: |
