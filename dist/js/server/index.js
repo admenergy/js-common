@@ -19,6 +19,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createPromise: () => (/* binding */ createPromise)
 /* harmony export */ });
+/* harmony import */ var _common_bestTimeUnitMS__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(738);
+
 /**
  * Promise Helper
  *
@@ -35,12 +37,38 @@ __webpack_require__.r(__webpack_exports__);
  * return stuff;
  */
 function createPromise() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    timeout = _ref.timeout;
   var resolve;
   var reject;
+  var timeoutId;
   var promise = new Promise(function (rs, rj) {
-    resolve = rs;
-    reject = rj;
+    resolve = function resolve(value) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      rs(value);
+    };
+    reject = function reject(reason) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      rj(reason);
+    };
   });
+  if (timeout) {
+    var timeoutValue;
+    if (typeof timeout === "number") {
+      timeoutValue = timeout;
+    } else {
+      timeoutValue = new Date(timeout).getTime() - Date.now();
+    }
+    var t = (0,_common_bestTimeUnitMS__WEBPACK_IMPORTED_MODULE_0__.bestTimeUnitMS)(timeoutValue);
+    var error = new Error("Promise timed out after ".concat(t.round, " ").concat(t.unit, "."));
+    timeoutId = setTimeout(function () {
+      reject(error);
+    }, timeoutValue);
+  }
   return {
     promise: promise,
     resolve: resolve,
@@ -50,10 +78,137 @@ function createPromise() {
 
 /***/ }),
 
+/***/ 738:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   bestTimeUnitMS: () => (/* binding */ bestTimeUnitMS)
+/* harmony export */ });
+/* harmony import */ var _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(777);
+
+
+/**
+ * Convert a millisecond number to human readable units.
+ *
+ * @param ms - Value to convert.
+ *
+ * @returns An instance of ConversionResult with value, round, unit, and a toString method that flattens the output.
+ *
+ * @throws TypeError if the parameter types are incorrect.
+ *
+ * @example
+ * bestTimeUnitMS(4500000);
+ * console.log(result.toString());
+ * -> "1.25 h"
+ */
+function bestTimeUnitMS(ms) {
+  if (typeof ms !== "number") {
+    throw new TypeError("bestTimeUnitMS(ms) : 'ms' must be a number.");
+  }
+  var conversions = [{
+    unit: "μs",
+    value: 1 / 1000
+  }, {
+    unit: "ms",
+    value: 1
+  }, {
+    unit: "s",
+    value: 1 * 1000
+  }, {
+    unit: "m",
+    value: 1 * 1000 * 60
+  }, {
+    unit: "h",
+    value: 1 * 1000 * 60 * 60
+  }, {
+    unit: "d",
+    value: 1 * 1000 * 60 * 60 * 24
+  }];
+  var conversion = (0,_bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.bestConversionHelper)(ms, 1.2, conversions, 1);
+  var value = ms / conversion.value;
+  var round = Math.round(value * 100) / 100;
+  return new _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.ConversionResult(value, round, conversion.unit);
+}
+
+/***/ }),
+
 /***/ 741:
 /***/ ((module) => {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE__741__;
+
+/***/ }),
+
+/***/ 777:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ConversionResult: () => (/* binding */ ConversionResult),
+/* harmony export */   bestConversionHelper: () => (/* binding */ bestConversionHelper)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+var ConversionResult = /*#__PURE__*/_createClass(function ConversionResult(value, round, unit) {
+  _classCallCheck(this, ConversionResult);
+  this.value = value;
+  this.round = round;
+  this.unit = unit;
+
+  // Define the toString method as non-enumerable
+  Object.defineProperty(this, "toString", {
+    value: function value() {
+      return "".concat(this.round, " ").concat(this.unit);
+    },
+    enumerable: false
+  });
+});
+
+/**
+ * Best Conversion Helper
+ *
+ * Helper to convert to human readable units
+ *
+ * @param startingNumber - Value to convert.
+ * @param threshold - Multiplier before converting to the next unit (recommended: 1.2).
+ * @param conversions - Array of conversions.
+ * @param startingConversionsIndex - Which index in `conversions` represents `startingNumber`.
+ *
+ * @returns The best conversion in the conversion table.
+ *
+ * @throws TypeError if the parameter types are bad.
+ *
+ * @example
+ * See bestByteUnit.js and bestTimeUnitMS.js
+ */
+function bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) {
+  if (typeof startingNumber !== "number") {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'startingNumber' must be a number.");
+  }
+  if (typeof threshold !== "number") {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'threshold' must be a number.");
+  }
+  if (!Array.isArray(conversions)) {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'conversions' must be an array.");
+  }
+  if (typeof startingConversionsIndex !== "number") {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'startingConversionsIndex' must be a number.");
+  }
+  startingNumber = Math.abs(startingNumber);
+  var i = startingConversionsIndex;
+  while (0 < i && startingNumber <= conversions[i - 1].value * threshold) {
+    i--;
+  }
+  while (i < conversions.length - 1 && conversions[i + 1].value * threshold <= startingNumber) {
+    i++;
+  }
+  return conversions[i];
+}
 
 /***/ })
 

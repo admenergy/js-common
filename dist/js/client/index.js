@@ -174,6 +174,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  decodeQueryString: () => (/* reexport */ decodeQueryString),
   encodeForm: () => (/* reexport */ encodeForm),
   encodeQueryString: () => (/* reexport */ encodeQueryString),
   fetchJSON: () => (/* reexport */ fetchJSON),
@@ -181,6 +182,39 @@ __webpack_require__.d(__webpack_exports__, {
   sset: () => (/* reexport */ sset)
 });
 
+;// ./app/client/decodeQueryString.ts
+/**
+ * Decodes a query string into an object. Starting "?" are auto-trimmed. Empty pair values are omitted.
+ *
+ * @param str - The query string to decode.
+ *
+ * @returns An object containing key-value pairs from the query string.
+ *
+ * @throws {TypeError} If the parameter types are bad.
+ *
+ * @example
+ * const query = decodeQueryString("?foo=bar");
+ * -> { foo: "bar" }
+ */
+function decodeQueryString(str) {
+  var query = {};
+  if (typeof str !== "string") {
+    throw new TypeError("decodeQueryString(str) : 'str' must be a string.");
+  }
+  if (!str) return {};
+  if (str.charAt(0) === "?") str = str.substring(1);
+  if (!str.length) return {};
+  str.split("&").forEach(function (str) {
+    var pair = str.split("=");
+    if (2 < pair.length) {
+      throw new Error("Query string is not well-formed");
+    }
+    var k = decodeURIComponent(pair[0]);
+    var v = decodeURIComponent(pair[1]);
+    if (v) query[String(k)] = v;
+  });
+  return query;
+}
 ;// ./app/client/encodeForm.ts
 /**
  * @todo Not done. Needs to support: checkbox, radio, select
@@ -537,6 +571,7 @@ function sset(key, value) {
   return value;
 }
 ;// ./app/client/index.ts
+
 
 
 
