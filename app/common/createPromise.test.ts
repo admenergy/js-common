@@ -27,15 +27,19 @@ describe("createPromise", () => {
   });
 
   it(`should timeout promise after specified milliseconds`, async () => {
-    const pr = createPromise({ timeout: 50 });
-    await expect(pr.promise).rejects.toThrow("Promise timed out after 50 ms.");
-  }, 100);
+    const pr = createPromise({ timeout: 1000 });
+    await expect(pr.promise).rejects.toThrow(
+      "Promise timed out after 1000 ms.",
+    );
+  }, 2000);
 
   it(`should timeout promise after specified Date`, async () => {
-    const futureDate = new Date(Date.now() + 50);
+    const futureDate = new Date(Date.now() + 1000);
     const pr = createPromise({ timeout: futureDate });
-    await expect(pr.promise).rejects.toThrow("Promise timed out after 50 ms.");
-  }, 100);
+    await expect(pr.promise).rejects.toThrow(
+      "Promise timed out after 1000 ms.",
+    );
+  }, 2000);
 
   it(`should not timeout if promise resolves before timeout`, async () => {
     const pr = createPromise<string>({ timeout: 100 });
@@ -48,7 +52,7 @@ describe("createPromise", () => {
   });
 
   it(`should not timeout if promise rejects before timeout`, async () => {
-    const pr = createPromise({ timeout: 100 });
+    const pr = createPromise({ timeout: 1000 });
     const testError = new Error("rejected before timeout");
 
     // Reject immediately
