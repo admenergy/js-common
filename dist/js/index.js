@@ -105,393 +105,7 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
 
 /***/ }),
 
-/***/ 154:
-/***/ ((module) => {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__154__;
-
-/***/ }),
-
-/***/ 245:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  encodeForm: () => (/* reexport */ encodeForm),
-  encodeQueryString: () => (/* reexport */ encodeQueryString),
-  fetchJSON: () => (/* reexport */ fetchJSON),
-  sget: () => (/* reexport */ sget),
-  sset: () => (/* reexport */ sset)
-});
-
-;// ./app/client/encodeForm.ts
-/**
- * @todo Not done. Needs to support: checkbox, radio, select
- *
- * Encode HTML Form
- *
- * Encodes a Form element as a plain JavaScript object
- *
- * @param {HTMLFormElement}  form  Form to encode the values of.
- * @returns {Object}  Object containing the `{ name: value }`
- *
- * @example
- * onSubmit = event => {
- *   event.preventDefault();
- *   console.log(encodeForm(event.target));
- * }
- */
-function encodeForm(htmlFormElement) {
-  var ret = {};
-  var valueOfElement = function valueOfElement(element) {
-    var type = element.getAttribute("type");
-    var asNum;
-    var value;
-    switch (element.tagName) {
-      case "INPUT":
-        switch (type) {
-          case "number":
-            asNum = Number(element.value);
-            return isNaN(asNum) ? NaN : asNum;
-          case "checkbox":
-            return element.checked;
-          default:
-            return element.value;
-        }
-      case "TEXTAREA":
-        return element.value;
-      case "SELECT":
-        {
-          // WONT FIX: Multi not supported.
-          var selectElement = element;
-          if (~selectElement.selectedIndex) {
-            return selectElement.options[selectElement.selectedIndex].value;
-          } else {
-            return "";
-          }
-        }
-      default:
-        value = element.getAttribute("data-value");
-        return typeof value === "string" ? JSON.parse(value) : "";
-    }
-  };
-  htmlFormElement.querySelectorAll("[name]").forEach(function (element) {
-    var name = element.getAttribute("name");
-    if (!name) return; // only if name has content
-
-    var arrayMode = false;
-    var checkboxLike = element instanceof HTMLInputElement && (element.type === "checkbox" || element.type === "radio");
-    var value = valueOfElement(element);
-    if (checkboxLike) {
-      arrayMode = true;
-      value = element.value;
-    }
-    if (arrayMode) {
-      if (typeof ret[name] === "undefined") ret[name] = [];
-      if (!Array.isArray(ret[name])) {
-        // skip this erroneous case
-        console.warn("[SKIP] Data was set to store an array, but encountered a non-array element: ".concat(element.tagName, "[name=").concat(name, "]") + (element.tagName === "INPUT" ? "[type=".concat(element.type, "]") : ""));
-        return;
-      }
-      ret[name].push(value);
-    } else {
-      if (Array.isArray(ret[name])) {
-        // skip this erroneous case
-        console.warn("Data was set to store a string, but encountered an array element: ".concat(element.tagName, "[name=").concat(name, "]") + (element.tagName === "INPUT" ? "[type=".concat(element.type, "]") : ""));
-        return;
-      }
-      ret[name] = value;
-    }
-  });
-  return ret;
-}
-;// ./app/client/encodeQueryString.ts
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-/**
- * Encodes an object into a query string or returns a string as is.
- *
- * @param data - The object to encode into a query string.
- * @param url - Optional URL to append the query string to.
- *
- * @returns The encoded query string or the original string if `data` is not an object.
- *
- * @throws {TypeError} If the parameter types are bad.
- *
- * @example
- * const url = encodeQueryString({ foo: "bar" }, "https://example.com");
- * -> "https://example.com?foo=bar"
- */
-function encodeQueryString(data, url) {
-  if (_typeof(data) !== "object" || data === null) {
-    throw new TypeError("encodeQueryString(data, url?) : 'data' must be an object.");
-  }
-  if (url !== undefined && typeof url !== "string") {
-    throw new TypeError("encodeQueryString(data, url?) : 'url' is optional, but must be a string.");
-  }
-  var query = Object.entries(data).filter(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-      key = _ref2[0],
-      value = _ref2[1];
-    return value !== undefined && value !== null;
-  }).map(function (_ref3) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-      key = _ref4[0],
-      value = _ref4[1];
-    return "".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(value));
-  }).join("&");
-  if (url) {
-    return "".concat(url, "?").concat(query);
-  } else {
-    return query;
-  }
-}
-// EXTERNAL MODULE: external "lodash"
-var external_lodash_ = __webpack_require__(154);
-// EXTERNAL MODULE: ./app/ErrorTypes/index.ts
-var ErrorTypes = __webpack_require__(85);
-;// ./app/client/fetchJSON.ts
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = fetchJSON_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function fetchJSON_slicedToArray(r, e) { return fetchJSON_arrayWithHoles(r) || fetchJSON_iterableToArrayLimit(r, e) || fetchJSON_unsupportedIterableToArray(r, e) || fetchJSON_nonIterableRest(); }
-function fetchJSON_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function fetchJSON_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return fetchJSON_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? fetchJSON_arrayLikeToArray(r, a) : void 0; } }
-function fetchJSON_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function fetchJSON_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function fetchJSON_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function fetchJSON_typeof(o) { "@babel/helpers - typeof"; return fetchJSON_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, fetchJSON_typeof(o); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-
-
-/**
- * Fetch [GET|POST] JSON.
- * Formats a fetch call to send & accept JSON.
- * Sets the method to POST if JSON data is provided.
- *
- * @param url The URL to fetch.
- * @param data Optional JSON data to send.
- * @param options Optional fetch options.
- *
- * @returns A Promise resolving to the JSON response.
- *
- * @throws {TypeError} If the parameter types are bad.
- * @throws {UnauthorizedError} If the response status is 401.
- * @throws {AccessDeniedError} If the response status is 403.
- * @throws {Error} If the response status is not 200-299.
- * @throws {Error} If the response is not JSON.
- *
- * @example
- * const data = await fetchJSON(`/api/session/login`, { email, password });
- * -> { success: true, message: "Login successful." }
- */
-function fetchJSON(_x, _x2) {
-  return _fetchJSON.apply(this, arguments);
-}
-function _fetchJSON() {
-  _fetchJSON = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(url, data) {
-    var options,
-      asForm,
-      fetchData,
-      formData,
-      res,
-      json,
-      _json$message,
-      _args = arguments,
-      _t;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.p = _context.n) {
-        case 0:
-          options = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
-          if (!(typeof url !== "string")) {
-            _context.n = 1;
-            break;
-          }
-          throw new TypeError("fetchJSON(url, data?, options?) : 'url' must be a string.");
-        case 1:
-          if (!(data !== undefined && (fetchJSON_typeof(data) !== "object" || data === null))) {
-            _context.n = 2;
-            break;
-          }
-          throw new TypeError("fetchJSON(url, data?, options?) : 'data' is optional, but must be an object.");
-        case 2:
-          if (!(options !== undefined && (fetchJSON_typeof(options) !== "object" || options === null))) {
-            _context.n = 3;
-            break;
-          }
-          throw new TypeError("fetchJSON(url, data?, options?) : 'options' is optional, but must be an object.");
-        case 3:
-          asForm = !!options.form;
-          if (asForm) {
-            fetchData = (0,external_lodash_.merge)({
-              method: "post"
-            }, options);
-          } else {
-            fetchData = (0,external_lodash_.merge)({
-              method: typeof data === "undefined" ? "get" : "post",
-              headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-              }
-            }, options);
-          }
-          if (asForm && data) {
-            formData = new FormData();
-            Object.entries(data).forEach(function (_ref) {
-              var _ref2 = fetchJSON_slicedToArray(_ref, 2),
-                key = _ref2[0],
-                value = _ref2[1];
-              if (value instanceof FileList || Array.isArray(value)) {
-                var _iterator = _createForOfIteratorHelper(value),
-                  _step;
-                try {
-                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                    var v = _step.value;
-                    formData.append(key, v);
-                  }
-                } catch (err) {
-                  _iterator.e(err);
-                } finally {
-                  _iterator.f();
-                }
-              } else {
-                formData.append(key, value);
-              }
-            });
-            fetchData.body = formData;
-          } else {
-            if (data !== undefined) {
-              fetchData.body = JSON.stringify(data);
-            }
-          }
-          _context.n = 4;
-          return fetch(url, fetchData);
-        case 4:
-          res = _context.v;
-          _context.p = 5;
-          _context.n = 6;
-          return res.clone().json();
-        case 6:
-          json = _context.v;
-          _context.n = 8;
-          break;
-        case 7:
-          _context.p = 7;
-          _t = _context.v;
-          return _context.a(2, res.text().then(function (unexpectedText) {
-            if (res.status === 401) {
-              throw new ErrorTypes.UnauthorizedError(unexpectedText);
-            }
-            if (res.status === 403) {
-              throw new ErrorTypes.AccessDeniedError(unexpectedText);
-            }
-            console.error(_t);
-            throw new Error("[".concat(res.status, "] Unexpected non-json response: ") + unexpectedText);
-          }));
-        case 8:
-          if (!(200 <= res.status && res.status < 300)) {
-            _context.n = 9;
-            break;
-          }
-          return _context.a(2, json);
-        case 9:
-          if (!(res.status === 401)) {
-            _context.n = 10;
-            break;
-          }
-          console.log("🐙 fetchJSON 401", json.message);
-          throw new ErrorTypes.UnauthorizedError(json.message);
-        case 10:
-          if (!(res.status === 403)) {
-            _context.n = 11;
-            break;
-          }
-          console.log("🐙 fetchJSON 403", json.message);
-          throw new ErrorTypes.AccessDeniedError(json.message);
-        case 11:
-          console.log("🐙 fetchJSON error", json.message);
-          throw new Error((_json$message = json.message) !== null && _json$message !== void 0 ? _json$message : JSON.stringify(json));
-        case 12:
-          return _context.a(2);
-      }
-    }, _callee, null, [[5, 7]]);
-  }));
-  return _fetchJSON.apply(this, arguments);
-}
-;// ./app/client/sget.ts
-/**
- * Get from storage as JSON
- *
- * @param key - The key to retrieve.
- * @param defaultValue - The default value to return if the key is not found.
- * @param storage - The storage object to retrieve the value from, defaults to localStorage.
- *
- * @returns The JSON.parsed value for the key, or the default value if not found.
- *
- * @throws TypeError If the parameter types are bad.
- *
- * @example
- * const value = sget("foo", 42);
- * -> 42
- */
-function sget(key, defaultValue) {
-  var storage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : localStorage;
-  if (!(storage instanceof Storage)) {
-    throw new TypeError("sget(key, defaultValue, storage) : 'storage' must be a Storage object.");
-  }
-  if (typeof key !== "string") {
-    throw new TypeError("sget(key, defaultValue, storage) : 'key' must be a string.");
-  }
-  var stored = storage.getItem(key);
-  if (stored === null) return defaultValue;
-  return JSON.parse(stored);
-}
-;// ./app/client/sset.ts
-/**
- * Set to Storage as JSON
- *
- * @param key - The key to set.
- * @param value - The value to set. Will be stringified as JSON.
- * @param storage - The storage object to set the value in, defaults to localStorage.
- *
- * @returns The value that was set.
- *
- * @throws TypeError If the parameter types are bad.
- *
- * @example
- * const value = sset("foo", 42);
- * -> 42
- */
-function sset(key, value) {
-  var storage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : localStorage;
-  if (!(storage instanceof Storage)) {
-    throw new TypeError("sset(key, value, storage) : 'storage' must be a Storage object.");
-  }
-  if (typeof key !== "string") {
-    throw new TypeError("sset(key, value, storage) : 'key' must be a string.");
-  }
-  storage.setItem(key, JSON.stringify(value));
-  return value;
-}
-;// ./app/client/index.ts
-
-
-
-
-
-
-/***/ }),
-
-/***/ 407:
+/***/ 91:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -500,15 +114,15 @@ __webpack_require__.r(__webpack_exports__);
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
   AccessDeniedError: () => (/* reexport */ ErrorTypes.AccessDeniedError),
-  ConversionResult: () => (/* reexport */ ConversionResult),
+  ConversionResult: () => (/* reexport */ bestConversionHelper.ConversionResult),
   EventDispatcher: () => (/* reexport */ EventDispatcher),
   Limiter: () => (/* reexport */ Limiter),
   NotFoundError: () => (/* reexport */ ErrorTypes.NotFoundError),
   UnauthorizedError: () => (/* reexport */ ErrorTypes.UnauthorizedError),
   benchmark: () => (/* reexport */ benchmark),
   bestByteUnit: () => (/* reexport */ bestByteUnit),
-  bestConversionHelper: () => (/* reexport */ bestConversionHelper),
-  bestTimeUnitMS: () => (/* reexport */ bestTimeUnitMS),
+  bestConversionHelper: () => (/* reexport */ bestConversionHelper.bestConversionHelper),
+  bestTimeUnitMS: () => (/* reexport */ bestTimeUnitMS.bestTimeUnitMS),
   createPromise: () => (/* reexport */ createPromise.createPromise),
   getIn: () => (/* reexport */ getIn),
   getMime: () => (/* reexport */ getMime),
@@ -523,68 +137,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ./app/ErrorTypes/index.ts
 var ErrorTypes = __webpack_require__(85);
-;// ./app/common/bestConversionHelper.ts
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-var ConversionResult = /*#__PURE__*/_createClass(function ConversionResult(value, round, unit) {
-  _classCallCheck(this, ConversionResult);
-  this.value = value;
-  this.round = round;
-  this.unit = unit;
-
-  // Define the toString method as non-enumerable
-  Object.defineProperty(this, "toString", {
-    value: function value() {
-      return "".concat(this.round, " ").concat(this.unit);
-    },
-    enumerable: false
-  });
-});
-
-/**
- * Best Conversion Helper
- *
- * Helper to convert to human readable units
- *
- * @param startingNumber - Value to convert.
- * @param threshold - Multiplier before converting to the next unit (recommended: 1.2).
- * @param conversions - Array of conversions.
- * @param startingConversionsIndex - Which index in `conversions` represents `startingNumber`.
- *
- * @returns The best conversion in the conversion table.
- *
- * @throws TypeError if the parameter types are bad.
- *
- * @example
- * See bestByteUnit.js and bestTimeUnitMS.js
- */
-function bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) {
-  if (typeof startingNumber !== "number") {
-    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'startingNumber' must be a number.");
-  }
-  if (typeof threshold !== "number") {
-    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'threshold' must be a number.");
-  }
-  if (!Array.isArray(conversions)) {
-    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'conversions' must be an array.");
-  }
-  if (typeof startingConversionsIndex !== "number") {
-    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'startingConversionsIndex' must be a number.");
-  }
-  startingNumber = Math.abs(startingNumber);
-  var i = startingConversionsIndex;
-  while (0 < i && startingNumber <= conversions[i - 1].value * threshold) {
-    i--;
-  }
-  while (i < conversions.length - 1 && conversions[i + 1].value * threshold <= startingNumber) {
-    i++;
-  }
-  return conversions[i];
-}
+// EXTERNAL MODULE: ./app/common/bestConversionHelper.ts
+var bestConversionHelper = __webpack_require__(777);
 ;// ./app/common/benchmark.ts
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
@@ -684,7 +238,7 @@ function _benchmark() {
           e = new Date();
           ms = e.getTime() - s.getTime();
           opsPerSec = count / (ms / 1000);
-          conversion = bestConversionHelper(opsPerSec, 1.2, conversions, 0);
+          conversion = (0,bestConversionHelper.bestConversionHelper)(opsPerSec, 1.2, conversions, 0);
           value = opsPerSec / conversion.value;
           round = Math.round(value * 100) / 100;
           unit = conversion.unit;
@@ -737,68 +291,25 @@ function bestByteUnit(_byte) {
     unit: "EB",
     value: 1 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024
   }];
-  var conversion = bestConversionHelper(_byte, 1.2, conversions, 0);
+  var conversion = (0,bestConversionHelper.bestConversionHelper)(_byte, 1.2, conversions, 0);
   var value = _byte / conversion.value;
   var round = Math.round(value * 100) / 100;
-  return new ConversionResult(value, round, conversion.unit);
+  return new bestConversionHelper.ConversionResult(value, round, conversion.unit);
 }
-;// ./app/common/bestTimeUnitMS.ts
-
-
-/**
- * Convert a millisecond number to human readable units.
- *
- * @param ms - Value to convert.
- *
- * @returns An instance of ConversionResult with value, round, unit, and a toString method that flattens the output.
- *
- * @throws TypeError if the parameter types are incorrect.
- *
- * @example
- * bestTimeUnitMS(4500000);
- * console.log(result.toString());
- * -> "1.25 h"
- */
-function bestTimeUnitMS(ms) {
-  if (typeof ms !== "number") {
-    throw new TypeError("bestTimeUnitMS(ms) : 'ms' must be a number.");
-  }
-  var conversions = [{
-    unit: "μs",
-    value: 1 / 1000
-  }, {
-    unit: "ms",
-    value: 1
-  }, {
-    unit: "s",
-    value: 1 * 1000
-  }, {
-    unit: "m",
-    value: 1 * 1000 * 60
-  }, {
-    unit: "h",
-    value: 1 * 1000 * 60 * 60
-  }, {
-    unit: "d",
-    value: 1 * 1000 * 60 * 60 * 24
-  }];
-  var conversion = bestConversionHelper(ms, 1.2, conversions, 1);
-  var value = ms / conversion.value;
-  var round = Math.round(value * 100) / 100;
-  return new ConversionResult(value, round, conversion.unit);
-}
+// EXTERNAL MODULE: ./app/common/bestTimeUnitMS.ts
+var bestTimeUnitMS = __webpack_require__(738);
 // EXTERNAL MODULE: ./app/common/createPromise.ts
 var createPromise = __webpack_require__(550);
 ;// ./app/common/EventDispatcher.ts
-function EventDispatcher_typeof(o) { "@babel/helpers - typeof"; return EventDispatcher_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, EventDispatcher_typeof(o); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function EventDispatcher_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function EventDispatcher_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, EventDispatcher_toPropertyKey(o.key), o); } }
-function EventDispatcher_createClass(e, r, t) { return r && EventDispatcher_defineProperties(e.prototype, r), t && EventDispatcher_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _defineProperty(e, r, t) { return (r = EventDispatcher_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function EventDispatcher_toPropertyKey(t) { var i = EventDispatcher_toPrimitive(t, "string"); return "symbol" == EventDispatcher_typeof(i) ? i : i + ""; }
-function EventDispatcher_toPrimitive(t, r) { if ("object" != EventDispatcher_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != EventDispatcher_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /**
  * Event Dispatcher
  *
@@ -827,11 +338,11 @@ function EventDispatcher_toPrimitive(t, r) { if ("object" != EventDispatcher_typ
  */
 var EventDispatcher = /*#__PURE__*/function () {
   function EventDispatcher() {
-    EventDispatcher_classCallCheck(this, EventDispatcher);
+    _classCallCheck(this, EventDispatcher);
     _defineProperty(this, "handlers", new Map());
     _defineProperty(this, "batchedHandlers", new Map());
   }
-  return EventDispatcher_createClass(EventDispatcher, [{
+  return _createClass(EventDispatcher, [{
     key: "trigger",
     value: function trigger(type) {
       var _this = this;
@@ -2025,6 +1536,427 @@ function setIn(source, path, value) {
 
 /***/ }),
 
+/***/ 154:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__154__;
+
+/***/ }),
+
+/***/ 251:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  decodeQueryString: () => (/* reexport */ decodeQueryString),
+  encodeForm: () => (/* reexport */ encodeForm),
+  encodeQueryString: () => (/* reexport */ encodeQueryString),
+  fetchJSON: () => (/* reexport */ fetchJSON),
+  sget: () => (/* reexport */ sget),
+  sset: () => (/* reexport */ sset)
+});
+
+;// ./app/client/decodeQueryString.ts
+/**
+ * Decodes a query string into an object. Starting "?" are auto-trimmed. Empty pair values are omitted.
+ *
+ * @param str - The query string to decode.
+ *
+ * @returns An object containing key-value pairs from the query string.
+ *
+ * @throws {TypeError} If the parameter types are bad.
+ *
+ * @example
+ * const query = decodeQueryString("?foo=bar");
+ * -> { foo: "bar" }
+ */
+function decodeQueryString(str) {
+  var query = {};
+  if (typeof str !== "string") {
+    throw new TypeError("decodeQueryString(str) : 'str' must be a string.");
+  }
+  if (!str) return {};
+  if (str.charAt(0) === "?") str = str.substring(1);
+  if (!str.length) return {};
+  str.split("&").forEach(function (str) {
+    var pair = str.split("=");
+    if (2 < pair.length) {
+      throw new Error("Query string is not well-formed");
+    }
+    var k = decodeURIComponent(pair[0]);
+    var v = decodeURIComponent(pair[1]);
+    if (v) query[String(k)] = v;
+  });
+  return query;
+}
+;// ./app/client/encodeForm.ts
+/**
+ * @todo Not done. Needs to support: checkbox, radio, select
+ *
+ * Encode HTML Form
+ *
+ * Encodes a Form element as a plain JavaScript object
+ *
+ * @param {HTMLFormElement}  form  Form to encode the values of.
+ * @returns {Object}  Object containing the `{ name: value }`
+ *
+ * @example
+ * onSubmit = event => {
+ *   event.preventDefault();
+ *   console.log(encodeForm(event.target));
+ * }
+ */
+function encodeForm(htmlFormElement) {
+  var ret = {};
+  var valueOfElement = function valueOfElement(element) {
+    var type = element.getAttribute("type");
+    var asNum;
+    var value;
+    switch (element.tagName) {
+      case "INPUT":
+        switch (type) {
+          case "number":
+            asNum = Number(element.value);
+            return isNaN(asNum) ? NaN : asNum;
+          case "checkbox":
+            return element.checked;
+          default:
+            return element.value;
+        }
+      case "TEXTAREA":
+        return element.value;
+      case "SELECT":
+        {
+          // WONT FIX: Multi not supported.
+          var selectElement = element;
+          if (~selectElement.selectedIndex) {
+            return selectElement.options[selectElement.selectedIndex].value;
+          } else {
+            return "";
+          }
+        }
+      default:
+        value = element.getAttribute("data-value");
+        return typeof value === "string" ? JSON.parse(value) : "";
+    }
+  };
+  htmlFormElement.querySelectorAll("[name]").forEach(function (element) {
+    var name = element.getAttribute("name");
+    if (!name) return; // only if name has content
+
+    var arrayMode = false;
+    var checkboxLike = element instanceof HTMLInputElement && (element.type === "checkbox" || element.type === "radio");
+    var value = valueOfElement(element);
+    if (checkboxLike) {
+      arrayMode = true;
+      value = element.value;
+    }
+    if (arrayMode) {
+      if (typeof ret[name] === "undefined") ret[name] = [];
+      if (!Array.isArray(ret[name])) {
+        // skip this erroneous case
+        console.warn("[SKIP] Data was set to store an array, but encountered a non-array element: ".concat(element.tagName, "[name=").concat(name, "]") + (element.tagName === "INPUT" ? "[type=".concat(element.type, "]") : ""));
+        return;
+      }
+      ret[name].push(value);
+    } else {
+      if (Array.isArray(ret[name])) {
+        // skip this erroneous case
+        console.warn("Data was set to store a string, but encountered an array element: ".concat(element.tagName, "[name=").concat(name, "]") + (element.tagName === "INPUT" ? "[type=".concat(element.type, "]") : ""));
+        return;
+      }
+      ret[name] = value;
+    }
+  });
+  return ret;
+}
+;// ./app/client/encodeQueryString.ts
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+/**
+ * Encodes an object into a query string or returns a string as is.
+ *
+ * @param data - The object to encode into a query string.
+ * @param url - Optional URL to append the query string to.
+ *
+ * @returns The encoded query string or the original string if `data` is not an object.
+ *
+ * @throws {TypeError} If the parameter types are bad.
+ *
+ * @example
+ * const url = encodeQueryString({ foo: "bar" }, "https://example.com");
+ * -> "https://example.com?foo=bar"
+ */
+function encodeQueryString(data, url) {
+  if (_typeof(data) !== "object" || data === null) {
+    throw new TypeError("encodeQueryString(data, url?) : 'data' must be an object.");
+  }
+  if (url !== undefined && typeof url !== "string") {
+    throw new TypeError("encodeQueryString(data, url?) : 'url' is optional, but must be a string.");
+  }
+  var query = Object.entries(data).filter(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      key = _ref2[0],
+      value = _ref2[1];
+    return value !== undefined && value !== null;
+  }).map(function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+      key = _ref4[0],
+      value = _ref4[1];
+    return "".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(value));
+  }).join("&");
+  if (url) {
+    return "".concat(url, "?").concat(query);
+  } else {
+    return query;
+  }
+}
+// EXTERNAL MODULE: external "lodash"
+var external_lodash_ = __webpack_require__(154);
+// EXTERNAL MODULE: ./app/ErrorTypes/index.ts
+var ErrorTypes = __webpack_require__(85);
+;// ./app/client/fetchJSON.ts
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = fetchJSON_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function fetchJSON_slicedToArray(r, e) { return fetchJSON_arrayWithHoles(r) || fetchJSON_iterableToArrayLimit(r, e) || fetchJSON_unsupportedIterableToArray(r, e) || fetchJSON_nonIterableRest(); }
+function fetchJSON_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function fetchJSON_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return fetchJSON_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? fetchJSON_arrayLikeToArray(r, a) : void 0; } }
+function fetchJSON_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function fetchJSON_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function fetchJSON_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function fetchJSON_typeof(o) { "@babel/helpers - typeof"; return fetchJSON_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, fetchJSON_typeof(o); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+/**
+ * Fetch [GET|POST] JSON.
+ * Formats a fetch call to send & accept JSON.
+ * Sets the method to POST if JSON data is provided.
+ *
+ * @param url The URL to fetch.
+ * @param data Optional JSON data to send.
+ * @param options Optional fetch options.
+ *
+ * @returns A Promise resolving to the JSON response.
+ *
+ * @throws {TypeError} If the parameter types are bad.
+ * @throws {UnauthorizedError} If the response status is 401.
+ * @throws {AccessDeniedError} If the response status is 403.
+ * @throws {Error} If the response status is not 200-299.
+ * @throws {Error} If the response is not JSON.
+ *
+ * @example
+ * const data = await fetchJSON(`/api/session/login`, { email, password });
+ * -> { success: true, message: "Login successful." }
+ */
+function fetchJSON(_x, _x2) {
+  return _fetchJSON.apply(this, arguments);
+}
+function _fetchJSON() {
+  _fetchJSON = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(url, data) {
+    var options,
+      asForm,
+      fetchData,
+      formData,
+      res,
+      json,
+      _json$message,
+      _args = arguments,
+      _t;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.p = _context.n) {
+        case 0:
+          options = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
+          if (!(typeof url !== "string")) {
+            _context.n = 1;
+            break;
+          }
+          throw new TypeError("fetchJSON(url, data?, options?) : 'url' must be a string.");
+        case 1:
+          if (!(data !== undefined && (fetchJSON_typeof(data) !== "object" || data === null))) {
+            _context.n = 2;
+            break;
+          }
+          throw new TypeError("fetchJSON(url, data?, options?) : 'data' is optional, but must be an object.");
+        case 2:
+          if (!(options !== undefined && (fetchJSON_typeof(options) !== "object" || options === null))) {
+            _context.n = 3;
+            break;
+          }
+          throw new TypeError("fetchJSON(url, data?, options?) : 'options' is optional, but must be an object.");
+        case 3:
+          asForm = !!options.form;
+          if (asForm) {
+            fetchData = (0,external_lodash_.merge)({
+              method: "post"
+            }, options);
+          } else {
+            fetchData = (0,external_lodash_.merge)({
+              method: typeof data === "undefined" ? "get" : "post",
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              }
+            }, options);
+          }
+          if (asForm && data) {
+            formData = new FormData();
+            Object.entries(data).forEach(function (_ref) {
+              var _ref2 = fetchJSON_slicedToArray(_ref, 2),
+                key = _ref2[0],
+                value = _ref2[1];
+              if (value instanceof FileList || Array.isArray(value)) {
+                var _iterator = _createForOfIteratorHelper(value),
+                  _step;
+                try {
+                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                    var v = _step.value;
+                    formData.append(key, v);
+                  }
+                } catch (err) {
+                  _iterator.e(err);
+                } finally {
+                  _iterator.f();
+                }
+              } else {
+                formData.append(key, value);
+              }
+            });
+            fetchData.body = formData;
+          } else {
+            if (data !== undefined) {
+              fetchData.body = JSON.stringify(data);
+            }
+          }
+          _context.n = 4;
+          return fetch(url, fetchData);
+        case 4:
+          res = _context.v;
+          _context.p = 5;
+          _context.n = 6;
+          return res.clone().json();
+        case 6:
+          json = _context.v;
+          _context.n = 8;
+          break;
+        case 7:
+          _context.p = 7;
+          _t = _context.v;
+          return _context.a(2, res.text().then(function (unexpectedText) {
+            if (res.status === 401) {
+              throw new ErrorTypes.UnauthorizedError(unexpectedText);
+            }
+            if (res.status === 403) {
+              throw new ErrorTypes.AccessDeniedError(unexpectedText);
+            }
+            console.error(_t);
+            throw new Error("[".concat(res.status, "] Unexpected non-json response: ") + unexpectedText);
+          }));
+        case 8:
+          if (!(200 <= res.status && res.status < 300)) {
+            _context.n = 9;
+            break;
+          }
+          return _context.a(2, json);
+        case 9:
+          if (!(res.status === 401)) {
+            _context.n = 10;
+            break;
+          }
+          console.log("🐙 fetchJSON 401", json.message);
+          throw new ErrorTypes.UnauthorizedError(json.message);
+        case 10:
+          if (!(res.status === 403)) {
+            _context.n = 11;
+            break;
+          }
+          console.log("🐙 fetchJSON 403", json.message);
+          throw new ErrorTypes.AccessDeniedError(json.message);
+        case 11:
+          console.log("🐙 fetchJSON error", json.message);
+          throw new Error((_json$message = json.message) !== null && _json$message !== void 0 ? _json$message : JSON.stringify(json));
+        case 12:
+          return _context.a(2);
+      }
+    }, _callee, null, [[5, 7]]);
+  }));
+  return _fetchJSON.apply(this, arguments);
+}
+;// ./app/client/sget.ts
+/**
+ * Get from storage as JSON
+ *
+ * @param key - The key to retrieve.
+ * @param defaultValue - The default value to return if the key is not found.
+ * @param storage - The storage object to retrieve the value from, defaults to localStorage.
+ *
+ * @returns The JSON.parsed value for the key, or the default value if not found.
+ *
+ * @throws TypeError If the parameter types are bad.
+ *
+ * @example
+ * const value = sget("foo", 42);
+ * -> 42
+ */
+function sget(key, defaultValue) {
+  var storage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : localStorage;
+  if (!(storage instanceof Storage)) {
+    throw new TypeError("sget(key, defaultValue, storage) : 'storage' must be a Storage object.");
+  }
+  if (typeof key !== "string") {
+    throw new TypeError("sget(key, defaultValue, storage) : 'key' must be a string.");
+  }
+  var stored = storage.getItem(key);
+  if (stored === null) return defaultValue;
+  return JSON.parse(stored);
+}
+;// ./app/client/sset.ts
+/**
+ * Set to Storage as JSON
+ *
+ * @param key - The key to set.
+ * @param value - The value to set. Will be stringified as JSON.
+ * @param storage - The storage object to set the value in, defaults to localStorage.
+ *
+ * @returns The value that was set.
+ *
+ * @throws TypeError If the parameter types are bad.
+ *
+ * @example
+ * const value = sset("foo", 42);
+ * -> 42
+ */
+function sset(key, value) {
+  var storage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : localStorage;
+  if (!(storage instanceof Storage)) {
+    throw new TypeError("sset(key, value, storage) : 'storage' must be a Storage object.");
+  }
+  if (typeof key !== "string") {
+    throw new TypeError("sset(key, value, storage) : 'key' must be a string.");
+  }
+  storage.setItem(key, JSON.stringify(value));
+  return value;
+}
+;// ./app/client/index.ts
+
+
+
+
+
+
+
+/***/ }),
+
 /***/ 550:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -2032,6 +1964,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createPromise: () => (/* binding */ createPromise)
 /* harmony export */ });
+/* harmony import */ var _common_bestTimeUnitMS__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(738);
+
 /**
  * Promise Helper
  *
@@ -2048,12 +1982,38 @@ __webpack_require__.r(__webpack_exports__);
  * return stuff;
  */
 function createPromise() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    timeout = _ref.timeout;
   var resolve;
   var reject;
+  var timeoutId;
   var promise = new Promise(function (rs, rj) {
-    resolve = rs;
-    reject = rj;
+    resolve = function resolve(value) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      rs(value);
+    };
+    reject = function reject(reason) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      rj(reason);
+    };
   });
+  if (timeout) {
+    var timeoutValue;
+    if (typeof timeout === "number") {
+      timeoutValue = timeout;
+    } else {
+      timeoutValue = new Date(timeout).getTime() - Date.now();
+    }
+    var t = (0,_common_bestTimeUnitMS__WEBPACK_IMPORTED_MODULE_0__.bestTimeUnitMS)(timeoutValue);
+    var error = new Error("Promise timed out after ".concat(t.round, " ").concat(t.unit, "."));
+    timeoutId = setTimeout(function () {
+      reject(error);
+    }, timeoutValue);
+  }
   return {
     promise: promise,
     resolve: resolve,
@@ -2281,10 +2241,137 @@ function sanitizePath(workingDir, filePath) {
 
 /***/ }),
 
+/***/ 738:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   bestTimeUnitMS: () => (/* binding */ bestTimeUnitMS)
+/* harmony export */ });
+/* harmony import */ var _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(777);
+
+
+/**
+ * Convert a millisecond number to human readable units.
+ *
+ * @param ms - Value to convert.
+ *
+ * @returns An instance of ConversionResult with value, round, unit, and a toString method that flattens the output.
+ *
+ * @throws TypeError if the parameter types are incorrect.
+ *
+ * @example
+ * bestTimeUnitMS(4500000);
+ * console.log(result.toString());
+ * -> "1.25 h"
+ */
+function bestTimeUnitMS(ms) {
+  if (typeof ms !== "number") {
+    throw new TypeError("bestTimeUnitMS(ms) : 'ms' must be a number.");
+  }
+  var conversions = [{
+    unit: "μs",
+    value: 1 / 1000
+  }, {
+    unit: "ms",
+    value: 1
+  }, {
+    unit: "s",
+    value: 1 * 1000
+  }, {
+    unit: "m",
+    value: 1 * 1000 * 60
+  }, {
+    unit: "h",
+    value: 1 * 1000 * 60 * 60
+  }, {
+    unit: "d",
+    value: 1 * 1000 * 60 * 60 * 24
+  }];
+  var conversion = (0,_bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.bestConversionHelper)(ms, 1.2, conversions, 1);
+  var value = ms / conversion.value;
+  var round = Math.round(value * 100) / 100;
+  return new _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.ConversionResult(value, round, conversion.unit);
+}
+
+/***/ }),
+
 /***/ 741:
 /***/ ((module) => {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE__741__;
+
+/***/ }),
+
+/***/ 777:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ConversionResult: () => (/* binding */ ConversionResult),
+/* harmony export */   bestConversionHelper: () => (/* binding */ bestConversionHelper)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+var ConversionResult = /*#__PURE__*/_createClass(function ConversionResult(value, round, unit) {
+  _classCallCheck(this, ConversionResult);
+  this.value = value;
+  this.round = round;
+  this.unit = unit;
+
+  // Define the toString method as non-enumerable
+  Object.defineProperty(this, "toString", {
+    value: function value() {
+      return "".concat(this.round, " ").concat(this.unit);
+    },
+    enumerable: false
+  });
+});
+
+/**
+ * Best Conversion Helper
+ *
+ * Helper to convert to human readable units
+ *
+ * @param startingNumber - Value to convert.
+ * @param threshold - Multiplier before converting to the next unit (recommended: 1.2).
+ * @param conversions - Array of conversions.
+ * @param startingConversionsIndex - Which index in `conversions` represents `startingNumber`.
+ *
+ * @returns The best conversion in the conversion table.
+ *
+ * @throws TypeError if the parameter types are bad.
+ *
+ * @example
+ * See bestByteUnit.js and bestTimeUnitMS.js
+ */
+function bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) {
+  if (typeof startingNumber !== "number") {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'startingNumber' must be a number.");
+  }
+  if (typeof threshold !== "number") {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'threshold' must be a number.");
+  }
+  if (!Array.isArray(conversions)) {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'conversions' must be an array.");
+  }
+  if (typeof startingConversionsIndex !== "number") {
+    throw new TypeError("bestConversionHelper(startingNumber, threshold, conversions, startingConversionsIndex) : 'startingConversionsIndex' must be a number.");
+  }
+  startingNumber = Math.abs(startingNumber);
+  var i = startingConversionsIndex;
+  while (0 < i && startingNumber <= conversions[i - 1].value * threshold) {
+    i--;
+  }
+  while (i < conversions.length - 1 && conversions[i + 1].value * threshold <= startingNumber) {
+    i++;
+  }
+  return conversions[i];
+}
 
 /***/ })
 
@@ -2365,8 +2452,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   server: () => (/* reexport module object */ _server__WEBPACK_IMPORTED_MODULE_3__)
 /* harmony export */ });
 /* harmony import */ var _ErrorTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(85);
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(245);
-/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(407);
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(251);
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(91);
 /* harmony import */ var _server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(587);
 
 

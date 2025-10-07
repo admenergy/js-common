@@ -1,3 +1,6 @@
+interface CreatePromiseParams {
+    timeout?: number | Date;
+}
 /**
  * Promise Helper
  *
@@ -13,8 +16,9 @@
  * await pr.promise;
  * return stuff;
  */
-export declare function createPromise<T = any>(): {
+export declare function createPromise<T = any>({ timeout }?: CreatePromiseParams): {
     promise: Promise<T>;
     resolve: (value: T | PromiseLike<T>) => void;
     reject: (reason?: any) => void;
 };
+export {};

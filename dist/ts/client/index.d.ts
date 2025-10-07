@@ -1,3 +1,4 @@
+export * from "./decodeQueryString";
 export * from "./encodeForm";
 export * from "./encodeQueryString";
 export * from "./fetchJSON";
