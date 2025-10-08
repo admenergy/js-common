@@ -26,13 +26,12 @@
   "exclude": [
     "node_modules",
     "dist",
-    "__tests__",
-    "app/**/*.test.ts",
-    "app/**/*.test.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
     "app/entry.client.tsx",
     "app/entry.server.tsx",
     "app/root.tsx",
-    "app/routes",
-    "app/styles"
+    "app/routes/**/*",
+    "app/styles/**/*"
   ]
 }

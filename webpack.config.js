@@ -8,6 +8,9 @@ Object.keys(packageJson.dependencies).forEach((dep) => {
 
 const clientConfig = {
   target: "node",
+  experiments: {
+    outputModule: true,
+  },
   optimization: {
     usedExports: false,
     minimize: false,
@@ -17,10 +20,11 @@ const clientConfig = {
     filename: "[name]/index.js",
     path: path.resolve(__dirname, "dist/js"),
     library: {
-      name: packageJson.name,
-      type: "umd",
+      type: "module",
     },
-    globalObject: "this",
+    environment: {
+      module: true,
+    },
   },
   externals: dependencies,
   resolve: {
