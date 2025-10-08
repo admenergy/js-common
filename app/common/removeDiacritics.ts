@@ -32,6 +32,7 @@ const defaultDiacriticsRemovalMap = [
   { base: "\n", letters: /\r\n/g },
 
   // Unicode spaces and tabs
+  // eslint-disable-next-line no-control-regex
   { base: " ", letters: /[\u0009\u00A0\u2000-\u200A\u202F\u205F\u3000]/g },
 
   // Microsoft smart quotes
@@ -45,6 +46,7 @@ const defaultDiacriticsRemovalMap = [
   { base: "_", letters: /[\u005F\uFE4D-\uFE4F]/g },
 
   // Invisible formatting characters
+  // eslint-disable-next-line no-control-regex
   { base: "", letters: /[\u0002\u0003]/g },
 
   // Letters

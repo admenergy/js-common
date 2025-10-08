@@ -1,6 +1,6 @@
 import {
   bestConversionHelper,
-  Conversion,
+  type Conversion,
   ConversionResult,
 } from "./bestConversionHelper";
 
