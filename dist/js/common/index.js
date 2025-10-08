@@ -1,16 +1,4 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["@admenergy/js-common"] = factory();
-	else
-		root["@admenergy/js-common"] = factory();
-})(this, () => {
-return /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+/******/ var __webpack_modules__ = ({
 
 /***/ 85:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -298,89 +286,65 @@ function bestConversionHelper(startingNumber, threshold, conversions, startingCo
 
 /***/ })
 
-/******/ 	});
+/******/ });
 /************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
 /******/ 	}
-/******/ 	
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
 /************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
 /************************************************************************/
 var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  AccessDeniedError: () => (/* reexport */ ErrorTypes.AccessDeniedError),
-  ConversionResult: () => (/* reexport */ bestConversionHelper.ConversionResult),
-  EventDispatcher: () => (/* reexport */ EventDispatcher),
-  Limiter: () => (/* reexport */ Limiter),
-  NotFoundError: () => (/* reexport */ ErrorTypes.NotFoundError),
-  UnauthorizedError: () => (/* reexport */ ErrorTypes.UnauthorizedError),
-  benchmark: () => (/* reexport */ benchmark),
-  bestByteUnit: () => (/* reexport */ bestByteUnit),
-  bestConversionHelper: () => (/* reexport */ bestConversionHelper.bestConversionHelper),
-  bestTimeUnitMS: () => (/* reexport */ bestTimeUnitMS.bestTimeUnitMS),
-  createPromise: () => (/* reexport */ createPromise.createPromise),
-  getIn: () => (/* reexport */ getIn),
-  getMime: () => (/* reexport */ getMime),
-  isISODateString: () => (/* reexport */ isISODateString),
-  performance: () => (/* reexport */ performance),
-  removeDiacritics: () => (/* reexport */ removeDiacritics),
-  sanitizeJSON: () => (/* reexport */ sanitizeJSON),
-  sanitizeStringDisplay: () => (/* reexport */ sanitizeStringDisplay),
-  sanitizeStringKey: () => (/* reexport */ sanitizeStringKey),
-  setIn: () => (/* reexport */ setIn)
-});
 
 // EXTERNAL MODULE: ./app/ErrorTypes/index.ts
 var ErrorTypes = __webpack_require__(85);
@@ -1196,6 +1160,7 @@ var defaultDiacriticsRemovalMap = [
   letters: /\r\n/g
 },
 // Unicode spaces and tabs
+// eslint-disable-next-line no-control-regex
 {
   base: " ",
   letters: /[\u0009\u00A0\u2000-\u200A\u202F\u205F\u3000]/g
@@ -1219,6 +1184,7 @@ var defaultDiacriticsRemovalMap = [
   letters: /[\u005F\uFE4D-\uFE4F]/g
 },
 // Invisible formatting characters
+// eslint-disable-next-line no-control-regex
 {
   base: "",
   letters: /[\u0002\u0003]/g
@@ -1780,7 +1746,11 @@ function setIn(source, path, value) {
 
 
 
-/******/ 	return __webpack_exports__;
-/******/ })()
-;
-});
+const __webpack_exports__bestConversionHelper = bestConversionHelper.bestConversionHelper;
+const __webpack_exports__bestTimeUnitMS = bestTimeUnitMS.bestTimeUnitMS;
+const __webpack_exports__createPromise = createPromise.createPromise;
+export { EventDispatcher, Limiter, benchmark, bestByteUnit, __webpack_exports__bestConversionHelper as bestConversionHelper, __webpack_exports__bestTimeUnitMS as bestTimeUnitMS, __webpack_exports__createPromise as createPromise, getIn, getMime, isISODateString, performance, removeDiacritics, sanitizeJSON, sanitizeStringDisplay, sanitizeStringKey, setIn };
+export const AccessDeniedError = ErrorTypes.AccessDeniedError;
+export const ConversionResult = bestConversionHelper.ConversionResult;
+export const NotFoundError = ErrorTypes.NotFoundError;
+export const UnauthorizedError = ErrorTypes.UnauthorizedError;

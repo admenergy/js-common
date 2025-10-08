@@ -1,16 +1,7 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("json5"));
-	else if(typeof define === 'function' && define.amd)
-		define(["json5"], factory);
-	else if(typeof exports === 'object')
-		exports["@admenergy/js-common"] = factory(require("json5"));
-	else
-		root["@admenergy/js-common"] = factory(root["json5"]);
-})(this, (__WEBPACK_EXTERNAL_MODULE__741__) => {
-return /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+import * as __WEBPACK_EXTERNAL_MODULE_json5__ from "json5";
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "node:module";
+const __WEBPACK_EXTERNAL_createRequire_require = __WEBPACK_EXTERNAL_createRequire(import.meta.url);
+/******/ var __webpack_modules__ = ({
 
 /***/ 550:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -133,13 +124,6 @@ function bestTimeUnitMS(ms) {
 
 /***/ }),
 
-/***/ 741:
-/***/ ((module) => {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__741__;
-
-/***/ }),
-
 /***/ 777:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -212,88 +196,68 @@ function bestConversionHelper(startingNumber, threshold, conversions, startingCo
 
 /***/ })
 
-/******/ 	});
+/******/ });
 /************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
 /******/ 	}
-/******/ 	
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
 /************************************************************************/
 var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  getEnv: () => (/* reexport */ getEnv),
-  runProcess: () => (/* reexport */ runProcess),
-  sanitizePath: () => (/* reexport */ sanitizePath)
-});
-
-// EXTERNAL MODULE: external "json5"
-var external_json5_ = __webpack_require__(741);
-var external_json5_default = /*#__PURE__*/__webpack_require__.n(external_json5_);
+;// external "json5"
+const external_json5_namespaceObject = __WEBPACK_EXTERNAL_MODULE_json5__;
 ;// ./app/server/getEnv.ts
 
 
@@ -337,7 +301,7 @@ function getEnv(variableName) {
       }
 
       // Parse JSON5
-      return external_json5_default().parse(parsedConfig);
+      return external_json5_namespaceObject["default"].parse(parsedConfig);
     } catch (error) {
       console.log("\u26A0\uFE0F ", "Failed to parse ".concat(variableName));
       return null;
@@ -346,7 +310,7 @@ function getEnv(variableName) {
   return parsedConfig;
 }
 ;// external "child_process"
-const external_child_process_namespaceObject = require("child_process");
+const external_child_process_namespaceObject = __WEBPACK_EXTERNAL_createRequire_require("child_process");
 // EXTERNAL MODULE: ./app/common/createPromise.ts
 var createPromise = __webpack_require__(550);
 ;// ./app/server/runProcess.ts
@@ -432,7 +396,7 @@ function _runProcess() {
   return _runProcess.apply(this, arguments);
 }
 ;// external "path"
-const external_path_namespaceObject = require("path");
+const external_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire_require("path");
 ;// ./app/server/sanitizePath.ts
 
 
@@ -493,7 +457,4 @@ function sanitizePath(workingDir, filePath) {
 
 
 
-/******/ 	return __webpack_exports__;
-/******/ })()
-;
-});
+export { getEnv, runProcess, sanitizePath };

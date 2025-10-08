@@ -1,16 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("lodash"));
-	else if(typeof define === 'function' && define.amd)
-		define(["lodash"], factory);
-	else if(typeof exports === 'object')
-		exports["@admenergy/js-common"] = factory(require("lodash"));
-	else
-		root["@admenergy/js-common"] = factory(root["lodash"]);
-})(this, (__WEBPACK_EXTERNAL_MODULE__154__) => {
-return /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+import * as __WEBPACK_EXTERNAL_MODULE_lodash__ from "lodash";
+/******/ var __webpack_modules__ = ({
 
 /***/ 85:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -103,84 +92,67 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
   return _createClass(NotFoundError);
 }(/*#__PURE__*/_wrapNativeSuper(Error));
 
-/***/ }),
-
-/***/ 154:
-/***/ ((module) => {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__154__;
-
 /***/ })
 
-/******/ 	});
+/******/ });
 /************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
 /******/ 	}
-/******/ 	
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
 /************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
 /************************************************************************/
 var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  decodeQueryString: () => (/* reexport */ decodeQueryString),
-  encodeForm: () => (/* reexport */ encodeForm),
-  encodeQueryString: () => (/* reexport */ encodeQueryString),
-  fetchJSON: () => (/* reexport */ fetchJSON),
-  sget: () => (/* reexport */ sget),
-  sset: () => (/* reexport */ sset)
-});
 
 ;// ./app/client/decodeQueryString.ts
 /**
@@ -342,8 +314,8 @@ function encodeQueryString(data, url) {
     return query;
   }
 }
-// EXTERNAL MODULE: external "lodash"
-var external_lodash_ = __webpack_require__(154);
+;// external "lodash"
+const external_lodash_namespaceObject = __WEBPACK_EXTERNAL_MODULE_lodash__;
 // EXTERNAL MODULE: ./app/ErrorTypes/index.ts
 var ErrorTypes = __webpack_require__(85);
 ;// ./app/client/fetchJSON.ts
@@ -420,11 +392,11 @@ function _fetchJSON() {
         case 3:
           asForm = !!options.form;
           if (asForm) {
-            fetchData = (0,external_lodash_.merge)({
+            fetchData = (0,external_lodash_namespaceObject.merge)({
               method: "post"
             }, options);
           } else {
-            fetchData = (0,external_lodash_.merge)({
+            fetchData = (0,external_lodash_namespaceObject.merge)({
               method: typeof data === "undefined" ? "get" : "post",
               headers: {
                 "Accept": "application/json",
@@ -577,7 +549,4 @@ function sset(key, value) {
 
 
 
-/******/ 	return __webpack_exports__;
-/******/ })()
-;
-});
+export { decodeQueryString, encodeForm, encodeQueryString, fetchJSON, sget, sset };

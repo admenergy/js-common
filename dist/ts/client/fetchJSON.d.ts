@@ -3,6 +3,7 @@ export interface FetchJsonOptions {
     headers?: {
         [key: string]: string;
     };
+    signal?: AbortSignal;
 }
 /**
  * Fetch [GET|POST] JSON.
