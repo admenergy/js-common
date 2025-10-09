@@ -82,7 +82,7 @@ export default [
       },
       "import/resolver": {
         typescript: {
-          project: "./tsconfig.json",
+          project: "./tsconfig.eslint.json",
         },
       },
     },
@@ -94,25 +94,25 @@ export default [
     languageOptions: {
       parser: eslintTs.parser,
       parserOptions: {
-        project: "./tsconfig.json",
+        project: "./tsconfig.eslint.json",
         tsconfigRootDir: process.cwd(),
       },
       globals,
     },
     plugins: {
+      "@typescript-eslint": eslintTs.plugin,
+      "import": eslintImport,
+      "jsx-a11y": eslintJsxA11y,
+      "react-hooks": eslintReactHooks,
+      "react": eslintReact,
       "security": eslintSecurity,
       "unused-imports": eslintUnusedImports,
-      "import": eslintImport,
-      "react": eslintReact,
-      "react-hooks": eslintReactHooks,
-      "jsx-a11y": eslintJsxA11y,
-      "@typescript-eslint": eslintTs.plugin,
     },
     rules: {
-      ...eslintReact.configs.flat.recommended.rules,
-      ...eslintReactHooks.configs.recommended.rules,
       ...eslintImport.flatConfigs.recommended.rules,
       ...eslintJsxA11y.flatConfigs.recommended.rules,
+      ...eslintReact.configs.flat.recommended.rules,
+      ...eslintReactHooks.configs.recommended.rules,
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/consistent-type-imports": [
         "error",
@@ -140,7 +140,7 @@ export default [
       },
       "import/resolver": {
         typescript: {
-          project: "./tsconfig.json",
+          project: "./tsconfig.eslint.json",
         },
       },
     },

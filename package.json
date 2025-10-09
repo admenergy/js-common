@@ -47,6 +47,10 @@
     "clean": "rm -rf dist/ .next/",
     "purge": "rm -rf dist/ .next/ node_modules/ package-lock.json yarn.lock"
   },
+  "externals": {
+    "react": "react",
+    "react-dom": "react-dom"
+  },
   "dependencies": {
     "json5": "^2.2.3",
     "lodash": "^4.17.21",

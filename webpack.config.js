@@ -1,5 +1,11 @@
-const path = require("path");
-const packageJson = require("./package.json");
+import { readFileSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const packageJson = JSON.parse(readFileSync("./package.json", "utf8"));
 
 const dependencies = {};
 Object.keys(packageJson.dependencies).forEach((dep) => {
@@ -26,7 +32,7 @@ const clientConfig = {
       module: true,
     },
   },
-  externals: dependencies,
+  externals: packageJson.externals,
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
     alias: {
@@ -53,4 +59,4 @@ const clientConfig = {
   },
 };
 
-module.exports = clientConfig;
+export default clientConfig;

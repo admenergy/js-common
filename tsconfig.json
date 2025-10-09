@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "strict": false,
     "experimentalDecorators": true,
     "declaration": true,
