@@ -4,6 +4,7 @@ import { AccessDeniedError, UnauthorizedError } from "../ErrorTypes";
 export interface FetchJsonOptions {
   form?: boolean;
   headers?: { [key: string]: string };
+  signal?: AbortSignal;
 }
 
 /**

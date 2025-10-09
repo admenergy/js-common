@@ -6,6 +6,10 @@ import { fetchJSON } from "./fetchJSON";
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
+/*
+- Not testing Abort Controllers, since node fetch for Jest doesnt support signals. Test it in production.
+*/
+
 describe("fetchJSON", () => {
   afterEach(() => {
     vi.clearAllMocks();
