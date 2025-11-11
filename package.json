@@ -57,7 +57,7 @@
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.28.5",
-    "@babel/preset-typescript": "^7.27.1",
+    "@babel/preset-typescript": "^7.28.5",
     "@microsoft/eslint-formatter-sarif": "^3.1.0",
     "@mui/icons-material": "<7.0.0",
     "@mui/material": "<7.0.0",
