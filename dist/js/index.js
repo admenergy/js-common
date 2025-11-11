@@ -1448,7 +1448,7 @@ function setIn(source, path, value) {
   function traverse(source, path, value) {
     var _path = _toArray(path),
       p = _path[0],
-      pathRest = _path.slice(1);
+      pathRest = setIn_arrayLikeToArray(_path).slice(1);
     if (pathRest.length === 0) {
       if (source[String(p)] === value) {
         return {
