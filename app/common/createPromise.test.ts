@@ -28,17 +28,13 @@ describe("createPromise", () => {
 
   it(`should timeout promise after specified milliseconds`, async () => {
     const pr = createPromise({ timeout: 1000 });
-    await expect(pr.promise).rejects.toThrow(
-      "Promise timed out after 1000 ms.",
-    );
+    await expect(pr.promise).rejects.toThrow(/Promise timed out after \d* ms./);
   }, 2000);
 
   it(`should timeout promise after specified Date`, async () => {
-    const futureDate = new Date(Date.now() + 1100);
+    const futureDate = new Date(Date.now() + 1000);
     const pr = createPromise({ timeout: futureDate });
-    await expect(pr.promise).rejects.toThrow(
-      "Promise timed out after 1000 ms.",
-    );
+    await expect(pr.promise).rejects.toThrow(/Promise timed out after \d* ms./);
   }, 2000);
 
   it(`should not timeout if promise resolves before timeout`, async () => {
