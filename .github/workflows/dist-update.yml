@@ -28,7 +28,7 @@ jobs:
         This pull request updates the dist/ files.
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup GitHub CLI
         run: |
@@ -56,7 +56,7 @@ jobs:
           git reset --hard origin/main
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "22"
 
