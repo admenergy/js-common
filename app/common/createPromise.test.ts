@@ -34,7 +34,7 @@ describe("createPromise", () => {
   }, 2000);
 
   it(`should timeout promise after specified Date`, async () => {
-    const futureDate = new Date(Date.now() + 1000);
+    const futureDate = new Date(Date.now() + 1100);
     const pr = createPromise({ timeout: futureDate });
     await expect(pr.promise).rejects.toThrow(
       "Promise timed out after 1000 ms.",
