@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "declaration": false,
+    "rootDir": ".",
+    "types": ["node", "vitest/globals"]
+  },
+  "include": [
+    "vitest.config.ts",
+    "vitest.setup.js",
+    "app/**/*.js",
+    "app/**/*.jsx",
+    "app/**/*.ts",
+    "app/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "app/entry.client.tsx",
+    "app/entry.server.tsx",
+    "app/root.tsx",
+    "app/routes",
+    "app/styles"
+  ]
+}
