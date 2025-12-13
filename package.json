@@ -38,8 +38,8 @@
   "scripts": {
     "==[ Development ]==": "",
     "build": "yarn clean && yarn webpack --mode production && yarn tsc",
-    "build-git-add": "npm run build && git add dist/",
-    "build-test": "npm run build && vitest run",
+    "build-git-add": "yarn build && git add dist/",
+    "build-test": "yarn build && vitest run",
     "====[ Lint ]====": "",
     "lint": "yarn eslint app/ && yarn tsc -p tsconfig.test.json",
     "lint:fix": "yarn eslint app/ --fix",
