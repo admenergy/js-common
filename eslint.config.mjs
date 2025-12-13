@@ -73,6 +73,15 @@ export default [
   // Base recommended rules
   {
     rules: {
+      // Yarn PnP + unrs-resolver (eslint-import-resolver-typescript v4) don't work together
+      // TypeScript validates these imports; this just silences ESLint's duplicate check
+      "import/no-unresolved": [
+        "error",
+        {
+          ignore: ["^(js-common|next-common)(/.*)?$"],
+        },
+      ],
+
       ...eslintJs.configs.recommended.rules,
     },
   },
