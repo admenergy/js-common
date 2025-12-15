@@ -1,0 +1,20 @@
+services:
+  dev:
+    tty: true
+    hostname: devcontainer
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.devcontainer
+      args:
+        PROJECT_NAME: js-common
+    # ports:
+    #   - "3001:3001"
+    # environment:
+    #   PORT: 3001
+    volumes:
+      # Workspace
+      - ..:/workspace/js-common:cached
+      # Home
+      - ../volumes/home:/home/vscode:cached
+      # Additional scripts
+      - ~/scripts:/home/vscode/scripts:ro

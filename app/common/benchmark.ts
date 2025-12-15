@@ -1,4 +1,4 @@
-import { Conversion, bestConversionHelper } from "./bestConversionHelper";
+import { bestConversionHelper, type Conversion } from "./bestConversionHelper";
 
 /**
  * Runs a benchmark test on a function.
