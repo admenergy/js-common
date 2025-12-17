@@ -12,8 +12,8 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 65:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 65
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -103,10 +103,10 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
   return _createClass(NotFoundError);
 }(/*#__PURE__*/_wrapNativeSuper(Error));
 
-/***/ }),
+/***/ },
 
-/***/ 262:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 262
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -158,10 +158,10 @@ function bestTimeUnitMS(ms) {
   return new _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.ConversionResult(value, round, conversion.unit);
 }
 
-/***/ }),
+/***/ },
 
-/***/ 333:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 333
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -230,10 +230,10 @@ function bestConversionHelper(startingNumber, threshold, conversions, startingCo
   return conversions[i];
 }
 
-/***/ }),
+/***/ },
 
-/***/ 994:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 994
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -296,7 +296,7 @@ function createPromise() {
   };
 }
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/

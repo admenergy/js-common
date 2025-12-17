@@ -12,8 +12,8 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 65:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 65
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -103,14 +103,14 @@ var NotFoundError = /*#__PURE__*/function (_Error3) {
   return _createClass(NotFoundError);
 }(/*#__PURE__*/_wrapNativeSuper(Error));
 
-/***/ }),
+/***/ },
 
-/***/ 773:
-/***/ ((module) => {
+/***/ 773
+(module) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE__773__;
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
