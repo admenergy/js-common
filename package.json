@@ -57,7 +57,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "json5": "^2.2.3",
     "lodash": "^4.17.23",
-    "lodash-es": "^4.17.22",
+    "lodash-es": "^4.17.23",
     "notistack": "^3.0.2",
     "react": "<19.0.0",
     "react-dom": "<19.0.0"
