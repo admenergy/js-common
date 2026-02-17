@@ -1,7 +1,5 @@
 import eslintJs from "@eslint/js";
 import eslintImport from "eslint-plugin-import";
-import eslintJsxA11y from "eslint-plugin-jsx-a11y";
-import eslintReact from "eslint-plugin-react";
 import eslintReactHooks from "eslint-plugin-react-hooks";
 import eslintSecurity from "eslint-plugin-security";
 import eslintUnusedImports from "eslint-plugin-unused-imports";
@@ -98,15 +96,11 @@ export default [
       "security": eslintSecurity,
       "unused-imports": eslintUnusedImports,
       "import": eslintImport,
-      "react": eslintReact,
       "react-hooks": eslintReactHooks,
-      "jsx-a11y": eslintJsxA11y,
     },
     rules: {
       ...eslintReactHooks.configs.recommended.rules,
-      ...eslintReact.configs.flat.recommended.rules,
       ...eslintImport.flatConfigs.recommended.rules,
-      ...eslintJsxA11y.flatConfigs.recommended.rules,
       "unused-imports/no-unused-imports": "warn",
       "no-unused-vars": [
         "warn",
@@ -122,9 +116,6 @@ export default [
       ],
     },
     settings: {
-      "react": {
-        version: "detect",
-      },
       "import/resolver": {
         typescript: {
           project: "./tsconfig.test.json",
@@ -148,16 +139,12 @@ export default [
       "security": eslintSecurity,
       "unused-imports": eslintUnusedImports,
       "import": eslintImport,
-      "react": eslintReact,
       "react-hooks": eslintReactHooks,
-      "jsx-a11y": eslintJsxA11y,
       "@typescript-eslint": eslintTs.plugin,
     },
     rules: {
       ...eslintReactHooks.configs.recommended.rules,
-      ...eslintReact.configs.flat.recommended.rules,
       ...eslintImport.flatConfigs.recommended.rules,
-      ...eslintJsxA11y.flatConfigs.recommended.rules,
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-restricted-types": [
         "error",
@@ -193,9 +180,6 @@ export default [
       ],
     },
     settings: {
-      "react": {
-        version: "detect",
-      },
       "import/resolver": {
         typescript: {
           project: "./tsconfig.test.json",
