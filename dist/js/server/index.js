@@ -12,61 +12,6 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 262
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   bestTimeUnitMS: () => (/* binding */ bestTimeUnitMS)
-/* harmony export */ });
-/* harmony import */ var _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(333);
-
-
-/**
- * Convert a millisecond number to human readable units.
- *
- * @param ms - Value to convert.
- *
- * @returns An instance of ConversionResult with value, round, unit, and a toString method that flattens the output.
- *
- * @throws TypeError if the parameter types are incorrect.
- *
- * @example
- * bestTimeUnitMS(4500000);
- * console.log(result.toString());
- * -> "1.25 h"
- */
-function bestTimeUnitMS(ms) {
-  if (typeof ms !== "number") {
-    throw new TypeError("bestTimeUnitMS(ms) : 'ms' must be a number.");
-  }
-  var conversions = [{
-    unit: "μs",
-    value: 1 / 1000
-  }, {
-    unit: "ms",
-    value: 1
-  }, {
-    unit: "s",
-    value: 1 * 1000
-  }, {
-    unit: "m",
-    value: 1 * 1000 * 60
-  }, {
-    unit: "h",
-    value: 1 * 1000 * 60 * 60
-  }, {
-    unit: "d",
-    value: 1 * 1000 * 60 * 60 * 24
-  }];
-  var conversion = (0,_bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.bestConversionHelper)(ms, 1.2, conversions, 1);
-  var value = ms / conversion.value;
-  var round = Math.round(value * 100) / 100;
-  return new _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.ConversionResult(value, round, conversion.unit);
-}
-
-/***/ },
-
 /***/ 333
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -139,10 +84,58 @@ function bestConversionHelper(startingNumber, threshold, conversions, startingCo
 
 /***/ },
 
-/***/ 741
-(module) {
+/***/ 262
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__741__;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   bestTimeUnitMS: () => (/* binding */ bestTimeUnitMS)
+/* harmony export */ });
+/* harmony import */ var _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(333);
+
+
+/**
+ * Convert a millisecond number to human readable units.
+ *
+ * @param ms - Value to convert.
+ *
+ * @returns An instance of ConversionResult with value, round, unit, and a toString method that flattens the output.
+ *
+ * @throws TypeError if the parameter types are incorrect.
+ *
+ * @example
+ * bestTimeUnitMS(4500000);
+ * console.log(result.toString());
+ * -> "1.25 h"
+ */
+function bestTimeUnitMS(ms) {
+  if (typeof ms !== "number") {
+    throw new TypeError("bestTimeUnitMS(ms) : 'ms' must be a number.");
+  }
+  var conversions = [{
+    unit: "μs",
+    value: 1 / 1000
+  }, {
+    unit: "ms",
+    value: 1
+  }, {
+    unit: "s",
+    value: 1 * 1000
+  }, {
+    unit: "m",
+    value: 1 * 1000 * 60
+  }, {
+    unit: "h",
+    value: 1 * 1000 * 60 * 60
+  }, {
+    unit: "d",
+    value: 1 * 1000 * 60 * 60 * 24
+  }];
+  var conversion = (0,_bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.bestConversionHelper)(ms, 1.2, conversions, 1);
+  var value = ms / conversion.value;
+  var round = Math.round(value * 100) / 100;
+  return new _bestConversionHelper__WEBPACK_IMPORTED_MODULE_0__.ConversionResult(value, round, conversion.unit);
+}
 
 /***/ },
 
@@ -209,6 +202,13 @@ function createPromise() {
     reject: reject
   };
 }
+
+/***/ },
+
+/***/ 741
+(module) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__741__;
 
 /***/ }
 
