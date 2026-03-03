@@ -6,7 +6,7 @@
   "updateRemoteUserUID": true,
   "workspaceFolder": "/workspace/js-common",
   "initializeCommand": ".devcontainer/init-home.sh",
-  "postCreateCommand": "/var/post-create.sh",
+  "postCreateCommand": "sudo /var/post-create.sh",
   "postStartCommand": "/var/post-start.sh",
   "customizations": {
     "vscode": {
@@ -19,6 +19,7 @@
         "DavidAnson.vscode-markdownlint",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
+        "GitHub.copilot-chat",
         "mechatroner.rainbow-csv",
         "mhutchie.git-graph",
         "mikestead.dotenv",

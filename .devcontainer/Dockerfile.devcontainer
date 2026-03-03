@@ -1,16 +1,18 @@
-FROM debian:trixie
+FROM ubuntu:noble
 
 # Switch to apt noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update && apt install -y locales tzdata && apt clean -y && rm -rf /var/lib/apt/lists/* \
-    && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
-    && locale-gen en_US.UTF-8 \
-    && update-locale LANG=en_US.UTF-8 \
-    && ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime \
-    && echo "America/Los_Angeles" > /etc/timezone
-ENV LANGUAGE=en_US:en
-ENV LC_ALL=en_US.UTF-8
+RUN apt update && apt install -y locales tzdata ca-certificates && apt clean -y && rm -rf /var/lib/apt/lists/* \
+	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+	&& ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime \
+	&& echo "America/Los_Angeles" > /etc/timezone
+
+# Zscaler Root CA
+COPY .devcontainer/zscaler-root-ca.crt /usr/local/share/ca-certificates/zscaler-root-ca.crt
+RUN chmod 644 /usr/local/share/ca-certificates/zscaler-root-ca.crt && update-ca-certificates
+ENV SSL_CERT_FILE="/usr/local/share/ca-certificates/zscaler-root-ca.crt"
+ENV NODE_EXTRA_CA_CERTS="/usr/local/share/ca-certificates/zscaler-root-ca.crt"
 
 # General development tools
 RUN apt update && apt install -y \
@@ -44,10 +46,25 @@ RUN apt update && apt install -y \
 	&& apt autoremove --purge -y \
 	&& apt clean -y && rm -rf /var/lib/apt/lists/*
 
-# Install Cursor agent
-RUN curl -fsSL https://cursor.com/install | bash
+# Add vscode user
+RUN groupadd -r vscode \
+	&& useradd -rs /bin/bash -m -g vscode -u 1001 vscode \
+	&& echo "vscode:vscode" | chpasswd \
+	&& echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
 
-# Node.js
+# Install Cursor, Claude, and Copilot agents
+USER vscode
+RUN curl -fsSL https://cursor.com/install | bash
+RUN curl -fsSL https://claude.ai/install.sh | bash
+RUN curl -fsSL https://gh.io/copilot-install | bash
+USER root
+
+# Stash agent dirs so post-create can restore into mounted home when missing
+RUN mkdir -p /var/agent-install \
+	&& cp -a /home/vscode/.local /home/vscode/.claude /var/agent-install/ \
+	&& rm -rf /home/vscode/.local /home/vscode/.claude
+
+# GitHub CLI
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /etc/apt/keyrings/githubcli-archive-keyring.gpg \
 	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /etc/apt/sources.list.d/github-cli.list \
 	&& apt update && apt install -y gh \
@@ -69,12 +86,6 @@ RUN NODE_MAJOR=24 \
 
 # Switch back to dialog for user's use of apt
 ENV DEBIAN_FRONTEND=dialog
-
-# Add vscode user
-RUN groupadd -r vscode \
-	&& useradd -rs /bin/bash -m -g vscode -u 1001 vscode \
-	&& echo "vscode:vscode" | chpasswd \
-	&& echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
 
 ARG PROJECT_NAME
 ENV PROJECT_NAME=$PROJECT_NAME
