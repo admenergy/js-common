@@ -30,7 +30,7 @@ export function encodeForm(htmlFormElement: HTMLFormElement): FormValues {
         switch (type) {
           case "number":
             asNum = Number((element as HTMLInputElement).value);
-            return isNaN(asNum) ? NaN : asNum;
+            return Number.isNaN(asNum) ? NaN : asNum;
           case "checkbox":
             return (element as HTMLInputElement).checked;
           default:

@@ -31,9 +31,7 @@ The project follows a standard structure:
 - `dist/` - Build output (generated)
   - `js/` - JavaScript output
   - `ts/` - TypeScript declaration files
-- `utility/` - Build and development utilities
-  - `eslint.js` - ESLint output formatter
-- `.eslintrc.js` - ESLint configuration
+- `biome.json` - Biome linter configuration
 - `.gitignore` - Git ignore rules
 - `jest.config.js` - Jest configuration
 - `package.json` - Project configuration and dependencies

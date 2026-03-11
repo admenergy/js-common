@@ -4,7 +4,7 @@ const stdinBuffer = fs.readFileSync(0);
 const allLintIssues = JSON.parse(stdinBuffer.toString());
 
 const reProject =
-  /^Parsing error: ESLint was configured to run on \`[^\`]*\` using \`parserOptions\.project\`:/;
+  /^Parsing error: ESLint was configured to run on `[^`]*` using `parserOptions\.project`:/;
 
 const importantLintIssues = allLintIssues.filter((json) => {
   const { errorCount, warningCount, messages } = json;

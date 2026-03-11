@@ -49,7 +49,7 @@ export function getEnv<T = any>(variableName: string): T | null {
 
       // Parse JSON5
       return json5.parse(parsedConfig);
-    } catch (error) {
+    } catch (_error) {
       console.log(`⚠️ `, `Failed to parse ${variableName}`);
       return null;
     }
