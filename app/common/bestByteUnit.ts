@@ -1,7 +1,7 @@
 import {
   bestConversionHelper,
-  ConversionResult,
   type Conversion,
+  ConversionResult,
 } from "./bestConversionHelper";
 
 /**

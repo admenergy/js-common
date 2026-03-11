@@ -43,7 +43,7 @@ export class EventDispatcher<T = any> {
   private handlers: Map<string, Set<EventHandler<T>>> = new Map();
   private batchedHandlers: Map<string, Map<EventHandler<T>, T[]>> = new Map();
 
-  trigger(type: string, event: T = {} as T): Promise<void[]> {
+  trigger(type: string, event: T = {} as T): Promise<undefined[]> {
     const handlers = this.handlers.get(type);
     if (!handlers) return Promise.resolve([]);
 

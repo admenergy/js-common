@@ -92,7 +92,6 @@ export function sanitizeJSON<T, R extends JsonValue = JsonValue>(
       if (process.env.NODE_ENV === "development") {
         console.warn(`Failed to sanitize property "${key}":`, error);
       }
-      continue;
     }
   }
 
