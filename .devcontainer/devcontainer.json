@@ -17,7 +17,7 @@
         "christian-kohler.npm-intellisense",
         "codeandstuff.package-json-upgrade",
         "DavidAnson.vscode-markdownlint",
-        "dbaeumer.vscode-eslint",
+        "biomejs.biome",
         "esbenp.prettier-vscode",
         "GitHub.copilot-chat",
         "mechatroner.rainbow-csv",

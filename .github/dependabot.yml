@@ -12,25 +12,7 @@ updates:
           - "react"
           - "react-dom"
 
-      nextjs:
-        patterns:
-          - "next"
-          - "@next/eslint-plugin-next"
-          - "eslint-config-next"
-
       material-ui:
         patterns:
           - "@mui/material"
           - "@mui/icons-material"
-
-      ag-grid:
-        patterns:
-          - "ag-grid-*"
-
-      es-lint:
-        patterns:
-          - "eslint"
-          - "@eslint/js"
-          - "@typescript-eslint/eslint-plugin"
-          - "@typescript-eslint/parser"
-          - "typescript-eslint"

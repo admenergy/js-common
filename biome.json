@@ -1,0 +1,84 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
+	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+	"files": {
+		"includes": [
+			"**",
+			"!__tests__",
+			"!.next",
+			"!coverage",
+			"!dist",
+			"!node_modules",
+			"!volumes"
+		]
+	},
+	"formatter": {
+		"enabled": false
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"complexity": {
+				"noExtraBooleanCast": "off",
+				"noThisInStatic": "off",
+				"useLiteralKeys": "off",
+				"useFlatMap": "warn",
+				"useOptionalChain": "warn"
+			},
+			"correctness": {
+				"noConstantCondition": "warn",
+				"noEmptyPattern": "off",
+				"noUnusedVariables": "warn",
+				"noUnusedImports": "warn",
+				"noUnusedFunctionParameters": "off",
+				"useExhaustiveDependencies": "warn",
+				"useHookAtTopLevel": "error"
+			},
+			"performance": {
+				"noImgElement": "off"
+			},
+			"security": {
+				"noBlankTarget": "off"
+			},
+			"style": {
+				"noNonNullAssertion": "off",
+				"useConst": "warn",
+				"useTemplate": "off",
+				"useNodejsImportProtocol": "off",
+				"useImportType": "warn",
+				"useExportType": "warn"
+			},
+			"suspicious": {
+				"noAssignInExpressions": "off",
+				"noControlCharactersInRegex": "off",
+				"noDoubleEquals": "off",
+				"noExplicitAny": "warn",
+				"noFallthroughSwitchClause": "off",
+				"noImplicitAnyLet": "off",
+				"noPrototypeBuiltins": "off",
+				"noDocumentCookie": "off",
+				"noRedeclare": "error",
+				"useIterableCallbackReturn": "warn"
+			},
+			"a11y": {
+				"noRedundantAlt": "warn",
+				"useButtonType": "warn",
+				"useValidAnchor": "warn",
+				"useValidAriaRole": "warn",
+				"noSvgWithoutTitle": "warn",
+				"noStaticElementInteractions": "warn",
+				"useKeyWithClickEvents": "warn"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": { "quoteStyle": "double" }
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": { "organizeImports": "on" }
+		}
+	}
+}
