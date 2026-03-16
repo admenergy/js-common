@@ -87,7 +87,7 @@
     "typesync": "^0.14.3",
     "vitest": "^4.0.18",
     "webpack": "^5.105.4",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^7.0.0"
   },
   "packageManager": "yarn@4.12.0"
 }
