@@ -20,6 +20,7 @@ services:
       # Additional scripts
       - ~/scripts:/home/vscode/scripts:ro
     networks:
+      - default
       - agent-team-bridge-network
 
 networks:
