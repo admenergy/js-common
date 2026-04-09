@@ -9,10 +9,10 @@
     "emitDeclarationOnly": true,
     "outDir": "./dist/ts",
     "rootDir": "./app",
-    "baseUrl": "./app",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./app/*"]
     },
+    "types": ["node"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
