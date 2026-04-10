@@ -67,7 +67,7 @@
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
-    "@biomejs/biome": "^2.4.10",
+    "@biomejs/biome": "^2.4.11",
     "@mui/icons-material": "<10.0.0",
     "@mui/material": "<10.0.0",
     "@testing-library/dom": "^10.4.1",
