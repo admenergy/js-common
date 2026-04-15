@@ -43,11 +43,11 @@ export class EventDispatcher<T = any> {
   private handlers: Map<string, Set<EventHandler<T>>> = new Map();
   private batchedHandlers: Map<string, Map<EventHandler<T>, T[]>> = new Map();
 
-  trigger(type: string, event: T = {} as T): Promise<undefined[]> {
+  trigger(type: string, event: T = {} as T): Promise<unknown[] | undefined> {
     const handlers = this.handlers.get(type);
     if (!handlers) return Promise.resolve([]);
 
-    const handlerPromises: Promise<undefined>[] = [];
+    const handlerPromises: Promise<unknown>[] = [];
     const stopPropagation = () => {
       handlerPromises.splice(0, handlerPromises.length);
     };
