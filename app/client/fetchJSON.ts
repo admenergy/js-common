@@ -32,7 +32,7 @@ export async function fetchJSON(
   url: string,
   data?: object,
   options: FetchJsonOptions = {},
-): Promise<any> {
+): Promise<unknown> {
   if (typeof url !== "string") {
     throw new TypeError(
       `fetchJSON(url, data?, options?) : 'url' must be a string.`,
