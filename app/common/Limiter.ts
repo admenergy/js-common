@@ -72,9 +72,9 @@ export class Limiter {
 }
 
 class TrackablePromise {
-  public isDone: boolean;
-  public isResolved: boolean;
-  public isRejected: boolean;
+  public isDone = false;
+  public isResolved = false;
+  public isRejected = false;
 
   private pr: ReturnType<typeof createPromise<void>>;
 

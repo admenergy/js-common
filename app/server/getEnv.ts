@@ -17,7 +17,7 @@ import json5 from "json5";
  * const config = getEnv("config.json5");
  * -> { foo: "Test value" }
  */
-export function getEnv<T = any>(variableName: string): T | null {
+export function getEnv<T = unknown>(variableName: string): T | null {
   if (typeof variableName !== "string") {
     throw new TypeError(
       `getEnv(variableName) : 'variableName' must be a string.`,
@@ -55,5 +55,5 @@ export function getEnv<T = any>(variableName: string): T | null {
     }
   }
 
-  return parsedConfig as any;
+  return parsedConfig as unknown as T;
 }

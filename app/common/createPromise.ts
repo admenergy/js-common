@@ -19,13 +19,13 @@ interface CreatePromiseParams {
  * await pr.promise;
  * return stuff;
  */
-export function createPromise<T = any>({ timeout }: CreatePromiseParams = {}): {
+export function createPromise<T = unknown>({ timeout }: CreatePromiseParams = {}): {
   promise: Promise<T>;
   resolve: (value: T | PromiseLike<T>) => void;
-  reject: (reason?: any) => void;
+  reject: (reason?: unknown) => void;
 } {
   let resolve: (value: T | PromiseLike<T>) => void;
-  let reject: (reason?: any) => void;
+  let reject: (reason?: unknown) => void;
   let timeoutId: NodeJS.Timeout | undefined;
 
   const promise = new Promise<T>((rs, rj) => {
@@ -35,7 +35,7 @@ export function createPromise<T = any>({ timeout }: CreatePromiseParams = {}): {
       }
       rs(value);
     };
-    reject = (reason?: any) => {
+    reject = (reason?: unknown) => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }

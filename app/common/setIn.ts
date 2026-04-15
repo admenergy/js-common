@@ -1,6 +1,6 @@
 import type { ObjectPath } from "./getIn";
 
-export function setIn<T>(source: T, path: ObjectPath, value: any): T {
+export function setIn<T>(source: T, path: ObjectPath, value: unknown): T {
   if (typeof source === "undefined") {
     throw new TypeError(`Can't use setIn on undefined.`);
   }

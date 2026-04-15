@@ -23,7 +23,7 @@ import { bestConversionHelper, type Conversion } from "./bestConversionHelper";
  * -> Date.now: "2.53 K/s"
  * -> performance.now: "492.37 /s"
  */
-export async function benchmark(f, count: number): Promise<string> {
+export async function benchmark(f: () => void | Promise<void>, count: number): Promise<string> {
   if (typeof f !== "function") {
     throw new TypeError(`benchmark(f, count) : 'f' must be a function.`);
   }
