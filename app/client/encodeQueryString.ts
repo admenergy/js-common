@@ -13,7 +13,7 @@
  * -> "https://example.com?foo=bar"
  */
 export function encodeQueryString(
-  data: Record<string, any>,
+  data: Record<string, unknown>,
   url?: string,
 ): string {
   if (typeof data !== "object" || data === null) {
@@ -32,7 +32,7 @@ export function encodeQueryString(
     .filter(([key, value]) => value !== undefined && value !== null)
     .map(
       ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+        `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`,
     )
     .join("&");
 
