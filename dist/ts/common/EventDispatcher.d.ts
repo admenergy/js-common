@@ -1,6 +1,6 @@
 export interface EventOptions {
     batched?: boolean;
-    filters?: Record<string, any>;
+    filters?: Record<string, unknown>;
 }
 export type EventData<T> = T & {
     stopPropagation: () => void;
@@ -31,10 +31,10 @@ export type EventData<T> = T & {
  * myClass.trigger("myevent", { foo: 42 });
  * -> { foo: 42 }
  */
-export declare class EventDispatcher<T = any> {
+export declare class EventDispatcher<T = Record<string, unknown>> {
     private handlers;
     private batchedHandlers;
-    trigger(type: string, event?: T): Promise<void[]>;
+    trigger(type: string, event?: T): Promise<unknown[] | undefined>;
     on(type: string, callback: (event: T) => void, options?: EventOptions): this;
     off(type: string, callback: (event: T) => void): this;
     private matchFilters;

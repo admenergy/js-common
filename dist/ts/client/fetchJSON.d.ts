@@ -26,4 +26,4 @@ export interface FetchJsonOptions {
  * const data = await fetchJSON(`/api/session/login`, { email, password });
  * -> { success: true, message: "Login successful." }
  */
-export declare function fetchJSON(url: string, data?: object, options?: FetchJsonOptions): Promise<any>;
+export declare function fetchJSON(url: string, data?: object, options?: FetchJsonOptions): Promise<unknown>;

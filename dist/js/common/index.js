@@ -612,7 +612,7 @@ var EventDispatcher = /*#__PURE__*/function () {
                 var batchedHandlers = _this.batchedHandlers.get(type);
                 if (batchedHandlers) {
                   batchedHandlers.forEach(function (events, handler) {
-                    handlerPromises.push(handler.callback(events));
+                    handlerPromises.push(Promise.resolve(handler.callback(events)));
                   });
                   _this.batchedHandlers["delete"](type);
                 }
@@ -623,7 +623,7 @@ var EventDispatcher = /*#__PURE__*/function () {
             }
             _this.batchedHandlers.get(type).get(handler).push(eventData);
           } else {
-            handlerPromises.push(handler.callback(eventData));
+            handlerPromises.push(Promise.resolve(handler.callback(eventData)));
           }
         }
       });
@@ -632,7 +632,8 @@ var EventDispatcher = /*#__PURE__*/function () {
   }, {
     key: "on",
     value: function on(type, callback) {
-      var _this2 = this;
+      var _this2 = this,
+        _options$filters;
       var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
         batched: false,
         filters: {}
@@ -650,7 +651,7 @@ var EventDispatcher = /*#__PURE__*/function () {
       }
       this.handlers.get(type).add({
         callback: callback,
-        filters: options.filters,
+        filters: (_options$filters = options.filters) !== null && _options$filters !== void 0 ? _options$filters : {},
         batched: options.batched
       });
       return this;
@@ -674,9 +675,10 @@ var EventDispatcher = /*#__PURE__*/function () {
             removals.push(handler);
           }
         });
-        removals.forEach(function (handler) {
-          return handlers["delete"](handler);
-        });
+        for (var _i = 0, _removals = removals; _i < _removals.length; _i++) {
+          var handler = _removals[_i];
+          handlers["delete"](handler);
+        }
         if (!handlers.size) {
           this.handlers["delete"](type);
         }
@@ -713,134 +715,6 @@ var EventDispatcher = /*#__PURE__*/function () {
     }
   }]);
 }();
-
-// Old JavaScript Code:
-/*
-const OldDeprecatedEventDispatcher = {
-  trigger: function (type, e = {}) {
-    if (typeof type !== "string") throw `Expected string for parameter: "type"`;
-
-    const handlersBatchKey = `_handlers_${type}_batch`;
-    const handlersKey = `_handlers_${type}`;
-    const handlers = this[String(handlersKey)];
-
-    if (handlers) {
-      const handlerPromises = [];
-      const originalStop = e.stopPropagation;
-      let keepGoing = true;
-
-      e.stopPropagation = () => {
-        keepGoing = false;
-        if (originalStop) originalStop();
-      };
-
-      handlers.forEach((f) => {
-        if (!keepGoing) return;
-
-        const match = (value, filter) => {
-          if (typeof filter === "object" && filter instanceof RegExp) {
-            return filter.test(value);
-          } else if (Array.isArray(filter)) {
-            let ret = false;
-            for (let t of filter) {
-              ret = ret || match(value, t);
-              if (ret) break;
-            }
-            return ret;
-          } else {
-            return value === filter;
-          }
-        };
-
-        let matched = true;
-        for (let key in f.filters) {
-          matched &= match(e[String(key)], f.filters[String(key)]);
-          if (!matched) break;
-        }
-        if (!matched) return;
-        if (f.batched) {
-          if (!this[String(handlersBatchKey)]) {
-            handlerPromises.push(
-              new Promise((resolve, reject) => {
-                this[String(handlersBatchKey)] = new Map();
-                setTimeout(() => {
-                  this[String(handlersBatchKey)].forEach((events, f) => {
-                    resolve(f.callback(events));
-                  });
-                  this[String(handlersBatchKey)] = null;
-                });
-              }),
-            );
-          }
-          if (!this[String(handlersBatchKey)].get(f))
-            this[String(handlersBatchKey)].set(f, []);
-          this[String(handlersBatchKey)].get(f).push({ target: this, ...e });
-        } else {
-          handlerPromises.push(f.callback(e));
-        }
-      });
-
-      return Promise.all(handlerPromises);
-    }
-  },
-
-  on: function (
-    type,
-    f,
-    { batched, filters } = { batched: false, filters: {} },
-  ) {
-    if (typeof type !== "string") throw `Expected string for parameter: "type"`;
-    if (typeof f !== "function") throw `Expected function for parameter: "f"`;
-
-    if (type.split(" ").length > 1) {
-      type.split(" ").forEach((type) => {
-        this.on(type, f);
-      });
-      return;
-    }
-
-    const handlersKey = `_handlers_${type}`;
-    let handlers = this[String(handlersKey)];
-
-    if (!handlers) {
-      handlers = this[String(handlersKey)] = new Set();
-    }
-
-    handlers.add({ callback: f, filters, batched });
-
-    return this;
-  },
-
-  off: function (type, f) {
-    if (typeof type !== "string") throw `Expected string for parameter: "type"`;
-    if (typeof f !== "function") throw `Expected function for parameter: "f"`;
-
-    if (type.split(" ").length > 1) {
-      type.split(" ").forEach((type) => {
-        this.off(type, f);
-      });
-      return;
-    }
-
-    const handlersKey = `_handlers_${type}`;
-    const handlers = this[String(handlersKey)];
-
-    if (handlers) {
-      const removals = [];
-      handlers.forEach((h) => {
-        if (h.callback === f) removals.push(h);
-      });
-      removals.forEach((h) => handlers.delete(h));
-
-      if (!handlers.size) {
-        delete this[String(handlersKey)];
-      }
-    }
-
-    return this;
-  },
-};
-*/
 ;// ./app/common/getIn.ts
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -928,6 +802,7 @@ function isISODateString(str) {
 }
 ;// ./app/common/Limiter.ts
 function Limiter_typeof(o) { "@babel/helpers - typeof"; return Limiter_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, Limiter_typeof(o); }
+function Limiter_defineProperty(e, r, t) { return (r = Limiter_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(Limiter_typeof(e) + " is not iterable"); }
 function Limiter_regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return Limiter_regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (Limiter_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, Limiter_regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, Limiter_regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), Limiter_regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", Limiter_regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), Limiter_regeneratorDefine2(u), Limiter_regeneratorDefine2(u, o, "Generator"), Limiter_regeneratorDefine2(u, n, function () { return this; }), Limiter_regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (Limiter_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function Limiter_regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } Limiter_regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { Limiter_regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, Limiter_regeneratorDefine2(e, r, n, t); }
@@ -1082,6 +957,9 @@ var TrackablePromise = /*#__PURE__*/function () {
   function TrackablePromise(promise) {
     var _this2 = this;
     Limiter_classCallCheck(this, TrackablePromise);
+    Limiter_defineProperty(this, "isDone", false);
+    Limiter_defineProperty(this, "isResolved", false);
+    Limiter_defineProperty(this, "isRejected", false);
     this.pr = (0,createPromise.createPromise)();
     promise.then(function (value) {
       _this2.isResolved = true;

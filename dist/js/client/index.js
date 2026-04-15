@@ -334,7 +334,7 @@ function encodeQueryString(data, url) {
     var _ref4 = _slicedToArray(_ref3, 2),
       key = _ref4[0],
       value = _ref4[1];
-    return "".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(value));
+    return "".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(String(value)));
   }).join("&");
   if (url) {
     return "".concat(url, "?").concat(query);
