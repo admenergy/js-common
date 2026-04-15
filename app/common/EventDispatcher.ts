@@ -43,11 +43,11 @@ export class EventDispatcher<T = any> {
   private handlers: Map<string, Set<EventHandler<T>>> = new Map();
   private batchedHandlers: Map<string, Map<EventHandler<T>, T[]>> = new Map();
 
-  trigger(type: string, event: T = {} as T): Promise<void[]> {
+  trigger(type: string, event: T = {} as T): Promise<undefined[]> {
     const handlers = this.handlers.get(type);
     if (!handlers) return Promise.resolve([]);
 
-    const handlerPromises: Promise<void>[] = [];
+    const handlerPromises: Promise<undefined>[] = [];
     const stopPropagation = () => {
       handlerPromises.splice(0, handlerPromises.length);
     };
@@ -125,7 +125,7 @@ export class EventDispatcher<T = any> {
           removals.push(handler);
         }
       });
-      removals.forEach((handler) => handlers.delete(handler));
+      for (const handler of removals) handlers.delete(handler);
       if (!handlers.size) {
         this.handlers.delete(type);
       }
