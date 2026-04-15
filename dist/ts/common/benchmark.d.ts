@@ -21,4 +21,4 @@
  * -> Date.now: "2.53 K/s"
  * -> performance.now: "492.37 /s"
  */
-export declare function benchmark(f: any, count: number): Promise<string>;
+export declare function benchmark(f: () => void | Promise<void>, count: number): Promise<string>;

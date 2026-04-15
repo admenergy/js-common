@@ -15,4 +15,4 @@
  * const config = getEnv("config.json5");
  * -> { foo: "Test value" }
  */
-export declare function getEnv<T = any>(variableName: string): T | null;
+export declare function getEnv<T = unknown>(variableName: string): T | null;

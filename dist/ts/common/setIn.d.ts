@@ -1,2 +1,2 @@
 import type { ObjectPath } from "./getIn";
-export declare function setIn<T>(source: T, path: ObjectPath, value: any): T;
+export declare function setIn<T>(source: T, path: ObjectPath, value: unknown): T;

@@ -16,9 +16,9 @@ interface CreatePromiseParams {
  * await pr.promise;
  * return stuff;
  */
-export declare function createPromise<T = any>({ timeout }?: CreatePromiseParams): {
+export declare function createPromise<T = unknown>({ timeout }?: CreatePromiseParams): {
     promise: Promise<T>;
     resolve: (value: T | PromiseLike<T>) => void;
-    reject: (reason?: any) => void;
+    reject: (reason?: unknown) => void;
 };
 export {};

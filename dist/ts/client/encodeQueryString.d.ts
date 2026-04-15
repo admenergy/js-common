@@ -12,4 +12,4 @@
  * const url = encodeQueryString({ foo: "bar" }, "https://example.com");
  * -> "https://example.com?foo=bar"
  */
-export declare function encodeQueryString(data: Record<string, any>, url?: string): string;
+export declare function encodeQueryString(data: Record<string, unknown>, url?: string): string;
