@@ -19,7 +19,7 @@ export function setIn<T>(source: T, path: ObjectPath, value: unknown): T {
   function traverse(
     source: any,
     path: ObjectPath,
-    value: any,
+    value: unknown,
   ): { node: any; changed: boolean } {
     const [p, ...pathRest] = path;
     if (pathRest.length === 0) {
