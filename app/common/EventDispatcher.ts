@@ -1,6 +1,6 @@
 export interface EventOptions {
   batched?: boolean;
-  filters?: Record<string, any>;
+  filters?: Record<string, unknown>;
 }
 
 export type EventData<T> = T & {
@@ -8,8 +8,8 @@ export type EventData<T> = T & {
 };
 
 interface EventHandler<T> {
-  callback: (event: T | T[]) => any;
-  filters: Record<string, any>;
+  callback: (event: T | T[]) => unknown;
+  filters: Record<string, unknown>;
   batched: boolean;
 }
 
@@ -39,7 +39,7 @@ interface EventHandler<T> {
  * myClass.trigger("myevent", { foo: 42 });
  * -> { foo: 42 }
  */
-export class EventDispatcher<T = any> {
+export class EventDispatcher<T = Record<string, unknown>> {
   private handlers: Map<string, Set<EventHandler<T>>> = new Map();
   private batchedHandlers: Map<string, Map<EventHandler<T>, T[]>> = new Map();
 
@@ -62,7 +62,7 @@ export class EventDispatcher<T = any> {
               const batchedHandlers = this.batchedHandlers.get(type);
               if (batchedHandlers) {
                 batchedHandlers.forEach((events, handler) => {
-                  handlerPromises.push(handler.callback(events));
+                  handlerPromises.push(Promise.resolve(handler.callback(events)));
                 });
                 this.batchedHandlers.delete(type);
               }
@@ -73,7 +73,7 @@ export class EventDispatcher<T = any> {
           }
           this.batchedHandlers.get(type).get(handler).push(eventData);
         } else {
-          handlerPromises.push(handler.callback(eventData));
+          handlerPromises.push(Promise.resolve(handler.callback(eventData)));
         }
       }
     });
@@ -101,7 +101,7 @@ export class EventDispatcher<T = any> {
 
     this.handlers.get(type).add({
       callback,
-      filters: options.filters,
+      filters: options.filters ?? {},
       batched: options.batched,
     });
 
@@ -134,16 +134,16 @@ export class EventDispatcher<T = any> {
     return this;
   }
 
-  private matchFilters(event: T, filters: Record<string, any>): boolean {
+  private matchFilters(event: T, filters: Record<string, unknown>): boolean {
     for (const key in filters) {
       const filter = filters[key];
-      const value = (event as any)[key];
+      const value = (event as Record<string, unknown>)[key];
       if (Array.isArray(filter)) {
         if (!filter.includes(value)) {
           return false;
         }
       } else if (filter instanceof RegExp) {
-        if (!filter.test(value)) {
+        if (!filter.test(value as string)) {
           return false;
         }
       } else {
