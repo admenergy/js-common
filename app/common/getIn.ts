@@ -1,6 +1,6 @@
-export type ObjectPath = any[];
+export type ObjectPath = (string | number)[];
 
-export function getIn<T>(object: T, path: ObjectPath, defaultValue?: any): any {
+export function getIn<T>(object: T, path: ObjectPath, defaultValue?: unknown): unknown {
   for (const p of path) {
     if (object === null) {
       object = undefined;
